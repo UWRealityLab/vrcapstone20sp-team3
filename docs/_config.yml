@@ -1,6 +1,6 @@
 # SITE CONFIGURATION
-baseurl: "/type-theme"
-url: "https://rohanchandra.github.io/"
+baseurl: ""
+url: "https://uwrealitylab.github.io/vrcapstone20sp-team3/"
 
 # THEME-SPECIFIC CONFIGURATION
 theme_settings:
