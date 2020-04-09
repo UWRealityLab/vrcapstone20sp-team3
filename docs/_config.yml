@@ -1,6 +1,6 @@
 # SITE CONFIGURATION
 baseurl: ""
-url: "https://uwrealitylab.github.io/vrcapstone20sp-team3/"
+url: "https://uwrealitylab.github.io/vrcapstone20sp-team3/docs/"
 
 # THEME-SPECIFIC CONFIGURATION
 theme_settings:
