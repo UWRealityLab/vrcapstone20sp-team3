@@ -11,6 +11,99 @@ layout: default
   {% endif %}
 
   <div class="posts">
+    <div class="post-teaser">
+      <header>
+        <h1 style="text-align: center;">
+          Why Symbolia?
+        </h1>
+      </header>
+      <div class="excerpt">
+        <p>
+          TODO: the pitch is currently uninspired and a little too businessy
+          TODO: get this all into markdown, so we can get math typesetting and em dashes.
+          TODO: also will want some concept art in the project pitch
+        </p>
+
+        <p>
+          A technological breakthrough is only truly a breakthrough if it
+            unifies previously disparate areas of one's life.
+          Personal computing has unified mail, shopping, television, etc. into the more general
+            idea of information transfer.
+          As the technology behind virtual reality improves,
+            it becomes clearer that VR is here to stay.
+          But how do we show the power of VR?
+        </p>
+
+        <p>
+          Symbolia aims to explore interactions with math that are possible in VR,
+            that could not have been previously achieved.
+          Nowadays,
+            when working through derivations,
+            mathematicians find themselves flitting between creative mediums (e.g., whiteboards and notebooks)
+            and computers---the former being used for exploratory work and the latter being used for verifying the exploratory work.
+          More concretely,
+            suppose you're working through a problem with a term $$log(x + y)$$,
+            and you mistakenly rewrite this into $$log(x) + log(y)$$.
+          You carry on and later on in your derivation,
+            you find you can't show your desired conclusion,
+            or even worse,
+            you derive a conclusion that you don't realize is false!
+          Even expert mathematicians make silly mistakes,
+            but we often don't check for these kinds of mistakes.
+          Symbolia integrates computational tools into a virtual whiteboard environment,
+            to make checking your work part of the creative process.
+          Beyond these concrete benefits,
+            Symbolia aims to "feel" fun and natural and to allow its users to
+            more consistently hit flow states when playing with math.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="posts">
+    <div class="post-teaser">
+      <header>
+        <h1 style="text-align: center;">
+          Meet the team that's making it happen
+        </h1>
+      </header>
+      <div class="excerpt">
+        <table style="width:100%">
+          <tr>
+            <th style="border: none; text-align: center;">Yuma Tou</th>
+            <th style="border: none; text-align: center;">Erik Hoberg</th>
+            <th style="border: none; text-align: center;">Logan Weber</th>
+            <th style="border: none; text-align: center;">Sea-Eun Lee</th>
+          </tr>
+          <tr>
+            <td style="border: none; text-align: center;">
+              <!-- TODO: yuma pic -->
+              <img src="{{ site.baseurl }}/assets/img/logan.jpeg" style="border: none; text-align: center;">
+            </td>
+            <td align="center" style="border: none; text-align: center;">
+              <!-- TODO: erik pic -->
+              <img src="{{ site.baseurl }}/assets/img/logan.jpeg" style="border: none; text-align: center;">
+            </td>
+            <td align="center" style="border: none; text-align: center;">
+              <img src="{{ site.baseurl }}/assets/img/logan.jpeg" style="border: none; text-align: center;">
+            </td>
+            <td align="center" style="border: none; text-align: center;">
+              <!-- TODO: sea-eun pic -->
+              <img src="{{ site.baseurl }}/assets/img/logan.jpeg" style="border: none; text-align: center;">
+            </td>
+          </tr>
+          <tr>
+            <td style="border: none; text-align: center;">TODO: yuma bio</td>
+            <td style="border: none; text-align: center;">TODO: erik bio</td>
+            <td style="border: none; text-align: center;">5th Year Master's Student studying programming languages</td>
+            <td style="border: none; text-align: center;">TODO: sea-eun bio</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="posts">
     {% for post in paginator.posts %}
     <div class="post-teaser">
       <header>

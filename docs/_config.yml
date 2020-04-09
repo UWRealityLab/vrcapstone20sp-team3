@@ -5,18 +5,19 @@ url: "https://uwrealitylab.github.io/"
 # THEME-SPECIFIC CONFIGURATION
 theme_settings:
   # Meta
-  title: Type Theme
+  title: Symbolia
   avatar: assets/img/avatar.png
   favicon: assets/favicon.ico
   gravatar: # Email MD5 hash
-  description: "A website with blog posts and pages" # used by search engines
+  description: "A website tracking progress on a virtual reality capstone project for manipulating mathematical expressions" # used by search engines
 
   # Header and footer text
   header_text: >
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
-     <p>Remove all header text in <code>_config.yml</code> to disable this feature.</p>
-  header_text_feature_image:
+     <div style="background-color: rgba(26, 188, 156, 0.92); border-radius: 10px">
+      <h1 style="margin-bottom: 0px;">Symbolia</h1>
+      <p style="padding-bottom: 5px;">The world's first virtual environment for computer-assisted symbolic mathematics</p>
+     </div>
+  header_text_feature_image: "assets/img/math_feature_img.jpg"
   footer_text: >
    Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
 
@@ -29,7 +30,7 @@ theme_settings:
   facebook:
   flickr:
   gitlab:
-  github: "rohanchandra/type-theme"
+  github: "UWRealityLab/vrcapstone20sp-team3"
   gitter:
   google_plus:
   instagram:
