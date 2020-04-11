@@ -5,19 +5,19 @@ url: "https://uwrealitylab.github.io/"
 # THEME-SPECIFIC CONFIGURATION
 theme_settings:
   # Meta
-  title: Symbolia
+  title: Blockly
   avatar: assets/img/avatar.png
-  favicon: assets/favicon.ico
+  favicon: assets/img/favicon.png
   gravatar: # Email MD5 hash
-  description: "A website tracking progress on a virtual reality capstone project for manipulating mathematical expressions" # used by search engines
+  description: "A website tracking progress on a virtual reality capstone project for teaching programming via programmatically-generated 3D art" # used by search engines
 
   # Header and footer text
   header_text: >
-     <div style="background-color: rgba(26, 188, 156, 0.92); border-radius: 10px">
-      <h1 style="margin-bottom: 0px;">Symbolia</h1>
-      <p style="padding-bottom: 5px;">The world's first virtual environment for computer-assisted symbolic mathematics</p>
+     <div style="background-color: rgba(26, 188, 156, 0.69); border-radius: 10px">
+      <h1 style="margin-bottom: 0px;">Blockly</h1>
+      <p style="padding-bottom: 5px;">Create 3D art to learn computer programming</p>
      </div>
-  header_text_feature_image: "assets/img/math_feature_img.jpg"
+  header_text_feature_image: "assets/img/voxel_feature_img.png"
   footer_text: >
    Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
 
