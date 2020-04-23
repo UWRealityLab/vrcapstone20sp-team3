@@ -17,7 +17,7 @@ public class BlockController : MonoBehaviour
     void Update()
     {
         Select();
-        Move(this.selectedBlock);
+        Move();
     }
 
     // if mouse click on a block, set that block to be the currently selected block
@@ -52,9 +52,9 @@ public class BlockController : MonoBehaviour
 
     // if key press for move/delete, perform action on the currently selected block
     // does nothing if no block is currently selected
-    private void Move(GameObject gameObject)
+    private void Move()
     {
-        if (gameObject == null)
+        if (this.selectedBlock == null)
         {
             return;
         }
@@ -62,44 +62,47 @@ public class BlockController : MonoBehaviour
         // TODO: update the if conditions to be based on gestures rather than keypresses
         if (Input.GetKeyDown(KeyCode.A))
         {
-            Vector3 position = gameObject.transform.position;
+            Vector3 position = this.selectedBlock.transform.position;
+            Debug.Log("old pos = " + this.selectedBlock.transform.position);
             position.x -= gridSize;
-            gameObject.transform.position = position;
+            this.selectedBlock.transform.position = position;
+            Debug.Log("new pos = " + this.selectedBlock.transform.position);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            Vector3 position = gameObject.transform.position;
+            Vector3 position = this.selectedBlock.transform.position;
             position.x += gridSize;
-            gameObject.transform.position = position;
+            this.selectedBlock.transform.position = position;
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            Vector3 position = gameObject.transform.position;
+            Vector3 position = this.selectedBlock.transform.position;
             position.y -= gridSize;
-            gameObject.transform.position = position;
+            this.selectedBlock.transform.position = position;
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            Vector3 position = gameObject.transform.position;
+            Vector3 position = this.selectedBlock.transform.position;
             position.y += gridSize;
-            gameObject.transform.position = position;
+            this.selectedBlock.transform.position = position;
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Vector3 position = gameObject.transform.position;
+            Vector3 position = this.selectedBlock.transform.position;
             position.z -= gridSize;
-            gameObject.transform.position = position;
+            this.selectedBlock.transform.position = position;
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Vector3 position = gameObject.transform.position;
+            Vector3 position = this.selectedBlock.transform.position;
             position.z += gridSize;
-            gameObject.transform.position = position;
+            this.selectedBlock.transform.position = position;
         }
 
         if (Input.GetKeyDown(KeyCode.Delete))
         {
-            Destroy(gameObject);
+            Destroy(this.selectedBlock);
+            this.selectedBlock = null;
         }
     }
 }
