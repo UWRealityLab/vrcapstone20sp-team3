@@ -5,7 +5,26 @@
     <atom:link href="/vrcapstone20sp-team3/feed.xml" rel="self" type="application/rss+xml"/>
     <link>http://localhost:4000/vrcapstone20sp-team3/</link>
     <description>A website tracking progress on a virtual reality capstone project for teaching programming via programmatically-generated 3D art</description>
-    <pubDate>Thu, 16 Apr 2020 18:53:30 -0700</pubDate>
+    <pubDate>Thu, 23 Apr 2020 17:50:06 -0700</pubDate>
+    
+      <item>
+        <title>Week 2: Strategy</title>
+        <link>/vrcapstone20sp-team3/2020/04/17/week2.html</link>
+        <guid isPermaLink="true">/vrcapstone20sp-team3/2020/04/17/week2.html</guid>
+        <description>&lt;h2 id=&quot;what-we-accomplished&quot;&gt;What we accomplished&lt;/h2&gt;
+&lt;p&gt;This week we researched and experimented with some of the available assets for Oculus hand tracking.  We found some examples of how others have done custom hand tracking (see notes) and we plan to use this as a starting point as we start developing our custom hand gestures. We finalized our project details and presented the project pitch in class on Tuesday and received some final feedback from the course staff about our idea. We also finished our detailed PRD, where we set milestones and outlined responsibilities for each member moving forward.&lt;/p&gt;
+
+&lt;h2 id=&quot;plan-for-next-week&quot;&gt;Plan for next week&lt;/h2&gt;
+&lt;p&gt;Start implementing our components! Our goal for next week is to have some working components that we can show the course staff during our lab session next week. Yuma and Sea-Eun will begin some work on the backend for the programming concepts we’re planning to implement. Logan will be working on implementing the hand gestures for block movement and the emit gesture, Erik will work on hand gestures for the define module and looping gesture. We aren’t necessarily planning on connecting all of this together yet (ie. maybe the backend components are tested with a controller, and then we add the custom hand gestures the week after).&lt;/p&gt;
+
+&lt;h2 id=&quot;notes&quot;&gt;Notes&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/jorgejgnz/HandTrackingPack-HapticFeedback/&quot;&gt;Custom Hand Tracking Example&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.google.com/document/d/1-uIjydR_zQL7k6IQ9gUN79jNO5Kdd8oCZtkQjxiXoGc/edit&quot;&gt;Finalized PRD&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 17 Apr 2020 00:00:00 -0700</pubDate>
+      </item>
     
       <item>
         <title>Week 1: Ideation</title>
