@@ -1,10 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Blockly {
 
 public class PoseRecognizer : MonoBehaviour {
+  public StringEvent OnUpdateLeftPose;
+  public StringEvent OnUpdateRightPose;
+
+  public float threshold = 43.8f;
+
   // TODO should really have the pose hands pulling their data from here, rather
   // than the other way around.
   // public List<Pose> leftPoses;
@@ -12,42 +18,23 @@ public class PoseRecognizer : MonoBehaviour {
   public PoseHand leftHand;
   public PoseHand rightHand;
 
-  public TextMesh leftPoseDisplay;
-  public TextMesh rightPoseDisplay;
+  private PoseHand.Pose currLeftPose;
+  public PoseHand.Pose CurrLeftPose { get => currLeftPose; }
 
-  public TextMesh gestureDisplay;
-
-  public float threshold = 1f;
-
-  // TODO handle poses for both hands
-  private LinkedList<string> recentPoses;
-  // how many of the most recent poses to keep track of
-  private int numRecordedPoses = 10;
-
-  public void Awake() {
-    recentPoses = new LinkedList<string>();
-  }
+  private PoseHand.Pose currRightPose;
+  public PoseHand.Pose CurrRightPose { get => currRightPose; }
 
   public void Update() {
     PoseHand.Pose leftPose = Recognize(leftHand.GetCurrentPose(), leftHand.poses);
     PoseHand.Pose rightPose = Recognize(rightHand.GetCurrentPose(), rightHand.poses);
-    leftPoseDisplay.text = leftPose.name;
-    rightPoseDisplay.text = rightPose.name;
-
-    if (recentPoses.Count == 0 || leftPose.name != recentPoses.First.Value) {
-      // user changed their hand pose
-      recentPoses.AddFirst(leftPose.name);
-      if (recentPoses.Count > numRecordedPoses) {
-        recentPoses.RemoveLast();
-      }
-
-      string gesture = RecognizeGesture();
-      if (gesture == null) {
-        gestureDisplay.text = "No Gesture";
-      } else {
-        gestureDisplay.text = gesture;
-      }
+    if (leftPose.name != currLeftPose.name) {
+      OnUpdateLeftPose.Invoke(leftPose.name);
     }
+    if (rightPose.name != currRightPose.name) {
+      OnUpdateRightPose.Invoke(rightPose.name);
+    }
+    currLeftPose = leftPose;
+    currRightPose = rightPose;
   }
 
   public PoseHand.Pose Recognize(PoseHand.Pose pose, List<PoseHand.Pose> validPoses) {
@@ -80,22 +67,6 @@ public class PoseRecognizer : MonoBehaviour {
       }
     }
     return bestCandidate;
-  }
-
-  public string RecognizeGesture() {
-    LinkedListNode<string> curr = recentPoses.First;
-    if (curr.Value == "No Pose") {
-      curr = curr.Next;
-      if (curr != null && curr.Value == "Point") {
-        return "Block move";
-      }
-    } else if (curr.Value == "Open") {
-      curr = curr.Next;
-      if (curr != null && (curr.Value == "Fist" || (curr.Value == "No Pose" && curr.Next.Value == "Fist"))) {
-        return "Emit";
-      }
-    }
-    return null;
   }
 }
 

@@ -12,15 +12,15 @@ public class FingerTrail : MonoBehaviour {
   private TrailRenderer trail;
   private Transform trailTransform;
   public Transform indexFingerTip;
-  public TextMesh display;
 
   private Transform playerTransform;
 
-  void Start() {
+  public void Start() {
     trailObj = new GameObject("Finger Trail");
     trailTransform = trailObj.transform;
     trail = trailObj.AddComponent<TrailRenderer>();
     trail.time = -1f;
+    trail.enabled = false;
     trailTransform.position = indexFingerTip.position;
     trail.time = trailTime;
     trail.startWidth = startWidth;
@@ -32,26 +32,30 @@ public class FingerTrail : MonoBehaviour {
     playerTransform = gameObject.GetComponentInChildren(typeof(EditorPlayer)).transform;
   }
 
-  void Update() {
-    if (display.text == "Point") {
-      trail.enabled = true;
-    } else {
-      if (trail.enabled) {
-        Debug.Log("end move gesture");
-        Vector3[] positions = new Vector3[trail.positionCount];
-        trail.GetPositions(positions);
-        RecognizeGesture(positions);
-      }
-      trail.enabled = false;
+  public void OnUpdatePose(string poseName) {
+    if (poseName == "Point") {
       trail.Clear();
+      trail.enabled = true;
+    } else if (trail.enabled) {
+      // Debug.Log("end move gesture");
+      // string dir = RecognizeDirection();
+      // if (dir != null) {
+      //   OnRecognizeDirection.Invoke(dir);
+      // }
+      trail.enabled = false;
     }
+  }
+
+  public void Update() {
     trailTransform.position = indexFingerTip.position;
   }
 
-  void RecognizeGesture(Vector3[] positions) {
+  public string RecognizeDirection() {
+    Vector3[] positions = new Vector3[trail.positionCount];
+    trail.GetPositions(positions);
     if (positions.Length < 2) {
       Debug.Log("ignoring direction gesture with too few positions");
-      return;
+      return null;
     }
     for (int i = 1; i < positions.Length - 1; i++) {
       Vector3 prev = (positions[i] - positions[i-1]).normalized;
@@ -59,7 +63,7 @@ public class FingerTrail : MonoBehaviour {
       float alignment = Vector3.Dot(prev, curr);
       if (alignment < 0.7) {
         Debug.Log("ignoring loopy direction gesture");
-        return;
+        return null;
       }
     }
     Vector3 start = playerTransform.InverseTransformPoint(positions[0]);
@@ -68,23 +72,23 @@ public class FingerTrail : MonoBehaviour {
     if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y) && Mathf.Abs(dir.x) > Mathf.Abs(dir.z)) {
       // x component is the largest
       if (dir.x > 0f) {
-        Debug.Log("Right");
+        return "Right";
       } else {
-        Debug.Log("Left");
+        return "Left";
       }
     } else if (Mathf.Abs(dir.y) > Mathf.Abs(dir.x) && Mathf.Abs(dir.y) > Mathf.Abs(dir.z)) {
       // y component is the largest
       if (dir.y > 0f) {
-        Debug.Log("Up");
+        return "Up";
       } else {
-        Debug.Log("Down");
+        return "Down";
       }
     } else {
       // z component is the largest
       if (dir.z > 0f) {
-        Debug.Log("Forward");
+        return "Forward";
       } else {
-        Debug.Log("Backward");
+        return "Backward";
       }
     }
   }
