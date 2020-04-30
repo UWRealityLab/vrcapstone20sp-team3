@@ -10,7 +10,6 @@ public class EditorPlayer : MonoBehaviour {
   // positional acceleration
   private float posA = 1f;
 
-  private Vector3 rotation;
   // rotational velocity
   private Vector3 rotV;
   // rotational acceleration
