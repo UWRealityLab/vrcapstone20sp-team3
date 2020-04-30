@@ -6,26 +6,15 @@ using UnityEngine;
 namespace Blockly {
 
 // needs to be placed on a game object that has an OVRCustomSkeleton component.
-public class PoseHand : MonoBehaviour {
-  [System.Serializable]
-  public struct Finger {
-    public List<Quaternion> segmentRotations;
-  }
-
-  [System.Serializable]
-  public struct Pose {
-    public string name;
-    public List<Finger> fingers;
-    public Quaternion wristRotation;
-  }
-
+public class EditorHand : MonoBehaviour {
   public OVRCustomSkeleton skeleton;
-  public List<Pose> poses;
   [Range(50f, 1000f)]
   public float transitionSpeed = 750f;
   [Range(0f, 1f)]
   public float depthAttenuation = 0.6f;
 
+  private Chirality chirality;
+  private List<Pose> poses;
   private static readonly KeyCode[] poseKeys = {
     KeyCode.Alpha1,
     KeyCode.Alpha2,
@@ -38,14 +27,18 @@ public class PoseHand : MonoBehaviour {
     KeyCode.Alpha9,
     KeyCode.Alpha0,
   };
-
   private KeyCode modKey;
 
   public void Awake() {
+    PoseRecognizer recognizer = GetComponentInParent<PoseRecognizer>();
     skeleton = GetComponent<OVRCustomSkeleton>();
     if (skeleton.GetSkeletonType() == OVRSkeleton.SkeletonType.HandLeft) {
+      chirality = Chirality.Left;
+      poses = recognizer.leftPoses;
       modKey = KeyCode.LeftShift;
     } else if (skeleton.GetSkeletonType() == OVRSkeleton.SkeletonType.HandRight) {
+      chirality = Chirality.Right;
+      poses = recognizer.rightPoses;
       modKey = KeyCode.RightShift;
     }
   }
@@ -136,6 +129,10 @@ public class PoseHand : MonoBehaviour {
         depth++;
       }
     }
+  }
+
+  public Chirality GetChirality() {
+    return chirality;
   }
 }
 
