@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
+#if UNITY_EDITOR
+
 namespace Blockly {
 
 [CustomEditor(typeof(EditorHand))]
@@ -26,3 +28,5 @@ public class EditorHandEditor : Editor {
 }
 
 }
+
+#endif
