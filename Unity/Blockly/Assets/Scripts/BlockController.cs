@@ -5,12 +5,12 @@ using UnityEngine;
 public class BlockController : MonoBehaviour
 {
     public float gridSize;
-    private GameObject selectedBlock;  // currently selected block
+    public bool isSelected;  // whether this block is currently selected
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -35,7 +35,7 @@ public class BlockController : MonoBehaviour
                 Debug.Log("Hit " + hitInfo.transform.gameObject.name);
                 if (hitInfo.collider.gameObject.tag == "Selectable")
                 {
-                    this.selectedBlock = hitInfo.collider.gameObject;
+                    this.isSelected = this.gameObject == hitInfo.collider.gameObject;
                     Debug.Log("It's working!");
                 }
                 else
@@ -49,12 +49,62 @@ public class BlockController : MonoBehaviour
             }
         }
     }
+    
+    public void MoveRight()
+    {
+        Vector3 position = this.gameObject.transform.position;
+        position.x += gridSize;
+        this.gameObject.transform.position = position;
+    }
 
-    // if key press for move/delete, perform action on the currently selected block
-    // does nothing if no block is currently selected
+    public void MoveLeft()
+    {
+        Vector3 position = this.gameObject.transform.position;
+        Debug.Log("old pos = " + this.gameObject.transform.position);
+        position.x -= gridSize;
+        this.gameObject.transform.position = position;
+        Debug.Log("new pos = " + this.gameObject.transform.position);
+    }
+
+    public void MoveForward()
+    {
+        Vector3 position = this.gameObject.transform.position;
+        position.y += gridSize;
+        this.gameObject.transform.position = position;
+    }
+
+    public void MoveBackward()
+    {
+        Vector3 position = this.gameObject.transform.position;
+        position.y -= gridSize;
+        this.gameObject.transform.position = position;
+    }
+
+    public void MoveUp()
+    {
+        Vector3 position = this.gameObject.transform.position;
+        position.z += gridSize;
+        this.gameObject.transform.position = position;
+    }
+
+    public void MoveDown()
+    {
+        Vector3 position = this.gameObject.transform.position;
+        position.z -= gridSize;
+        this.gameObject.transform.position = position;
+    }
+
+    public void Remove()
+    {
+        this.isSelected = false;
+        Destroy(this.gameObject);
+    }
+
+    // if key press for move/delete, perform action on this block
+    // does nothing if block is not currently selected
     private void Move()
     {
-        if (this.selectedBlock == null)
+        if (!this.isSelected)
         {
             return;
         }
@@ -62,47 +112,33 @@ public class BlockController : MonoBehaviour
         // TODO: update the if conditions to be based on gestures rather than keypresses
         if (Input.GetKeyDown(KeyCode.A))
         {
-            Vector3 position = this.selectedBlock.transform.position;
-            Debug.Log("old pos = " + this.selectedBlock.transform.position);
-            position.x -= gridSize;
-            this.selectedBlock.transform.position = position;
-            Debug.Log("new pos = " + this.selectedBlock.transform.position);
+            MoveLeft();
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            Vector3 position = this.selectedBlock.transform.position;
-            position.x += gridSize;
-            this.selectedBlock.transform.position = position;
+            MoveRight();
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            Vector3 position = this.selectedBlock.transform.position;
-            position.y -= gridSize;
-            this.selectedBlock.transform.position = position;
+            MoveBackward();
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            Vector3 position = this.selectedBlock.transform.position;
-            position.y += gridSize;
-            this.selectedBlock.transform.position = position;
+            MoveForward();
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Vector3 position = this.selectedBlock.transform.position;
-            position.z -= gridSize;
-            this.selectedBlock.transform.position = position;
+            MoveDown();
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Vector3 position = this.selectedBlock.transform.position;
-            position.z += gridSize;
-            this.selectedBlock.transform.position = position;
+            MoveUp();
         }
 
         if (Input.GetKeyDown(KeyCode.Delete))
         {
-            Destroy(this.selectedBlock);
-            this.selectedBlock = null;
+            Remove();
         }
     }
 }
+

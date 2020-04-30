@@ -27,10 +27,10 @@ public class BlockInstantiater : MonoBehaviour
             {
                 // TODO: change hit.point.x, y, z to the location of the gesture
                 Vector3 location = snapToGrid(new Vector3(hit.point.x, hit.point.y, hit.point.z));
-                if (isGridSpaceEmpty(location))
-                {
+                // if (!isGridSpaceOccupied(location))
+                // {
                     GameObject obj = Instantiate(blockPrefab, location, Quaternion.identity) as GameObject;
-                }
+                // }
             }
         }
     }
@@ -39,13 +39,13 @@ public class BlockInstantiater : MonoBehaviour
     // (converts x, y, z of position into whole numbers)
     private Vector3 snapToGrid(Vector3 position)
     {
-        return new Vector3((float) Math.Ceiling(position.x),
-                           (float) Math.Ceiling(position.y),
-                           (float) Math.Ceiling(position.z));
+        return new Vector3((float) Math.Ceiling(position.x - 0.5),
+                           (float) Math.Ceiling(position.y - 0.5),
+                           (float) Math.Ceiling(position.z - 0.5));
     }
 
     // returns true if there is not currently a block at the given position
-    private bool isGridSpaceEmpty(Vector3 position)
+    private bool isGridSpaceOccupied(Vector3 position)
     {
         return Physics.CheckSphere(position, 0.2f);
     }
