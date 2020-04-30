@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Blockly {
 
@@ -11,22 +9,21 @@ public class PoseRecognizer : MonoBehaviour {
 
   public float threshold = 43.8f;
 
-  // TODO should really have the pose hands pulling their data from here, rather
-  // than the other way around.
-  // public List<Pose> leftPoses;
-  // public List<Pose> rightPoses;
-  public PoseHand leftHand;
-  public PoseHand rightHand;
+  public List<Pose> leftPoses;
+  public List<Pose> rightPoses;
 
-  private PoseHand.Pose currLeftPose;
-  public PoseHand.Pose CurrLeftPose { get => currLeftPose; }
+  public EditorHand leftHand;
+  public EditorHand rightHand;
 
-  private PoseHand.Pose currRightPose;
-  public PoseHand.Pose CurrRightPose { get => currRightPose; }
+  private Pose currLeftPose;
+  public Pose CurrLeftPose { get => currLeftPose; }
+
+  private Pose currRightPose;
+  public Pose CurrRightPose { get => currRightPose; }
 
   public void Update() {
-    PoseHand.Pose leftPose = Recognize(leftHand.GetCurrentPose(), leftHand.poses);
-    PoseHand.Pose rightPose = Recognize(rightHand.GetCurrentPose(), rightHand.poses);
+    Pose leftPose = Recognize(leftHand.GetCurrentPose(), leftPoses);
+    Pose rightPose = Recognize(rightHand.GetCurrentPose(), rightPoses);
     if (leftPose.name != currLeftPose.name) {
       OnUpdateLeftPose.Invoke(leftPose.name);
     }
@@ -37,10 +34,10 @@ public class PoseRecognizer : MonoBehaviour {
     currRightPose = rightPose;
   }
 
-  public PoseHand.Pose Recognize(PoseHand.Pose pose, List<PoseHand.Pose> validPoses) {
+  public Pose Recognize(Pose pose, List<Pose> validPoses) {
     bool discardPose = false;
     float bestDistSum = Mathf.Infinity;
-    PoseHand.Pose bestCandidate = new PoseHand.Pose();
+    Pose bestCandidate = new Pose();
     bestCandidate.name = "No Pose";
 
     // For each pose
@@ -48,8 +45,8 @@ public class PoseRecognizer : MonoBehaviour {
       Debug.Assert(pose.fingers.Count == validPose.fingers.Count);
       float distSum = 0f;
       for (int i = 0; i < pose.fingers.Count; i++) {
-        PoseHand.Finger finger = pose.fingers[i];
-        PoseHand.Finger validFinger = validPose.fingers[i];
+        Finger finger = pose.fingers[i];
+        Finger validFinger = validPose.fingers[i];
         for (int j = 0; j < finger.segmentRotations.Count; j++) {
           if (Quaternion.Angle(finger.segmentRotations[j], validFinger.segmentRotations[j]) > threshold) {
             discardPose = true;
