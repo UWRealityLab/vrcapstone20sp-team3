@@ -12,8 +12,7 @@ public class PoseRecognizer : MonoBehaviour {
   public List<Pose> leftPoses;
   public List<Pose> rightPoses;
 
-  public EditorHand leftHand;
-  public EditorHand rightHand;
+  private IPlayer player;
 
   private Pose currLeftPose;
   public Pose CurrLeftPose { get => currLeftPose; }
@@ -21,9 +20,15 @@ public class PoseRecognizer : MonoBehaviour {
   private Pose currRightPose;
   public Pose CurrRightPose { get => currRightPose; }
 
+  public void Start() {
+    player = GetComponent<PlayerManager>().GetPlayer();
+  }
+
   public void Update() {
-    Pose leftPose = Recognize(leftHand.GetCurrentPose(), leftPoses);
-    Pose rightPose = Recognize(rightHand.GetCurrentPose(), rightPoses);
+    Pose leftPose = Recognize(player.GetCurrLeftPose(), leftPoses);
+    Pose rightPose = Recognize(player.GetCurrRightPose(), rightPoses);
+    Debug.Log($"left pose is {leftPose.name}");
+    Debug.Log($"right pose is {rightPose.name}");
     if (leftPose.name != currLeftPose.name) {
       OnUpdateLeftPose.Invoke(leftPose.name);
     }

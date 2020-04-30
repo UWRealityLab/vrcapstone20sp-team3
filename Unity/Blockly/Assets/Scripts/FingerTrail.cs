@@ -11,11 +11,15 @@ public class FingerTrail : MonoBehaviour {
   private GameObject trailObj;
   private TrailRenderer trail;
   private Transform trailTransform;
-  public Transform indexFingerTip;
 
   private Transform playerTransform;
+  private Transform indexFingerTip;
 
   public void Start() {
+    IPlayer player = GetComponent<PlayerManager>().GetPlayer();
+    playerTransform = player.GetTransform();
+    indexFingerTip = player.GetLeftIndexTipTransform();
+
     trailObj = new GameObject("Finger Trail");
     trailTransform = trailObj.transform;
     trail = trailObj.AddComponent<TrailRenderer>();
@@ -28,8 +32,6 @@ public class FingerTrail : MonoBehaviour {
     trail.numCapVertices = 1;
     trail.sharedMaterial = new Material(Shader.Find("Unlit/Color"));
     trail.sharedMaterial.color = trailColor;
-
-    playerTransform = gameObject.GetComponentInChildren(typeof(EditorPlayer)).transform;
   }
 
   public void OnUpdatePose(string poseName) {
@@ -37,11 +39,6 @@ public class FingerTrail : MonoBehaviour {
       trail.Clear();
       trail.enabled = true;
     } else if (trail.enabled) {
-      // Debug.Log("end move gesture");
-      // string dir = RecognizeDirection();
-      // if (dir != null) {
-      //   OnRecognizeDirection.Invoke(dir);
-      // }
       trail.enabled = false;
     }
   }

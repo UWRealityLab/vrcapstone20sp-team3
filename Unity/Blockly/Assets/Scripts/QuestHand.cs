@@ -6,52 +6,17 @@ using UnityEngine;
 namespace Blockly {
 
 // needs to be placed on a game object that has an OVRCustomSkeleton component.
-public class EditorHand : MonoBehaviour {
-  [Range(50f, 1000f)]
-  public float transitionSpeed = 750f;
-  [Range(0f, 1f)]
-  public float depthAttenuation = 0.6f;
-
+public class QuestHand : MonoBehaviour {
   private OVRCustomSkeleton skeleton;
+
   private Chirality chirality;
-  private List<Pose> poses;
-  private static readonly KeyCode[] poseKeys = {
-    KeyCode.Alpha1,
-    KeyCode.Alpha2,
-    KeyCode.Alpha3,
-    KeyCode.Alpha4,
-    KeyCode.Alpha5,
-    KeyCode.Alpha6,
-    KeyCode.Alpha7,
-    KeyCode.Alpha8,
-    KeyCode.Alpha9,
-    KeyCode.Alpha0,
-  };
-  private KeyCode modKey;
 
   public void Awake() {
-    PoseRecognizer recognizer = GetComponentInParent<PoseRecognizer>();
     skeleton = GetComponent<OVRCustomSkeleton>();
     if (skeleton.GetSkeletonType() == OVRSkeleton.SkeletonType.HandLeft) {
       chirality = Chirality.Left;
-      poses = recognizer.leftPoses;
-      modKey = KeyCode.LeftShift;
     } else if (skeleton.GetSkeletonType() == OVRSkeleton.SkeletonType.HandRight) {
       chirality = Chirality.Right;
-      poses = recognizer.rightPoses;
-      modKey = KeyCode.RightShift;
-    }
-  }
-
-  public void Update() {
-    if (Input.GetKey(modKey)) {
-      for (int i = 0; i < poses.Count; i++) {
-        // if (Input.GetKeyDown(poseKeys[i])) {
-        if (Input.GetKey(poseKeys[i])) {
-          ApplyPose(poses[i]);
-          break;
-        }
-      }
     }
   }
 
@@ -105,38 +70,8 @@ public class EditorHand : MonoBehaviour {
     return pose;
   }
 
-  public void ApplyPose(Pose pose) {
-    List<Transform> boneTransforms = skeleton.CustomBones;
-
-    // NOTE: eventually, we may want poses that incorporate the wrist rotation
-    // (e.g., to disambiguate between a thumbs up and a thumbs down).
-    // boneTransforms[0].rotation = pose.wristRotation;
-
-    int offset = 2;
-    foreach (var finger in pose.fingers) {
-      int depth = 0;
-      foreach (var targetRotation in finger.segmentRotations) {
-        if (transitionSpeed == 0f) {
-          boneTransforms[offset].localRotation = targetRotation;
-        } else {
-          float speedMultiplier = Mathf.Pow(depthAttenuation, depth);
-          boneTransforms[offset].localRotation = Quaternion.RotateTowards(
-            boneTransforms[offset].localRotation,
-            targetRotation,
-            transitionSpeed * speedMultiplier * Time.deltaTime);
-        }
-        offset++;
-        depth++;
-      }
-    }
-  }
-
   public Chirality GetChirality() {
     return chirality;
-  }
-
-  public OVRSkeleton GetSkeleton() {
-    return skeleton;
   }
 }
 
