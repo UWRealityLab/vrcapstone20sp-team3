@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>Week 3: Bottom-Up | Blockly</title>
+	<meta name="description"
+		content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/vrcapstone20sp-team3/assets/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/vrcapstone20sp-team3/assets/img/favicon.png" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="/vrcapstone20sp-team3/2020/04/24/week3.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="Blockly"
+		href="/vrcapstone20sp-team3/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+		integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet"
+		type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css"
+		integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+
+	<script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js"
+		integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ"
+		crossorigin="anonymous"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/vrcapstone20sp-team3/">
+			<img class="avatar" src="/vrcapstone20sp-team3/assets/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/vrcapstone20sp-team3/">Blockly</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled  -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/UWRealityLab/vrcapstone20sp-team3" title="Follow on GitHub">
+		<i class="fab fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- Search bar -->
+            
+		</ul>
+	</nav>
+
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/vrcapstone20sp-team3/')">
+    <h1 class="title">Week 3: Bottom-Up</h1>
+    
+    <p class="meta">
+      April 24, 2020
+      
+    </p>
+  </header>
+  <section class="post-content"><p><img src="/vrcapstone20sp-team3/assets/img/week3_collage.png" alt="Collage showing progress in week 3" /></p>
+
+<h2 id="what-we-accomplished">What we accomplished</h2>
+<p>We accomplished our goal of starting to implement hand tracking and the backend required for basic programming concepts. We got hand tracking to work by triggering an action (ie. create an object) when the user makes a specific pose with their hands. The backend supports block movement, emitting, and deletion through keyboard actions.</p>
+<ul>
+  <li>Logan: Researched and set up pose recognition for emit and block movement. Set up an emulated VR scene that allows us to develop features for hand tracking without building to the device every time, as this was a pain point for us.</li>
+  <li>Sea-Eun + Yuma: Pair programmed and began implementation on the backend Unity environment where users will be programming. Wrote initial code to emit, move, and delete blocks.</li>
+  <li>Erik: Researched and set up pose recognition for an initial looping attempt.</li>
+</ul>
+
+<h2 id="plan-for-next-week">Plan for next week</h2>
+<p>We would like to have most of our MVP finished by the end of next week. This involves polishing up the backend and finalizing on the specific poses we are using for hand recognition. We also need to extend pose recognition to detect movement as well (ie. user make a pose with their index finger and then moves their hand in a certain direction to denote which direction they want the block to move in). We are aiming to merge all components together into a single repository to combine the efforts that we did this week. We also need to make some final design decisions about what the environment will look like for the MVP (ie. where the blocks will be constrained to, theme, etc.)</p>
+<ul>
+  <li>Logan + Erik: Finish pose and gesture recognition for block movement, emit, looping, and defining modules.</li>
+  <li>Sea-Eun + Yuma: Finish backend that supports block movement, emit, looping, and defining modules.</li>
+</ul>
+
+<h2 id="notes">Notes</h2>
+<ul>
+  <li><a href="https://www.youtube.com/watch?v=lBzwUKQ3tbw">Hand Tracking Gesture Detection Oculus Tutorial</a></li>
+  <li><a href="https://github.com/jorgejgnz/HandTrackingGestureRecorder">Hand Gesture Recorder Using Oculus Link</a></li>
+  <li><a href="https://frl.nyu.edu/write-data-locally-on-oculus-quest/ ">Writing Data Locally on Oculus Quest</a></li>
+  <li><a href="https://support.oculus.com/2255729571307786/?locale=en_US">Transfering Data From Computer to Oculus Quest</a></li>
+</ul>
+</section>
+  
+<footer>
+  <div class="tags">
+    
+    <a class="tag" href="/vrcapstone20sp-team3/tags#week+3">#week 3</a>
+    
+  </div>
+</footer>
+
+
+</article>
+
+<!-- Disqus -->
+
+
+<!-- Post navigation -->
+
+
+    </div>
+    
+<script src="/vrcapstone20sp-team3/assets/js/katex_init.js"></script>
+
+
+
+<footer class="site-footer">
+	<p class="text">Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/rohanchandra/type-theme">Type Theme</a>
+</p>
+</footer>
+
+
+  </body>
+</html>
