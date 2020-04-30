@@ -645,6 +645,99 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 444521428}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &806816525
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 806816528}
+  - component: {fileID: 806816527}
+  - component: {fileID: 806816526}
+  m_Layer: 0
+  m_Name: GestureDisplay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!102 &806816526
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806816525}
+  m_Text: No Gesture
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1
+  m_Anchor: 4
+  m_Alignment: 0
+  m_TabSize: 4
+  m_FontSize: 235
+  m_FontStyle: 0
+  m_RichText: 1
+  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+--- !u!23 &806816527
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806816525}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!4 &806816528
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806816525}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.1, y: 1.83, z: 6}
+  m_LocalScale: {x: 0.032268673, y: 0.032268673, z: 0.032268673}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &855799700 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4897388692554662, guid: c6a74181d4000004887343fb87b3c53a,
@@ -722,7 +815,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skeleton: {fileID: 1022661795}
   poses:
-  - name: Emit
+  - name: Open
     fingers:
     - segmentRotations:
       - {x: 0.37538692, y: -0.42458406, z: 0.007778856, w: 0.8238644}
@@ -772,7 +865,7 @@ MonoBehaviour:
       - {x: -0.0021245792, y: 0.37251222, z: -0.80812186, w: 0.45625556}
       - {x: 0.00064476096, y: -0.04917067, z: 0.024018826, w: 0.99850136}
     wristRotation: {x: 0, y: -0, z: -0, w: 1}
-  - name: Clench
+  - name: Fist
     fingers:
     - segmentRotations:
       - {x: 0.33375528, y: -0.335788, z: -0.09613063, w: 0.8755643}
@@ -823,7 +916,7 @@ GameObject:
   - component: {fileID: 1089163846}
   - component: {fileID: 1089163845}
   m_Layer: 0
-  m_Name: RightDisplay
+  m_Name: PoseDisplay.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -961,7 +1054,7 @@ GameObject:
   - component: {fileID: 1257486679}
   - component: {fileID: 1257486678}
   m_Layer: 0
-  m_Name: LeftDisplay
+  m_Name: PoseDisplay.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1217,9 +1310,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHand: {fileID: 1022661794}
   rightHand: {fileID: 270398637}
-  leftDisplay: {fileID: 1257486678}
-  rightDisplay: {fileID: 1089163845}
-  threshold: 1
+  leftPoseDisplay: {fileID: 1257486678}
+  rightPoseDisplay: {fileID: 1089163845}
+  gestureDisplay: {fileID: 806816526}
+  threshold: 43.8
 --- !u!114 &1342361713
 MonoBehaviour:
   m_ObjectHideFlags: 0

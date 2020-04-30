@@ -14,24 +14,24 @@ public class FingerTrail : MonoBehaviour {
   public Transform indexFingerTip;
   public TextMesh display;
 
-  // Start is called before the first frame update
+  private Transform playerTransform;
+
   void Start() {
-    trailObj = new GameObject("Mouse Trail");
+    trailObj = new GameObject("Finger Trail");
     trailTransform = trailObj.transform;
     trail = trailObj.AddComponent<TrailRenderer>();
     trail.time = -1f;
+    trailTransform.position = indexFingerTip.position;
+    trail.time = trailTime;
+    trail.startWidth = startWidth;
+    trail.endWidth = endWidth;
+    trail.numCapVertices = 1;
+    trail.sharedMaterial = new Material(Shader.Find("Unlit/Color"));
+    trail.sharedMaterial.color = trailColor;
 
-    // trailTransform.position = indexFingerTip.position;
-
-    // trail.time = trailTime;
-    // trail.startWidth = startWidth;
-    // trail.endWidth = endWidth;
-    // trail.numCapVertices = 1;
-    // trail.sharedMaterial = new Material(Shader.Find("Unlit/Color"));
-    // trail.sharedMaterial.color = trailColor;
+    playerTransform = gameObject.GetComponentInChildren(typeof(EditorPlayer)).transform;
   }
 
-  // Update is called once per frame
   void Update() {
     if (display.text == "Point") {
       trail.enabled = true;
@@ -46,20 +46,46 @@ public class FingerTrail : MonoBehaviour {
       trail.Clear();
     }
     trailTransform.position = indexFingerTip.position;
-
-    // TODO move these back into init
-    trail.time = trailTime;
-    trail.startWidth = startWidth;
-    trail.endWidth = endWidth;
-    trail.numCapVertices = 1;
-    trail.sharedMaterial = new Material(Shader.Find("Unlit/Color"));
-    trail.sharedMaterial.color = trailColor;
   }
 
   void RecognizeGesture(Vector3[] positions) {
-    Debug.Log("[Positions]");
-    foreach (var pos in positions) {
-      Debug.Log($"  {pos}");
+    if (positions.Length < 2) {
+      Debug.Log("ignoring direction gesture with too few positions");
+      return;
+    }
+    for (int i = 1; i < positions.Length - 1; i++) {
+      Vector3 prev = (positions[i] - positions[i-1]).normalized;
+      Vector3 curr = (positions[i+1] - positions[i]).normalized;
+      float alignment = Vector3.Dot(prev, curr);
+      if (alignment < 0.7) {
+        Debug.Log("ignoring loopy direction gesture");
+        return;
+      }
+    }
+    Vector3 start = playerTransform.InverseTransformPoint(positions[0]);
+    Vector3 end = playerTransform.InverseTransformPoint(positions[positions.Length-1]);
+    Vector3 dir = (end - start).normalized;
+    if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y) && Mathf.Abs(dir.x) > Mathf.Abs(dir.z)) {
+      // x component is the largest
+      if (dir.x > 0f) {
+        Debug.Log("Right");
+      } else {
+        Debug.Log("Left");
+      }
+    } else if (Mathf.Abs(dir.y) > Mathf.Abs(dir.x) && Mathf.Abs(dir.y) > Mathf.Abs(dir.z)) {
+      // y component is the largest
+      if (dir.y > 0f) {
+        Debug.Log("Up");
+      } else {
+        Debug.Log("Down");
+      }
+    } else {
+      // z component is the largest
+      if (dir.z > 0f) {
+        Debug.Log("Forward");
+      } else {
+        Debug.Log("Backward");
+      }
     }
   }
 }
