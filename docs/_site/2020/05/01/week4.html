@@ -2,9 +2,9 @@
 <html class="no-js">
   <head>
 	<meta charset="utf-8">
-	<title>Blog 1: Ideation | Blockly</title>
+	<title>Blog 4: Teeing Up | Blockly</title>
 	<meta name="description"
-		content="What we accomplishedThis week we spent a lot of time thinking about and iterating on our design. The team all met each other and we initially decided on purs...">
+		content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -14,7 +14,7 @@
 	<link rel="shortcut icon" href="/vrcapstone20sp-team3/assets/img/favicon.png" type="image/x-icon">
 
 	<!-- Canonical -->
-	<link rel="canonical" href="/vrcapstone20sp-team3/2020/04/10/week1.html">
+	<link rel="canonical" href="/vrcapstone20sp-team3/2020/05/01/week4.html">
 
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" title="Blockly"
@@ -135,31 +135,40 @@
     <div class="content">
       <article >
   <header style="background-image: url('/vrcapstone20sp-team3/')">
-    <h1 class="title">Blog 1: Ideation</h1>
+    <h1 class="title">Blog 4: Teeing Up</h1>
     
     <p class="meta">
-      April 10, 2020
+      May 1, 2020
       
     </p>
   </header>
-  <section class="post-content"><h2 id="what-we-accomplished">What we accomplished</h2>
-<p>This week we spent a lot of time thinking about and iterating on our design. The team all met each other and we initially decided on pursuing a project called Symbolia which focused on allowing the user to evaluate math expressions and simple programming concepts by allowing the user to draw these in 3D space. We spent a pretty significant amount of time thinking about what project to pursue before deciding on this one, and we created a website and various pieces of concept art for Symbolia, since we thought that this work was due on Thursday. On Thursday, the course staff did not like our idea so we had to start from scratch. We spent a significant amount of time on Thursday and Friday thinking about ideas and how the implementation would look like and we eventually settled on trying to focus on somehwat novel hand tracking technology to teach a user programming concepts.</p>
+  <section class="post-content"><p><img src="/vrcapstone20sp-team3/assets/img/blog4_gesture_collage.jpg" alt="Collage showing gesture progress" /></p>
 
-<p>The project that we decided to pursue is called Blockly, which is an environment where users can learn how to program by introducing various ways that a user can perform fundamental programming concepts (ie. looping, variable assignment, etc) using hand motions to control a block. We spent a good amount of time on Saturday redoing our work to create a brand new website, concept art, a video, and this blog post! We still need to work out a few aspects of our design, but we feel fairly confident about the main ideas.</p>
+<h2 id="what-we-accomplished">What we accomplished</h2>
+<p>We continued working on the MVP this week. We got gesture data collection working (ie. saving the gesture that one of your hands is making in Unity locally on the quest and then getting that data onto a computer). We also refactored some of the gesture and pose recognition to trigger arbitrary events to make integration with the backend easier. Implemented move and emit gestures using the pose recognition that we implemented last week. Began work on the back end to support more complex functions (ie. looping and modules), but we are putting this work on hold for now in order to finish the MVP.</p>
+
+<ul>
+  <li>Logan: Refactored gesture and pose recognition to make integration with the backend easier and implemented move and emit gestures using pose recognition implemented last week.</li>
+  <li>Sea-Eun + Yuma: Began implementation of more complex functions in the backend.</li>
+  <li>Erik: Implemented gesture data collection, figured out how to transfer data from program -&gt; quest -&gt; computer.</li>
+</ul>
 
 <h2 id="plan-for-next-week">Plan for next week</h2>
-<p>Our main goal for next week will be to really hammer down on the exact specifics of how users will learn programming from our system (ie. what is the user interface, what exact hand commands should correspond to which programming concepts). Our deliverable will be a finished PRD that will give us a good plan moving forward. We hope to get our environments all set up for programming in Unity and by the end of the week (ie. after we finish our PRD) we want to be ready to start implementing a prototype a prototype.</p>
+<p>We need to finish our MVP by the beginning of next week. We will also be presenting our MVP and video demos so we wil need to spend some time figuring out how to stream our demo to the class. After the MVP, we will continue working on improving hand gestures, if necessary, and we will begin working on the module component of the backend.</p>
+
+<h2 id="upcoming-challenges">Upcoming Challenges</h2>
+<p>We will be integrating our work that we have been doing independently by the beginning of next week, so it’s possible that this might be harder than we are anticipating. Currently, we are having one person record hand gestures that we are hoping will work for other members of the team, but it’s possible that the hand gesture might be too specific to the person recording it (however, this is why we allocated some time next week to improve the hand gestures if necessary).</p>
 
 <h2 id="notes">Notes</h2>
 <ul>
-  <li>Project idea notes: <a href="https://docs.google.com/document/d/14HqkGo25-KkSJPUrV5kkn3qtYqYhWiz3rqzr2RcS-js/edit?ts=5e8cf990">google doc</a></li>
+  <li><a href="https://www.youtube.com/watch?v=oJrAT8L4BrA">Serializing and Saving Objects in Unity</a></li>
 </ul>
 </section>
   
 <footer>
   <div class="tags">
     
-    <a class="tag" href="/vrcapstone20sp-team3/tags#blog+1">#blog 1</a>
+    <a class="tag" href="/vrcapstone20sp-team3/tags#blog+4">#blog 4</a>
     
   </div>
 </footer>
