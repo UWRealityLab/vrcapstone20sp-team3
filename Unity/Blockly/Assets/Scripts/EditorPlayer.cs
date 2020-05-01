@@ -5,9 +5,6 @@ using UnityEngine;
 namespace Blockly {
 
 public class EditorPlayer : MonoBehaviour, IPlayer {
-  public GameObject leftHandObj;
-  public GameObject rightHandObj;
-
   public Transform leftIndexTip;
   public Transform rightIndexTip;
 
@@ -34,9 +31,23 @@ public class EditorPlayer : MonoBehaviour, IPlayer {
     Cursor.visible = false;
     Cursor.lockState = CursorLockMode.Locked;
     isFocused = true;
+  }
 
-    leftHand = leftHandObj.GetComponent<EditorHand>();
-    rightHand = rightHandObj.GetComponent<EditorHand>();
+  public void Start() {
+    List<EditorHand> hands = new List<EditorHand>();
+    GetComponentsInChildren<EditorHand>(hands);
+    Debug.Assert(hands.Count == 2);
+    if (hands[0].GetChirality() == Chirality.Left) {
+      leftHand = hands[0];
+      rightHand = hands[1];
+    } else {
+      leftHand = hands[1];
+      rightHand = hands[0];
+    }
+    Debug.Log(hands[0].GetChirality());
+    Debug.Log(hands[1].GetChirality());
+    Debug.Assert(leftHand.GetChirality() == Chirality.Left);
+    Debug.Assert(rightHand.GetChirality() == Chirality.Right);
   }
 
   public void Update() {

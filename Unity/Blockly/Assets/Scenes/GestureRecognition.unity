@@ -452,8 +452,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfc4e140c947649ddb53389a92800f38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftHandObj: {fileID: 1022661792}
-  rightHandObj: {fileID: 270398635}
   leftIndexTip: {fileID: 855799700}
   rightIndexTip: {fileID: 1476212387}
 --- !u!1 &270398635 stripped
@@ -480,7 +478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d34763c2b49b9440da1d01a1565b3c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transitionSpeed: 5
+  transitionSpeed: 750
   depthAttenuation: 0.6
 --- !u!1001 &346499032
 PrefabInstance:
@@ -1571,8 +1569,6 @@ MonoBehaviour:
       - {x: -0.030556347, y: -0.58807886, z: -0.17086552, w: 0.7899588}
       - {x: -0.05252775, y: -0.6254165, z: -0.14975391, w: 0.7639822}
     wristRotation: {x: 0.036360737, y: -0.7338297, z: -0.034549065, w: 0.67747945}
-  leftHand: {fileID: 1022661794}
-  rightHand: {fileID: 270398637}
 --- !u!114 &1342361713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1589,7 +1585,6 @@ MonoBehaviour:
   startWidth: 0.005
   endWidth: 0.005
   trailTime: Infinity
-  indexFingerTip: {fileID: 855799700}
 --- !u!96 &1342361714
 TrailRenderer:
   serializedVersion: 2
