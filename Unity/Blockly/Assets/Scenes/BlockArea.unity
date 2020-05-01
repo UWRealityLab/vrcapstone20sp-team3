@@ -502,6 +502,7 @@ GameObject:
   - component: {fileID: 2043039212}
   - component: {fileID: 2043039211}
   - component: {fileID: 2043039210}
+  - component: {fileID: 2043039214}
   m_Layer: 0
   m_Name: Cursor
   m_TagString: Untagged
@@ -583,6 +584,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2043039214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043039209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a160d3734bafd804caf4bcb68901dc9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridSize: 1
+  blockPrefab: {fileID: 2226868214865433724, guid: 30435ee68dd949240b41c43e071564fd,
+    type: 3}
 --- !u!1 &2096479407
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,6 +758,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 2226868214865433724, guid: 30435ee68dd949240b41c43e071564fd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30435ee68dd949240b41c43e071564fd, type: 3}
