@@ -27,8 +27,6 @@ public class PoseRecognizer : MonoBehaviour {
   public void Update() {
     Pose leftPose = Recognize(player.GetCurrLeftPose(), leftPoses);
     Pose rightPose = Recognize(player.GetCurrRightPose(), rightPoses);
-    Debug.Log($"left pose is {leftPose.name}");
-    Debug.Log($"right pose is {rightPose.name}");
     if (leftPose.name != currLeftPose.name) {
       OnUpdateLeftPose.Invoke(leftPose.name);
     }
@@ -40,32 +38,34 @@ public class PoseRecognizer : MonoBehaviour {
   }
 
   public Pose Recognize(Pose pose, List<Pose> validPoses) {
-    bool discardPose = false;
-    float bestDistSum = Mathf.Infinity;
+    float bestError = Mathf.Infinity;
     Pose bestCandidate = new Pose();
     bestCandidate.name = "No Pose";
 
     // For each pose
     foreach (var validPose in validPoses) {
       Debug.Assert(pose.fingers.Count == validPose.fingers.Count);
-      float distSum = 0f;
+      float error = 0f;
+      bool discardPose = false;
       for (int i = 0; i < pose.fingers.Count; i++) {
         Finger finger = pose.fingers[i];
         Finger validFinger = validPose.fingers[i];
         for (int j = 0; j < finger.segmentRotations.Count; j++) {
-          if (Quaternion.Angle(finger.segmentRotations[j], validFinger.segmentRotations[j]) > threshold) {
+          float currError = Quaternion.Angle(finger.segmentRotations[j], validFinger.segmentRotations[j]);
+          if (currError > threshold) {
             discardPose = true;
             break;
           }
+          error += currError;
         }
       }
+
       if (discardPose) {
-        discardPose = false;
         continue;
       }
-      if (distSum < bestDistSum) {
+      if (error < bestError) {
         bestCandidate = validPose;
-        bestDistSum = distSum;
+        bestError = error;
       }
     }
     return bestCandidate;
