@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CursorController : MonoBehaviour
 {
-    public float gridSize;
-    public bool isSelected;  // whether this block is currently selected
+    public float gridSize = 1.0f;
+    public GameObject blockPrefab;  // prefab for blocks, used when emitted
 
     // Start is called before the first frame update
     void Start()
@@ -16,38 +17,7 @@ public class CursorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Select();
         Move();
-    }
-
-    // if mouse click on a block, set that block to be the currently selected block
-    private void Select()
-    {
-        // TODD: update the if condition + Raycast logic to use gestures
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("Mouse is down");
-
-            RaycastHit hitInfo = new RaycastHit();
-            bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-            if (hit)
-            {
-                Debug.Log("Hit " + hitInfo.transform.gameObject.name);
-                if (hitInfo.collider.gameObject.tag == "Selectable")
-                {
-                    this.isSelected = this.gameObject == hitInfo.collider.gameObject;
-                    Debug.Log("It's working!");
-                }
-                else
-                {
-                    Debug.Log("nopz");
-                }
-            }
-            else
-            {
-                Debug.Log("No hit");
-            }
-        }
     }
     
     public void MoveRight()
@@ -66,50 +36,63 @@ public class CursorController : MonoBehaviour
         Debug.Log("new pos = " + this.gameObject.transform.position);
     }
 
-    public void MoveForward()
+    public void MoveUp()
     {
         Vector3 position = this.gameObject.transform.position;
         position.y += gridSize;
         this.gameObject.transform.position = position;
     }
 
-    public void MoveBackward()
+    public void MoveDown()
     {
         Vector3 position = this.gameObject.transform.position;
         position.y -= gridSize;
         this.gameObject.transform.position = position;
     }
 
-    public void MoveUp()
+    public void MoveBackward()
     {
         Vector3 position = this.gameObject.transform.position;
         position.z += gridSize;
         this.gameObject.transform.position = position;
     }
 
-    public void MoveDown()
+    public void MoveForward()
     {
         Vector3 position = this.gameObject.transform.position;
         position.z -= gridSize;
         this.gameObject.transform.position = position;
     }
 
-    public void Remove()
+    // emit a new block at the cursor's current position, if there isn't a block there already
+    public void Emit()
     {
-        this.isSelected = false;
-        Destroy(this.gameObject);
+        Vector3 cursorPosition = this.gameObject.transform.position;
+        if (isGridSpaceEmpty(cursorPosition))
+        {
+            GameObject obj = Instantiate(blockPrefab, this.gameObject.transform.position, Quaternion.identity) as GameObject;
+        }
     }
 
-    // if key press for move/delete, perform action on this block
-    // does nothing if block is not currently selected
+    // delete the block at the cursor's current position, if there is one
+    public void Delete()
+    {
+        Collider[] colliders = Physics.OverlapSphere(this.gameObject.transform.position, 0.2f);
+        foreach (Collider collider in colliders)
+        {
+            // only destroy emitted blocks, not the cursor/region
+            // TODO: look into layer masks
+            if (collider.gameObject.tag == "Selectable")
+            {
+                Destroy(collider.gameObject);
+            }
+        }
+    }
+
+    // calls appropriate functions to move/delete/emit based on keypress
+    // TODO: eventually remove this as this will be replaced by gesture control
     private void Move()
     {
-        if (!this.isSelected)
-        {
-            return;
-        }
-
-        // TODO: update the if conditions to be based on gestures rather than keypresses
         if (Input.GetKeyDown(KeyCode.A))
         {
             MoveLeft();
@@ -135,10 +118,29 @@ public class CursorController : MonoBehaviour
             MoveUp();
         }
 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Emit();
+        }
         if (Input.GetKeyDown(KeyCode.Delete))
         {
-            Remove();
+            Delete();
         }
+    }
+
+    // returns true if there is not currently a block at the given position
+    private bool isGridSpaceEmpty(Vector3 position)
+    {
+        Collider[] colliders = Physics.OverlapSphere(this.gameObject.transform.position, 0.2f);
+        foreach (Collider collider in colliders)
+        {
+            // TODO: look into layer masks
+            if (collider.gameObject.tag == "Selectable")
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
 
