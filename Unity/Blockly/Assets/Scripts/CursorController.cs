@@ -8,6 +8,9 @@ public class CursorController : MonoBehaviour
     public float gridSize = 1.0f;
     public GameObject blockPrefab;  // prefab for blocks, used when emitted
 
+    private const float MIN_POSITION = 0;  // inclusive
+    private const float MAX_POSITION = 9;  // inclusive
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +27,10 @@ public class CursorController : MonoBehaviour
     {
         Vector3 position = this.gameObject.transform.position;
         position.x += gridSize;
+        if (position.x > MAX_POSITION)
+        {
+            return;
+        }
         this.gameObject.transform.position = position;
     }
 
@@ -32,6 +39,10 @@ public class CursorController : MonoBehaviour
         Vector3 position = this.gameObject.transform.position;
         Debug.Log("old pos = " + this.gameObject.transform.position);
         position.x -= gridSize;
+        if (position.x < MIN_POSITION)
+        {
+            return;
+        }
         this.gameObject.transform.position = position;
         Debug.Log("new pos = " + this.gameObject.transform.position);
     }
@@ -40,6 +51,10 @@ public class CursorController : MonoBehaviour
     {
         Vector3 position = this.gameObject.transform.position;
         position.y += gridSize;
+        if (position.y > MAX_POSITION)
+        {
+            return;
+        }
         this.gameObject.transform.position = position;
     }
 
@@ -47,6 +62,10 @@ public class CursorController : MonoBehaviour
     {
         Vector3 position = this.gameObject.transform.position;
         position.y -= gridSize;
+        if (position.y < MIN_POSITION)
+        {
+            return;
+        }
         this.gameObject.transform.position = position;
     }
 
@@ -54,6 +73,10 @@ public class CursorController : MonoBehaviour
     {
         Vector3 position = this.gameObject.transform.position;
         position.z += gridSize;
+        if (position.z > MAX_POSITION)
+        {
+            return;
+        }
         this.gameObject.transform.position = position;
     }
 
@@ -61,6 +84,10 @@ public class CursorController : MonoBehaviour
     {
         Vector3 position = this.gameObject.transform.position;
         position.z -= gridSize;
+        if (position.z < MIN_POSITION)
+        {
+            return;
+        }
         this.gameObject.transform.position = position;
     }
 
