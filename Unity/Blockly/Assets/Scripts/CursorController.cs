@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockController : MonoBehaviour
+public class CursorController : MonoBehaviour
 {
     public float gridSize;
     public bool isSelected;  // whether this block is currently selected

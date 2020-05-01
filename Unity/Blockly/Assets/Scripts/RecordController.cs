@@ -42,9 +42,9 @@ public class RecordController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        BlockController[] blocks = FindObjectsOfType<BlockController>();
+        CursorController[] blocks = FindObjectsOfType<CursorController>();
         GameObject selectedBlock;
-        foreach (BlockController b in blocks)
+        foreach (CursorController b in blocks)
         {
             if (b.isSelected)
             {
