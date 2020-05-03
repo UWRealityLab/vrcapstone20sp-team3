@@ -7,13 +7,12 @@ namespace Blockly {
 
 // needs to be placed on a game object that has an OVRCustomSkeleton component.
 public class EditorHand : MonoBehaviour {
+  public OVRCustomSkeleton skeleton;
   [Range(50f, 1000f)]
   public float transitionSpeed = 750f;
   [Range(0f, 1f)]
   public float depthAttenuation = 0.6f;
 
-  private OVRCustomSkeleton skeleton;
-  private Chirality chirality;
   private List<Pose> poses;
   private static readonly KeyCode[] poseKeys = {
     KeyCode.Alpha1,
@@ -31,13 +30,10 @@ public class EditorHand : MonoBehaviour {
 
   public void Awake() {
     PoseRecognizer recognizer = GetComponentInParent<PoseRecognizer>();
-    skeleton = GetComponent<OVRCustomSkeleton>();
     if (skeleton.GetSkeletonType() == OVRSkeleton.SkeletonType.HandLeft) {
-      chirality = Chirality.Left;
       poses = recognizer.leftPoses;
       modKey = KeyCode.LeftShift;
     } else if (skeleton.GetSkeletonType() == OVRSkeleton.SkeletonType.HandRight) {
-      chirality = Chirality.Right;
       poses = recognizer.rightPoses;
       modKey = KeyCode.RightShift;
     }
@@ -46,7 +42,6 @@ public class EditorHand : MonoBehaviour {
   public void Update() {
     if (Input.GetKey(modKey)) {
       for (int i = 0; i < poses.Count; i++) {
-        // if (Input.GetKeyDown(poseKeys[i])) {
         if (Input.GetKey(poseKeys[i])) {
           ApplyPose(poses[i]);
           break;
@@ -132,7 +127,14 @@ public class EditorHand : MonoBehaviour {
   }
 
   public Chirality GetChirality() {
-    return chirality;
+    if (skeleton.GetSkeletonType() == OVRSkeleton.SkeletonType.HandLeft) {
+      return Chirality.Left;
+    } else if (skeleton.GetSkeletonType() == OVRSkeleton.SkeletonType.HandRight) {
+      return Chirality.Right;
+    } else {
+      Debug.Assert(false);
+      return Chirality.Right;
+    }
   }
 
   public OVRSkeleton GetSkeleton() {

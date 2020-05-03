@@ -57,11 +57,8 @@ public class GestureRecognizer : MonoBehaviour {
   public string RecognizeGesture(LinkedList<string> recentPoses) {
     // TODO should be replaced by a simple regex-style matching language
     LinkedListNode<string> curr = recentPoses.First;
-    if (curr.Value == "No Pose") {
-      curr = curr.Next;
-      if (curr != null && curr.Value == "Point") {
-        return fingerTrail.RecognizeDirection();
-      }
+    if (curr != null && curr.Next != null && curr.Next.Value == "Point") {
+      return fingerTrail.RecognizeDirection();
     } else if (curr.Value == "Open") {
       curr = curr.Next;
       if (curr != null && (curr.Value == "Fist" || (curr.Value == "No Pose" && curr.Next.Value == "Fist"))) {

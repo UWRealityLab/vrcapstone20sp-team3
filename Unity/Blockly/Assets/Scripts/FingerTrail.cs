@@ -15,23 +15,27 @@ public class FingerTrail : MonoBehaviour {
   private Transform playerTransform;
   private Transform indexFingerTip;
 
-  public void Start() {
-    IPlayer player = GetComponent<PlayerManager>().GetPlayer();
-    playerTransform = player.GetTransform();
-    indexFingerTip = player.GetLeftIndexTipTransform();
-
+  public void Awake() {
     trailObj = new GameObject("Finger Trail");
     trailTransform = trailObj.transform;
     trail = trailObj.AddComponent<TrailRenderer>();
     trail.time = -1f;
     trail.enabled = false;
-    trailTransform.position = indexFingerTip.position;
+
     trail.time = trailTime;
     trail.startWidth = startWidth;
     trail.endWidth = endWidth;
     trail.numCapVertices = 1;
     trail.sharedMaterial = new Material(Shader.Find("Unlit/Color"));
     trail.sharedMaterial.color = trailColor;
+  }
+
+  public void Start() {
+    IPlayer player = GetComponent<PlayerManager>().GetPlayer();
+    playerTransform = player.GetTransform();
+    indexFingerTip = player.GetLeftIndexTipTransform();
+
+    trailTransform.position = indexFingerTip.position;
   }
 
   public void OnUpdatePose(string poseName) {

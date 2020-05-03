@@ -31,9 +31,7 @@ public class EditorPlayer : MonoBehaviour, IPlayer {
     Cursor.visible = false;
     Cursor.lockState = CursorLockMode.Locked;
     isFocused = true;
-  }
 
-  public void Start() {
     List<EditorHand> hands = new List<EditorHand>();
     GetComponentsInChildren<EditorHand>(hands);
     Debug.Assert(hands.Count == 2);
