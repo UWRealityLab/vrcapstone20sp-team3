@@ -7,51 +7,67 @@ public class CursorController : MonoBehaviour
 {
     public float gridSize = 1.0f;
     public GameObject blockPrefab;  // prefab for blocks, used when emitted
+    public AudioClip emitSound;
+    public AudioClip moveSound;
 
     private const float MIN_POSITION = 0;  // inclusive
     private const float MAX_POSITION = 9;  // inclusive
 
+    private AudioSource source;
+
     // Start is called before the first frame update
     void Start()
     {
+        source = GetComponent<AudioSource>();
+    }
 
+    void Awake()
+    {
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Move();
+        Move();
     }
 
     public void OnRecognizeGesture(string gestureName) {
       if (gestureName == "Left")
       {
           MoveLeft();
+          source.PlayOneShot(moveSound);
       }
       if (gestureName == "Right")
       {
           MoveRight();
+          source.PlayOneShot(moveSound);
       }
       if (gestureName == "Backward")
       {
           MoveBackward();
+          source.PlayOneShot(moveSound);
       }
       if (gestureName == "Forward")
       {
           MoveForward();
+          source.PlayOneShot(moveSound);
       }
       if (gestureName == "Up")
       {
           MoveDown();
+          source.PlayOneShot(moveSound);
       }
       if (gestureName == "Down")
       {
           MoveUp();
+          source.PlayOneShot(moveSound);
       }
 
       if (gestureName == "Emit")
       {
           Emit();
+          source.PlayOneShot(emitSound);
       }
       // if (Input.GetKeyDown(KeyCode.Delete))
       // {
