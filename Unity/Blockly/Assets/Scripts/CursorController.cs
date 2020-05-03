@@ -20,9 +20,45 @@ public class CursorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
+        // Move();
     }
-    
+
+    public void OnRecognizeGesture(string gestureName) {
+      if (gestureName == "Left")
+      {
+          MoveLeft();
+      }
+      if (gestureName == "Right")
+      {
+          MoveRight();
+      }
+      if (gestureName == "Backward")
+      {
+          MoveBackward();
+      }
+      if (gestureName == "Forward")
+      {
+          MoveForward();
+      }
+      if (gestureName == "Up")
+      {
+          MoveDown();
+      }
+      if (gestureName == "Down")
+      {
+          MoveUp();
+      }
+
+      if (gestureName == "Emit")
+      {
+          Emit();
+      }
+      // if (Input.GetKeyDown(KeyCode.Delete))
+      // {
+      //     Delete();
+      // }
+    }
+
     public void MoveRight()
     {
         Vector3 position = this.gameObject.transform.position;
@@ -50,8 +86,8 @@ public class CursorController : MonoBehaviour
     public void MoveUp()
     {
         Vector3 position = this.gameObject.transform.position;
-        position.y += gridSize;
-        if (position.y > MAX_POSITION)
+        position.y -= gridSize;
+        if (position.y < MIN_POSITION)
         {
             return;
         }
@@ -61,8 +97,8 @@ public class CursorController : MonoBehaviour
     public void MoveDown()
     {
         Vector3 position = this.gameObject.transform.position;
-        position.y -= gridSize;
-        if (position.y < MIN_POSITION)
+        position.y += gridSize;
+        if (position.y > MAX_POSITION)
         {
             return;
         }

@@ -146,8 +146,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 431367347}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.23271963, y: -0.36753058, z: 0.67955065}
+  m_LocalRotation: {x: -0, y: -0.3842969, z: -0, w: 0.9232096}
+  m_LocalPosition: {x: -3.22, y: -0.36753058, z: 0.67955065}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1257486680}
@@ -156,7 +156,7 @@ Transform:
   - {fileID: 1943809004}
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -45.2, z: 0}
 --- !u!114 &431367349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -724,6 +724,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6405805160239626933, guid: 15905d23892d043a59dd2cf0590d3a26,
         type: 3}
+      propertyPath: OnRecognizeLeftGesture.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405805160239626933, guid: 15905d23892d043a59dd2cf0590d3a26,
+        type: 3}
       propertyPath: OnRecognizeLeftGesture.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 431367349}
@@ -732,6 +737,16 @@ PrefabInstance:
       propertyPath: OnRecognizeRightGesture.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 431367349}
+    - target: {fileID: 6405805160239626933, guid: 15905d23892d043a59dd2cf0590d3a26,
+        type: 3}
+      propertyPath: OnRecognizeLeftGesture.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405805160239626933, guid: 15905d23892d043a59dd2cf0590d3a26,
+        type: 3}
+      propertyPath: OnRecognizeLeftGesture.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6405805160239626934, guid: 15905d23892d043a59dd2cf0590d3a26,
         type: 3}
       propertyPath: OnUpdateLeftPose.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -742,5 +757,10 @@ PrefabInstance:
       propertyPath: OnUpdateRightPose.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 431367349}
+    - target: {fileID: 6405805160239626934, guid: 15905d23892d043a59dd2cf0590d3a26,
+        type: 3}
+      propertyPath: threshold
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15905d23892d043a59dd2cf0590d3a26, type: 3}
