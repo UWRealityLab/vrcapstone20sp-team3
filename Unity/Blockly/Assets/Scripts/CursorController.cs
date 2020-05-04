@@ -55,12 +55,12 @@ public class CursorController : MonoBehaviour
       }
       if (gestureName == "Up")
       {
-          MoveDown();
+          MoveUp();
           source.PlayOneShot(moveSound);
       }
       if (gestureName == "Down")
       {
-          MoveUp();
+          MoveDown();
           source.PlayOneShot(moveSound);
       }
 
@@ -102,8 +102,8 @@ public class CursorController : MonoBehaviour
     public void MoveUp()
     {
         Vector3 position = this.gameObject.transform.position;
-        position.y -= gridSize;
-        if (position.y < MIN_POSITION)
+        position.y += gridSize;
+        if (position.y > MAX_POSITION)
         {
             return;
         }
@@ -113,8 +113,8 @@ public class CursorController : MonoBehaviour
     public void MoveDown()
     {
         Vector3 position = this.gameObject.transform.position;
-        position.y += gridSize;
-        if (position.y > MAX_POSITION)
+        position.y -= gridSize;
+        if (position.y < MIN_POSITION)
         {
             return;
         }
@@ -124,8 +124,8 @@ public class CursorController : MonoBehaviour
     public void MoveBackward()
     {
         Vector3 position = this.gameObject.transform.position;
-        position.z += gridSize;
-        if (position.z > MAX_POSITION)
+        position.z -= gridSize;
+        if (position.z < MIN_POSITION)
         {
             return;
         }
@@ -135,8 +135,8 @@ public class CursorController : MonoBehaviour
     public void MoveForward()
     {
         Vector3 position = this.gameObject.transform.position;
-        position.z -= gridSize;
-        if (position.z < MIN_POSITION)
+        position.z += gridSize;
+        if (position.z > MAX_POSITION)
         {
             return;
         }
