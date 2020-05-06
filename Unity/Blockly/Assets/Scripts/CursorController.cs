@@ -7,6 +7,10 @@ public class CursorController : MonoBehaviour
 {
     public float gridSize = 1.0f;
     public GameObject blockPrefab;  // prefab for blocks, used when emitted
+
+    public GameObject recordButton;
+    private ModuleController moduleController;
+
     public AudioClip emitSound;
     public AudioClip moveSound;
 
@@ -19,6 +23,7 @@ public class CursorController : MonoBehaviour
     void Start()
     {
         source = GetComponent<AudioSource>();
+        moduleController = recordButton.GetComponent<ModuleController>();
     }
 
     void Awake()
@@ -32,47 +37,52 @@ public class CursorController : MonoBehaviour
         Move();
     }
 
-    public void OnRecognizeGesture(string gestureName) {
-      if (gestureName == "Left")
-      {
-          MoveLeft();
-          source.PlayOneShot(moveSound);
-      }
-      if (gestureName == "Right")
-      {
-          MoveRight();
-          source.PlayOneShot(moveSound);
-      }
-      if (gestureName == "Backward")
-      {
-          MoveBackward();
-          source.PlayOneShot(moveSound);
-      }
-      if (gestureName == "Forward")
-      {
-          MoveForward();
-          source.PlayOneShot(moveSound);
-      }
-      if (gestureName == "Up")
-      {
-          MoveUp();
-          source.PlayOneShot(moveSound);
-      }
-      if (gestureName == "Down")
-      {
-          MoveDown();
-          source.PlayOneShot(moveSound);
-      }
+    public void OnRecognizeGesture(string gestureName)
+    {
+        if (moduleController.IsRecording())
+        {
+            moduleController.AddStatement(new Statement(gestureName, true));
+        }
+        if (gestureName == "Left")
+        {
+            MoveLeft();
+            source.PlayOneShot(moveSound);
+        }
+        if (gestureName == "Right")
+        {
+            MoveRight();
+            source.PlayOneShot(moveSound);
+        }
+        if (gestureName == "Backward")
+        {
+            MoveBackward();
+            source.PlayOneShot(moveSound);
+        }
+        if (gestureName == "Forward")
+        {
+            MoveForward();
+            source.PlayOneShot(moveSound);
+        }
+        if (gestureName == "Up")
+        {
+            MoveUp();
+            source.PlayOneShot(moveSound);
+        }
+        if (gestureName == "Down")
+        {
+            MoveDown();
+            source.PlayOneShot(moveSound);
+        }
 
-      if (gestureName == "Emit")
-      {
-          Emit();
-          source.PlayOneShot(emitSound);
-      }
-      // if (Input.GetKeyDown(KeyCode.Delete))
-      // {
-      //     Delete();
-      // }
+        if (gestureName == "Emit")
+        {
+            Emit();
+            source.PlayOneShot(emitSound);
+        }
+        // if (Input.GetKeyDown(KeyCode.Delete))
+        // {
+        //     Delete();
+        // }
     }
 
     public void MoveRight()
@@ -222,4 +232,3 @@ public class CursorController : MonoBehaviour
         return true;
     }
 }
-
