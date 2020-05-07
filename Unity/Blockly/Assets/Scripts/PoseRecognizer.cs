@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static OVRSkeleton;
 
 namespace Blockly {
 
@@ -10,6 +11,18 @@ public class PoseRecognizer : MonoBehaviour {
 
   public float threshold = 43.8f;
 
+  // NOTE: we use a custom struct, because dictionaries aren't integrated in
+  // the inspector
+  [System.Serializable]
+  public struct Pose {
+    public SkeletonPoseData data;
+    public string name;
+
+    public Pose(SkeletonPoseData data, string name) {
+      this.data = data;
+      this.name = name;
+    }
+  }
   public List<Pose> leftPoses;
   public List<Pose> rightPoses;
 
@@ -17,11 +30,8 @@ public class PoseRecognizer : MonoBehaviour {
 
   private IPlayer player;
 
-  private Pose currLeftPose;
-  public Pose CurrLeftPose { get => currLeftPose; }
-
-  private Pose currRightPose;
-  public Pose CurrRightPose { get => currRightPose; }
+  private string currLeftPose;
+  private string currRightPose;
 
   public void Start() {
     player = GetComponent<PlayerManager>().GetPlayer();
@@ -68,46 +78,45 @@ public class PoseRecognizer : MonoBehaviour {
   }
 
   public void Update() {
-    Pose leftPose = Recognize(player.GetCurrLeftPose(), leftPoses);
-    Pose rightPose = Recognize(player.GetCurrRightPose(), rightPoses);
-    if (leftPose.name != currLeftPose.name) {
-      OnUpdateLeftPose.Invoke(leftPose.name);
+    string leftPose = Recognize(player.GetCurrLeftPose(), leftPoses);
+    string rightPose = Recognize(player.GetCurrRightPose(), rightPoses);
+    if (leftPose != currLeftPose) {
+      OnUpdateLeftPose.Invoke(leftPose);
     }
-    if (rightPose.name != currRightPose.name) {
-      OnUpdateRightPose.Invoke(rightPose.name);
+    if (rightPose != currRightPose) {
+      OnUpdateRightPose.Invoke(rightPose);
     }
     currLeftPose = leftPose;
     currRightPose = rightPose;
   }
 
-  public Pose Recognize(Pose pose, List<Pose> validPoses) {
+  public string Recognize(SkeletonPoseData pose, List<Pose> targetPoses) {
     float bestError = Mathf.Infinity;
-    Pose bestCandidate = new Pose();
-    bestCandidate.name = "No Pose";
+    string bestCandidate = null;
 
     // For each pose
-    foreach (var validPose in validPoses) {
-      Debug.Assert(pose.fingers.Count == validPose.fingers.Count);
+    foreach (var targetPose in targetPoses) {
+      // Debug.Assert(pose.fingers.Count == validPose.fingers.Count);
       float error = 0f;
       bool discardPose = false;
-      for (int i = 0; i < pose.fingers.Count; i++) {
-        Finger finger = pose.fingers[i];
-        Finger validFinger = validPose.fingers[i];
-        for (int j = 0; j < finger.segmentRotations.Count; j++) {
-          float currError = Quaternion.Angle(finger.segmentRotations[j], validFinger.segmentRotations[j]);
-          if (currError > threshold) {
-            discardPose = true;
-            break;
-          }
-          error += currError;
-        }
-      }
+      // for (int i = 0; i < pose.fingers.Count; i++) {
+      //   Finger finger = pose.fingers[i];
+      //   Finger validFinger = validPose.fingers[i];
+      //   for (int j = 0; j < finger.segmentRotations.Count; j++) {
+      //     float currError = Quaternion.Angle(finger.segmentRotations[j], validFinger.segmentRotations[j]);
+      //     if (currError > threshold) {
+      //       discardPose = true;
+      //       break;
+      //     }
+      //     error += currError;
+      //   }
+      // }
 
-      if (discardPose) {
-        continue;
-      }
+      // if (discardPose) {
+      //   continue;
+      // }
       if (error < bestError) {
-        bestCandidate = validPose;
+        bestCandidate = targetPose.name;
         bestError = error;
       }
     }

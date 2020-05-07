@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static OVRSkeleton;
 
 namespace Blockly {
 
-// needs to be placed on a game object that has an OVRCustomSkeleton component.
+// needs to be placed on a game object that has an OVRSkeleton component.
 public class EditorHand : MonoBehaviour {
-  public OVRCustomSkeleton skeleton;
   [Range(50f, 1000f)]
   public float transitionSpeed = 750f;
   [Range(0f, 1f)]
   public float depthAttenuation = 0.6f;
 
-  private List<Pose> poses;
+  private OVRHand hand;
+  private OVRSkeleton skeleton;
+
+  private List<SkeletonPoseData> poses;
   private static readonly KeyCode[] poseKeys = {
     KeyCode.Alpha1,
     KeyCode.Alpha2,
@@ -29,12 +32,15 @@ public class EditorHand : MonoBehaviour {
   private KeyCode modKey;
 
   public void Awake() {
+    hand = GetComponent<OVRHand>();
+    skeleton = GetComponent<OVRSkeleton>();
     PoseRecognizer recognizer = GetComponentInParent<PoseRecognizer>();
-    if (skeleton.GetSkeletonType() == OVRSkeleton.SkeletonType.HandLeft) {
-      poses = recognizer.leftPoses;
+    Debug.Assert(recognizer != null);
+    if (skeleton.GetSkeletonType() == SkeletonType.HandLeft) {
+      poses = recognizer.leftPoses.Select(pose => pose.data).ToList();
       modKey = KeyCode.LeftShift;
-    } else if (skeleton.GetSkeletonType() == OVRSkeleton.SkeletonType.HandRight) {
-      poses = recognizer.rightPoses;
+    } else if (skeleton.GetSkeletonType() == SkeletonType.HandRight) {
+      poses = recognizer.rightPoses.Select(pose => pose.data).ToList();
       modKey = KeyCode.RightShift;
     }
   }
@@ -50,57 +56,23 @@ public class EditorHand : MonoBehaviour {
     }
   }
 
-  // TODO cut down on allocation
-  public Pose GetCurrentPose() {
-    List<Quaternion> boneRotations = skeleton.CustomBones.Select(
-      b => b.localRotation).ToList();
-
-    Pose pose = new Pose();
-    pose.name = "";
-    pose.wristRotation = boneRotations[0];
-    pose.fingers = new List<Finger>();
-
-    // thumb rotations
-    Finger thumb = new Finger();
-    thumb.segmentRotations = new List<Quaternion>();
-    for (int i = 2; i < 6; i++) {
-      thumb.segmentRotations.Add(boneRotations[i]);
-    }
-    // index rotations
-    Finger index = new Finger();
-    index.segmentRotations = new List<Quaternion>();
-    for (int i = 6; i < 9; i++) {
-      index.segmentRotations.Add(boneRotations[i]);
-    }
-    // middle rotations
-    Finger middle = new Finger();
-    middle.segmentRotations = new List<Quaternion>();
-    for (int i = 9; i < 12; i++) {
-      middle.segmentRotations.Add(boneRotations[i]);
-    }
-    // ring rotations
-    Finger ring = new Finger();
-    ring.segmentRotations = new List<Quaternion>();
-    for (int i = 12; i < 15; i++) {
-      ring.segmentRotations.Add(boneRotations[i]);
-    }
-    // pinky rotations
-    Finger pinky = new Finger();
-    pinky.segmentRotations = new List<Quaternion>();
-    for (int i = 15; i < 19; i++) {
-      pinky.segmentRotations.Add(boneRotations[i]);
-    }
-
-    pose.fingers.Add(thumb);
-    pose.fingers.Add(index);
-    pose.fingers.Add(middle);
-    pose.fingers.Add(ring);
-    pose.fingers.Add(pinky);
-
-    return pose;
+  public IOVRSkeletonDataProvider GetSkeleton() {
+    return hand;
   }
 
-  public void ApplyPose(Pose pose) {
+  public Transform GetBoneTransform(BoneId boneId) {
+    foreach (var bone in skeleton.Bones) {
+      if (bone.Id == boneId) {
+        return bone.Transform;
+      }
+    }
+    Debug.Assert(false);
+    return null;
+  }
+
+  public void ApplyPose(SkeletonPoseData pose) {
+    Debug.Assert(false);
+    /*
     List<Transform> boneTransforms = skeleton.CustomBones;
 
     // NOTE: eventually, we may want poses that incorporate the wrist rotation
@@ -124,21 +96,7 @@ public class EditorHand : MonoBehaviour {
         depth++;
       }
     }
-  }
-
-  public Chirality GetChirality() {
-    if (skeleton.GetSkeletonType() == OVRSkeleton.SkeletonType.HandLeft) {
-      return Chirality.Left;
-    } else if (skeleton.GetSkeletonType() == OVRSkeleton.SkeletonType.HandRight) {
-      return Chirality.Right;
-    } else {
-      Debug.Assert(false);
-      return Chirality.Right;
-    }
-  }
-
-  public OVRSkeleton GetSkeleton() {
-    return skeleton;
+    */
   }
 }
 

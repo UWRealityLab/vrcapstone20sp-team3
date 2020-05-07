@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static OVRSkeleton;
 
 namespace Blockly {
 
@@ -8,8 +9,8 @@ public interface IPlayer {
   Transform GetTransform();
   Transform GetLeftIndexTipTransform();
   Transform GetRightIndexTipTransform();
-  Pose GetCurrLeftPose();
-  Pose GetCurrRightPose();
+  SkeletonPoseData GetCurrLeftPose();
+  SkeletonPoseData GetCurrRightPose();
 }
 
 public class PlayerManager : MonoBehaviour {
