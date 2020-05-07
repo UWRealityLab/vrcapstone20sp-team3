@@ -8,11 +8,13 @@ public class ModuleController : MonoBehaviour
     private List<Statement> currentModule;
     private Dictionary<string, List<Statement>> allModules;
 
-    public CursorController cursorController;
+    public GameObject cursor;
+    private CursorController cursorController;
 
     // Start is called before the first frame update
     void Start()
     {
+        this.cursorController = cursor.GetComponent<CursorController>();
         this.isRecordingModule = false;
         this.allModules = new Dictionary<string, List<Statement>>();
     }
@@ -26,6 +28,18 @@ public class ModuleController : MonoBehaviour
     // TODO: if record button is clicked, call OnBeginModule() / OnEndModule() appropriately
     // TODO: figure out how the UI should look for using modules & call OnUseModule()
 
+    public void OnPressRecord()
+    {
+        if (this.isRecordingModule)
+        {
+            this.OnEndModule();
+        }
+        else
+        {
+            this.OnBeginModule();
+        }
+    }
+
     public void OnBeginModule()
     {
         this.isRecordingModule = true;
@@ -37,6 +51,12 @@ public class ModuleController : MonoBehaviour
         this.isRecordingModule = false;
         string moduleName = "module" + this.allModules.Count;
         this.allModules.Add(moduleName, this.currentModule);
+        string result = "";
+        foreach (var item in this.currentModule)
+        {
+            result += item.ToString() + ", ";
+        }
+        Debug.Log("recorded module [" + moduleName + "]: " + result);
         this.currentModule = null;
     }
 

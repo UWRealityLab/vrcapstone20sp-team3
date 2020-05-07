@@ -41,6 +41,9 @@ public class CursorController : MonoBehaviour
     {
         if (moduleController.IsRecording())
         {
+            // TODO only record if the move actually happens
+            // (e.g. shouldn't record if cursor is at edge of valid region and doesn't actually move)
+            Debug.Log("OnRecognizeGesture: " + gestureName);
             moduleController.AddStatement(new Statement(gestureName, true));
         }
         if (gestureName == "Left")
@@ -182,6 +185,10 @@ public class CursorController : MonoBehaviour
     // TODO: eventually remove this as this will be replaced by gesture control
     private void Move()
     {
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            moduleController.OnPressRecord();
+        }
         if (Input.GetKeyDown(KeyCode.A))
         {
             MoveLeft();

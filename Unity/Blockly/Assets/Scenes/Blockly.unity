@@ -1006,7 +1006,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1313078661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1016,9 +1016,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1313078660}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d490890609af6e041aed785ec38ba9f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 42434acae0160414caecc6505f96f2bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cursor: {fileID: 2043039209}
 --- !u!135 &1313078662
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1087,7 +1088,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313078660}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 4}
+  m_LocalPosition: {x: 15, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1122,7 +1123,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1926991886
 MonoBehaviour:
@@ -1339,6 +1340,7 @@ MonoBehaviour:
   gridSize: 1
   blockPrefab: {fileID: 2226868214865433724, guid: 30435ee68dd949240b41c43e071564fd,
     type: 3}
+  recordButton: {fileID: 1313078660}
   emitSound: {fileID: 8300000, guid: d716392289ac6764994885f5821f7d7b, type: 3}
   moveSound: {fileID: 8300000, guid: d716392289ac6764994885f5821f7d7b, type: 3}
 --- !u!82 &2043039215

@@ -12,4 +12,9 @@ public class Statement : MonoBehaviour
         this.name = name;
         this.isGesture = isGesture;
     }
+
+    public override string ToString()
+    {
+        return this.name;
+    }
 }
