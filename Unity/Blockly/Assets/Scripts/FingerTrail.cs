@@ -38,6 +38,8 @@ public class FingerTrail : MonoBehaviour {
     IPlayer player = GetComponent<PlayerManager>().GetPlayer();
     playerTransform = player.GetTransform();
     indexFingerTip = player.GetLeftIndexTipTransform();
+    Debug.Log(indexFingerTip);
+    Debug.Assert(indexFingerTip != null);
 
     trailTransform.position = indexFingerTip.position;
   }

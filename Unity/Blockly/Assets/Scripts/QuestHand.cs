@@ -2,26 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static OVRSkeleton;
 
 namespace Blockly {
 
 // needs to be placed on a game object that has an OVRCustomSkeleton component.
 public class QuestHand : MonoBehaviour {
-  private OVRCustomSkeleton skeleton;
-
-  private Chirality chirality;
+  private IOVRSkeletonDataProvider skeleton;
 
   public void Awake() {
-    skeleton = GetComponent<OVRCustomSkeleton>();
-    if (skeleton.GetSkeletonType() == OVRSkeleton.SkeletonType.HandLeft) {
-      chirality = Chirality.Left;
-    } else if (skeleton.GetSkeletonType() == OVRSkeleton.SkeletonType.HandRight) {
-      chirality = Chirality.Right;
-    }
+    skeleton = GetComponent<IOVRSkeletonDataProvider>();
+    // hand = GetComponent<OVRHand>();
+  }
+
+  public IOVRSkeletonDataProvider GetSkeleton() {
+    return skeleton;
   }
 
   // TODO cut down on allocation
-  public Pose GetCurrentPose() {
+    /*
+  public SkeletonPoseData GetCurrentPose() {
+    return skeleton.GetSkeletonPoseData();
     List<Quaternion> boneRotations = skeleton.CustomBones.Select(
       b => b.localRotation).ToList();
 
@@ -73,6 +74,7 @@ public class QuestHand : MonoBehaviour {
   public Chirality GetChirality() {
     return chirality;
   }
+    */
 }
 
 }
