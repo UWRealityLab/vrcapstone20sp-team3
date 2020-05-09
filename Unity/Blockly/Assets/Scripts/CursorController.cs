@@ -8,6 +8,9 @@ public class CursorController : MonoBehaviour
     public float gridSize = 1.0f;
     public GameObject blockPrefab;  // prefab for blocks, used when emitted
 
+    // prefab for the temporary blocks that show up during module creation
+    public GameObject moduleCreationBlockPrefab;
+
     public GameObject recordButton;
     private ModuleController moduleController;
 
@@ -162,7 +165,8 @@ public class CursorController : MonoBehaviour
         Vector3 cursorPosition = this.gameObject.transform.position;
         if (isGridSpaceEmpty(cursorPosition))
         {
-            GameObject obj = Instantiate(blockPrefab, this.gameObject.transform.position, Quaternion.identity) as GameObject;
+            GameObject prefab = this.moduleController.IsRecording() ? this.moduleCreationBlockPrefab : this.blockPrefab;
+            GameObject obj = Instantiate(prefab, this.gameObject.transform.position, Quaternion.identity) as GameObject;
         }
     }
 

@@ -72,6 +72,13 @@ public class ModuleController : MonoBehaviour
             Debug.Log("recorded module [" + moduleName + "]: " + result);
         }
 
+        // delete the temporary blocks that were created when recording the module
+        GameObject[] blocks = GameObject.FindGameObjectsWithTag("Module Creation Block");
+        foreach (GameObject block in blocks)
+        {
+            Destroy(block);
+        }
+
         this.isRecordingModule = false;
         this.cursorController.gameObject.transform.position = this.originalCursorPosition;
         this.currentModule = null;
