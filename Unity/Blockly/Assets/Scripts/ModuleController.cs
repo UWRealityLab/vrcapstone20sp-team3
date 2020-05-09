@@ -12,6 +12,8 @@ public class ModuleController : MonoBehaviour
     private CursorController cursorController;
     private Vector3 originalCursorPosition;  // for resetting cursor after completing module recording
 
+    public Material blockMaterial;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +25,13 @@ public class ModuleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    void OnApplicationQuit()
+    {
+        // reset opacity of blocks in case user quits in middle of recording module
+        setBlockMaterialTransparency(1f);
     }
 
     // TODO: if record button is clicked, call OnBeginModule() / OnEndModule() appropriately
@@ -46,6 +54,7 @@ public class ModuleController : MonoBehaviour
         this.isRecordingModule = true;
         this.currentModule = new List<Statement>();
         this.originalCursorPosition = this.cursorController.gameObject.transform.position;
+        setBlockMaterialTransparency(0.1f);
     }
 
     public void OnEndModule()
@@ -66,6 +75,7 @@ public class ModuleController : MonoBehaviour
         this.isRecordingModule = false;
         this.cursorController.gameObject.transform.position = this.originalCursorPosition;
         this.currentModule = null;
+        setBlockMaterialTransparency(1f);
     }
 
     public void OnUseModule(string moduleName)
@@ -93,5 +103,13 @@ public class ModuleController : MonoBehaviour
     public bool IsRecording()
     {
         return this.isRecordingModule;
+    }
+
+    // set transparency of all the current blocks to given alpha (0 is transparent, 1 is opaque)
+    private void setBlockMaterialTransparency(float alpha)
+    {
+        Color fadedColor = this.blockMaterial.color;
+        fadedColor.a = alpha;
+        this.blockMaterial.color = fadedColor;
     }
 }

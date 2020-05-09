@@ -1020,6 +1020,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursor: {fileID: 2043039209}
+  blockMaterial: {fileID: 2100000, guid: 6fc320a6fd3a00d49b6a61ba8b8f4742, type: 2}
 --- !u!135 &1313078662
 SphereCollider:
   m_ObjectHideFlags: 0
