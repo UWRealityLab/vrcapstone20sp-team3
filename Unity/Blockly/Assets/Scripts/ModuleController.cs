@@ -10,6 +10,7 @@ public class ModuleController : MonoBehaviour
 
     public GameObject cursor;
     private CursorController cursorController;
+    private Vector3 originalCursorPosition;  // for resetting cursor after completing module recording
 
     // Start is called before the first frame update
     void Start()
@@ -44,11 +45,11 @@ public class ModuleController : MonoBehaviour
     {
         this.isRecordingModule = true;
         this.currentModule = new List<Statement>();
+        this.originalCursorPosition = this.cursorController.gameObject.transform.position;
     }
 
     public void OnEndModule()
     {
-        this.isRecordingModule = false;
         if (this.currentModule.Count > 0)  // only store if module has statements
         {
             string moduleName = "module" + this.allModules.Count;
@@ -61,6 +62,9 @@ public class ModuleController : MonoBehaviour
             }
             Debug.Log("recorded module [" + moduleName + "]: " + result);
         }
+
+        this.isRecordingModule = false;
+        this.cursorController.gameObject.transform.position = this.originalCursorPosition;
         this.currentModule = null;
     }
 
