@@ -49,14 +49,18 @@ public class ModuleController : MonoBehaviour
     public void OnEndModule()
     {
         this.isRecordingModule = false;
-        string moduleName = "module" + this.allModules.Count;
-        this.allModules.Add(moduleName, this.currentModule);
-        string result = "";
-        foreach (var item in this.currentModule)
+        if (this.currentModule.Count > 0)  // only store if module has statements
         {
-            result += item.ToString() + ", ";
+            string moduleName = "module" + this.allModules.Count;
+            this.allModules.Add(moduleName, this.currentModule);
+
+            string result = "";
+            foreach (var item in this.currentModule)
+            {
+                result += item.ToString() + ", ";
+            }
+            Debug.Log("recorded module [" + moduleName + "]: " + result);
         }
-        Debug.Log("recorded module [" + moduleName + "]: " + result);
         this.currentModule = null;
     }
 

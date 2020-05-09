@@ -174,7 +174,7 @@ public class CursorController : MonoBehaviour
         {
             // only destroy emitted blocks, not the cursor/region
             // TODO: look into layer masks
-            if (collider.gameObject.tag == "Selectable")
+            if (collider.gameObject.tag == "Block")
             {
                 Destroy(collider.gameObject);
             }
@@ -231,7 +231,7 @@ public class CursorController : MonoBehaviour
         foreach (Collider collider in colliders)
         {
             // TODO: look into layer masks
-            if (collider.gameObject.tag == "Selectable")
+            if (collider.gameObject.tag == "Block")
             {
                 return false;
             }
