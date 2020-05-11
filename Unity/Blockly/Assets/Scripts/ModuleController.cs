@@ -7,12 +7,14 @@ public class ModuleController : MonoBehaviour
     private bool isRecordingModule;
     private List<Statement> currentModule;
     private Dictionary<string, List<Statement>> allModules;
+    private Dictionary<GameObject, string> objectToName;
 
     public GameObject cursor;
     private CursorController cursorController;
     private Vector3 originalCursorPosition;  // for resetting cursor after completing module recording
 
     public Material blockMaterial;
+    private GameObject selectedModule;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +22,7 @@ public class ModuleController : MonoBehaviour
         this.cursorController = cursor.GetComponent<CursorController>();
         this.isRecordingModule = false;
         this.allModules = new Dictionary<string, List<Statement>>();
+        this.objectToName = new Dictionary<GameObject, string>();
     }
 
     // Update is called once per frame
@@ -94,11 +97,11 @@ public class ModuleController : MonoBehaviour
             {
                 cursorController.OnRecognizeGesture(statement.name);
             }
-            else
+/*            else
             {
                 // recursive apply submodule
                 this.OnUseModule(statement.name);
-            }
+            }*/
         }
     }
 
@@ -118,5 +121,41 @@ public class ModuleController : MonoBehaviour
         Color fadedColor = this.blockMaterial.color;
         fadedColor.a = alpha;
         this.blockMaterial.color = fadedColor;
+    }
+
+    // if module is clicked on, set the module to be the currently selected module
+    private void Select()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Mouse is down");
+            RaycastHit hitInfo = new RaycastHit();
+            bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+            if (hit)
+            {
+                Debug.Log("Hit " + hitInfo.transform.gameObject.name);
+                if (hitInfo.collider.gameObject.tag == "isModule")
+                {
+                    this.selectedModule = hitInfo.collider.gameObject;
+                    Debug.Log("module was successfully selected");
+                }
+                else
+                {
+                    Debug.Log("not a module");
+                }
+            }
+            else
+            {
+                Debug.Log("No hit");
+            }
+        }
+    }
+
+    private void ApplyModule()
+    {
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            OnUseModule(objectToName[this.selectedModule]);
+        }
     }
 }
