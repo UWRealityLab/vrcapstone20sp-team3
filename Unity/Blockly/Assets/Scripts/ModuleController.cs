@@ -6,15 +6,15 @@ public class ModuleController : MonoBehaviour
 {
     private bool isRecordingModule;
     private List<Statement> currentModule;
-    private Dictionary<string, List<Statement>> allModules;
-    private Dictionary<GameObject, string> objectToName;
+    private Dictionary<string, List<Statement>> allModules;  // module name -> list of actions
+    private Dictionary<GameObject, string> objectToName;  // module library block -> module name
 
     public GameObject cursor;
     private CursorController cursorController;
     private Vector3 originalCursorPosition;  // for resetting cursor after completing module recording
 
     public Material blockMaterial;
-    private GameObject selectedModule;
+    private GameObject selectedModule;  // currently selected module (out of the module library)
 
     // Start is called before the first frame update
     void Start()

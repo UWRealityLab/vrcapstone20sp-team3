@@ -7,9 +7,7 @@ public class CursorController : MonoBehaviour
 {
     public float gridSize = 1.0f;
     public GameObject blockPrefab;  // prefab for blocks, used when emitted
-
-    // prefab for the temporary blocks that show up during module creation
-    public GameObject moduleCreationBlockPrefab;
+    public GameObject moduleCreationBlockPrefab;  // prefab for the temporary blocks that show up during module creation
 
     public GameObject recordButton;
     private ModuleController moduleController;
@@ -49,42 +47,41 @@ public class CursorController : MonoBehaviour
             Debug.Log("OnRecognizeGesture: " + gestureName);
             moduleController.AddStatement(new Statement(gestureName, true));
         }
-        if (gestureName == "Left")
-        {
-            MoveLeft();
-            source.PlayOneShot(moveSound);
-        }
-        if (gestureName == "Right")
-        {
-            MoveRight();
-            source.PlayOneShot(moveSound);
-        }
-        if (gestureName == "Backward")
-        {
-            MoveBackward();
-            source.PlayOneShot(moveSound);
-        }
-        if (gestureName == "Forward")
-        {
-            MoveForward();
-            source.PlayOneShot(moveSound);
-        }
-        if (gestureName == "Up")
-        {
-            MoveUp();
-            source.PlayOneShot(moveSound);
-        }
-        if (gestureName == "Down")
-        {
-            MoveDown();
-            source.PlayOneShot(moveSound);
-        }
 
         if (gestureName == "Emit")
         {
             Emit();
             source.PlayOneShot(emitSound);
         }
+        else
+        {
+            source.PlayOneShot(moveSound);
+            if (gestureName == "Left")
+            {
+                MoveLeft();
+            }
+            else if (gestureName == "Right")
+            {
+                MoveRight();
+            }
+            else if (gestureName == "Backward")
+            {
+                MoveBackward();
+            }
+            else if (gestureName == "Forward")
+            {
+                MoveForward();
+            }
+            else if (gestureName == "Up")
+            {
+                MoveUp();
+            }
+            else if (gestureName == "Down")
+            {
+                MoveDown();
+            }
+        }
+
         // if (Input.GetKeyDown(KeyCode.Delete))
         // {
         //     Delete();
