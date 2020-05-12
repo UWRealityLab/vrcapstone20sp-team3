@@ -40,14 +40,7 @@ public class CursorController : MonoBehaviour
 
     public void OnRecognizeGesture(string gestureName)
     {
-        if (moduleController.IsRecording())
-        {
-            // TODO only record if the move actually happens
-            // (e.g. shouldn't record if cursor is at edge of valid region and doesn't actually move)
-            Debug.Log("OnRecognizeGesture: " + gestureName);
-            moduleController.AddStatement(new Statement(gestureName, true));
-        }
-
+        Vector3 oldPosition = this.gameObject.transform.position;
         if (gestureName == "Emit")
         {
             Emit();
@@ -80,6 +73,18 @@ public class CursorController : MonoBehaviour
             {
                 MoveDown();
             }
+        }
+
+        if (moduleController.IsRecording())
+        {
+            Debug.Log("OnRecognizeGesture: " + gestureName);
+
+            // only record if the move actually happens (don't record if cursor is at edge of valid region and doesn't actually move)
+            if (gestureName != "Emit" && this.gameObject.transform.position == oldPosition)
+            {
+                return;
+            }
+            moduleController.AddStatement(new Statement(gestureName, true));
         }
 
         // if (Input.GetKeyDown(KeyCode.Delete))
