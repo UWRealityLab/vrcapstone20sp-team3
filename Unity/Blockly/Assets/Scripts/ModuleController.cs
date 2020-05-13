@@ -6,23 +6,31 @@ public class ModuleController : MonoBehaviour
 {
     private bool isRecordingModule;
     private List<Statement> currentModule;
-    private Dictionary<string, List<Statement>> allModules;  // module name -> list of actions
-    private Dictionary<GameObject, string> objectToName;  // module library block -> module name
+    private List<List<Statement>> allModules;  // list of modules (which are lists of actions)
 
+    /* cursor-related, module creation/recording */
     public GameObject cursor;
     private CursorController cursorController;
     private Vector3 originalCursorPosition;  // for resetting cursor after completing module recording
 
     public Material blockMaterial;
+
+    /* module library */
+    public GameObject libraryBlockPrefab;
     private GameObject selectedModule;  // currently selected module (out of the module library)
+    private Dictionary<GameObject, int> objectToName;  // module library block -> index of module in allModules
+    private const int FIRST_ROW_OFFSET = -15;  // x-value of first row of module library
+    private const int ROW_LENGTH = 5;  // number of modules in one row of the module library
+    private const float LIBRARY_GRID_SIZE = 1f;  // size of blocks in module library
+
 
     // Start is called before the first frame update
     void Start()
     {
         this.cursorController = cursor.GetComponent<CursorController>();
         this.isRecordingModule = false;
-        this.allModules = new Dictionary<string, List<Statement>>();
-        this.objectToName = new Dictionary<GameObject, string>();
+        this.allModules = new List<List<Statement>>();
+        this.objectToName = new Dictionary<GameObject, int>();
     }
 
     // Update is called once per frame
@@ -64,15 +72,16 @@ public class ModuleController : MonoBehaviour
     {
         if (this.currentModule.Count > 0)  // only store if module has statements
         {
-            string moduleName = "module" + this.allModules.Count;
-            this.allModules.Add(moduleName, this.currentModule);
+            int moduleName = this.allModules.Count;
+            this.allModules.Add(this.currentModule);
+            this.AddToLibrary(moduleName);
 
             string result = "";
             foreach (var item in this.currentModule)
             {
                 result += item.ToString() + ", ";
             }
-            Debug.Log("recorded module [" + moduleName + "]: " + result);
+            Debug.Log("recorded module #" + moduleName + ": " + result);
         }
 
         // delete the temporary blocks that were created when recording the module
@@ -88,7 +97,7 @@ public class ModuleController : MonoBehaviour
         setBlockMaterialTransparency(1f);
     }
 
-    public void OnUseModule(string moduleName)
+    public void OnUseModule(int moduleName)
     {
         List<Statement> module = this.allModules[moduleName];
         foreach (Statement statement in module)
@@ -157,5 +166,53 @@ public class ModuleController : MonoBehaviour
         {
             OnUseModule(objectToName[this.selectedModule]);
         }
+    }
+
+    // add given module to the module library: draw a copy of the module in the module library
+    // and add blocks to mapping of block->name
+    private void AddToLibrary(int moduleName)
+    {
+        Vector3 startPosition = this.moduleNameToLibraryPosition(moduleName);
+        Debug.Log("AddToLibrary: module #" + moduleName + " at " + startPosition + "!");
+        List<Statement> module = this.allModules[moduleName];
+        foreach (Statement statement in module)
+        {
+            switch (statement.name)
+            {
+                case "Emit":
+                    Instantiate(this.libraryBlockPrefab, startPosition, Quaternion.identity);
+                    break;
+                // case "Delete":
+                //     break;
+                case "Right":
+                    startPosition.x += LIBRARY_GRID_SIZE;
+                    break;
+                case "Left":
+                    startPosition.x -= LIBRARY_GRID_SIZE;
+                    break;
+                case "Up":
+                    startPosition.y += LIBRARY_GRID_SIZE;
+                    break;
+                case "Down":
+                    startPosition.y -= LIBRARY_GRID_SIZE;
+                    break;
+                case "Forward":
+                    startPosition.z += LIBRARY_GRID_SIZE;
+                    break;
+                case "Backward":
+                    startPosition.z -= LIBRARY_GRID_SIZE;
+                    break;
+                default:
+                    Debug.Log("unrecognized statement in module #" + moduleName + ": " + statement.name);
+                    break;
+            }
+        }
+    }
+
+    private Vector3 moduleNameToLibraryPosition(int moduleName)
+    {
+        float x = FIRST_ROW_OFFSET +- moduleName / 5;
+        float z = moduleName % ROW_LENGTH;
+        return new Vector3(x, 2f, z * 11);
     }
 }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Block
   - Module Creation Block
+  - Library Block
   layers:
   - Default
   - TransparentFX

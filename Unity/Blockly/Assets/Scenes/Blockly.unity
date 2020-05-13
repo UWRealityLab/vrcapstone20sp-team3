@@ -1021,6 +1021,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cursor: {fileID: 2043039209}
   blockMaterial: {fileID: 2100000, guid: 6fc320a6fd3a00d49b6a61ba8b8f4742, type: 2}
+  libraryBlockPrefab: {fileID: 7207642979990035086, guid: 6b5c91daf7943b442bf586bb36ca968a,
+    type: 3}
 --- !u!135 &1313078662
 SphereCollider:
   m_ObjectHideFlags: 0
