@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Blockly;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,7 +24,6 @@ public class ModuleController : MonoBehaviour
     private const int ROW_LENGTH = 5;  // number of modules in one row of the module library
     private const float LIBRARY_GRID_SIZE = 1f;  // size of blocks in module library
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +36,8 @@ public class ModuleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        Select();
+        ApplyModule();
     }
 
     void OnApplicationQuit()
@@ -104,6 +105,7 @@ public class ModuleController : MonoBehaviour
         {
             if (statement.isGesture)
             {
+                Debug.Log("recognizing gesture");
                 cursorController.OnRecognizeGesture(statement.name);
             }
 /*            else
@@ -135,36 +137,71 @@ public class ModuleController : MonoBehaviour
     // if module is clicked on, set the module to be the currently selected module
     private void Select()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.C))
         {
-            Debug.Log("Mouse is down");
-            RaycastHit hitInfo = new RaycastHit();
-            bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-            if (hit)
+            GameObject hand = GameObject.FindGameObjectWithTag("isHand");
+            Transform handTransform = hand.transform;
+            Vector3 handPosition = handTransform.position;
+            Debug.Log("hand position: " + handPosition);
+
+            Collider[] hitColliders = Physics.OverlapSphere(handPosition, 5);
+            foreach (Collider collider in hitColliders)
             {
-                Debug.Log("Hit " + hitInfo.transform.gameObject.name);
-                if (hitInfo.collider.gameObject.tag == "isModule")
+                if (collider.gameObject.tag == "Library Block")
                 {
-                    this.selectedModule = hitInfo.collider.gameObject;
-                    Debug.Log("module was successfully selected");
+                    this.selectedModule = collider.gameObject;
+                    Debug.Log("module was selected!");
+                    break;
                 }
-                else
-                {
-                    Debug.Log("not a module");
-                }
-            }
-            else
-            {
-                Debug.Log("No hit");
             }
         }
+
+
+        //Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+        //int i = 0;
+        //while (i < hitColliders.Length)
+        //{
+        //    hitColliders[i].SendMessage("AddDamage");
+        //    i++;
+        //}
+
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    Debug.Log("Mouse is down");
+        //    RaycastHit hitInfo = new RaycastHit();
+        //    bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+        //    if (hit)
+        //    {
+        //        Debug.Log("Hit " + hitInfo.transform.gameObject.name);
+        //        if (hitInfo.collider.gameObject.tag == "isModule")
+        //        {
+        //            this.selectedModule = hitInfo.collider.gameObject;
+        //            Debug.Log("module was successfully selected");
+        //        }
+        //        else
+        //        {
+        //            Debug.Log("not a module");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("No hit");
+        //    }
+        //}
     }
 
     private void ApplyModule()
     {
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
-            OnUseModule(objectToName[this.selectedModule]);
+            if (this.selectedModule != null)
+            {
+                Debug.Log("calling on Use Module with " + objectToName[this.selectedModule]);
+                OnUseModule(objectToName[this.selectedModule]);
+            } else
+            {
+                Debug.Log("no module was selected :(");
+            }
         }
     }
 
@@ -180,7 +217,8 @@ public class ModuleController : MonoBehaviour
             switch (statement.name)
             {
                 case "Emit":
-                    Instantiate(this.libraryBlockPrefab, startPosition, Quaternion.identity);
+                    GameObject obj = Instantiate(this.libraryBlockPrefab, startPosition, Quaternion.identity);
+                    objectToName.Add(obj, moduleName);
                     break;
                 // case "Delete":
                 //     break;
