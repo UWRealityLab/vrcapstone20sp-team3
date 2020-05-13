@@ -7,6 +7,7 @@ TagManager:
   - Block
   - Module Creation Block
   - Library Block
+  - isHand
   layers:
   - Default
   - TransparentFX
