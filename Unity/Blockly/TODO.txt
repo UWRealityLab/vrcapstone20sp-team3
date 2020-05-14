@@ -1,3 +1,6 @@
-- in the "Test" scene
-    - get debug logs in the quest working (follow this video: https://www.youtube.com/watch?v=AtOX6bXcQJE)
-    - figure out how to integrate pinch and pointer poses from OVR (https://developer.oculus.com/documentation/unity/unity-handtracking/?locale=en_US#getting-skeleton-mesh-data)
+- get debug logs in the quest working (follow this video: https://www.youtube.com/watch?v=AtOX6bXcQJE)
+  - first see if we can use the hand pointer as an OVRCursor
+  - then try the hand-interaction-train-scene approach where you have proximity
+    zones, so the cursor snaps to different UI elements
+- figure out how to integrate pinch and pointer poses from OVR (https://developer.oculus.com/documentation/unity/unity-handtracking/?locale=en_US#getting-skeleton-mesh-data)
+- make sure to leave EmacsClient.cs untracked or detect some env variable to enable it (just something clever)
