@@ -166,15 +166,20 @@ namespace OculusSampleFramework
 
 		private void Awake()
 		{
+			Debug.Log("awoking");
 			if (Instance && Instance != this)
 			{
+				Debug.Log("destroying self");
 				Destroy(this);
 				return;
 			}
 			Instance = this;
 
+			Debug.Log("before assert");
 			Assert.IsNotNull(_leftHand);
 			Assert.IsNotNull(_rightHand);
+			Debug.Log("after assert");
+			Debug.Log($"HandsManager.Instance == this: {HandsManager.Instance == this}");
 
 			LeftHand = _leftHand.GetComponent<OVRHand>();
 			LeftHandSkeleton = _leftHand.GetComponent<OVRSkeleton>();
@@ -189,6 +194,7 @@ namespace OculusSampleFramework
 			RightHandMeshRenderer = _rightHand.GetComponent<OVRMeshRenderer>();
 			_leftMeshRenderer = LeftHand.GetComponent<SkinnedMeshRenderer>();
 			_rightMeshRenderer = RightHand.GetComponent<SkinnedMeshRenderer>();
+			Debug.Log($"HandsManager.Instance.IsInitialized(): {HandsManager.Instance.IsInitialized()}");
 			StartCoroutine(FindSkeletonVisualGameObjects());
 		}
 
@@ -296,6 +302,15 @@ namespace OculusSampleFramework
 
 		public bool IsInitialized()
 		{
+			Debug.Log("is initted?");
+			Debug.Log(LeftHandSkeleton);
+			Debug.Log(LeftHandSkeleton.IsInitialized);
+			Debug.Log(RightHandSkeleton);
+			Debug.Log(RightHandSkeleton.IsInitialized);
+			Debug.Log(LeftHandMesh);
+			Debug.Log(LeftHandMesh.IsInitialized);
+			Debug.Log(RightHandMesh);
+			Debug.Log(RightHandMesh.IsInitialized);
 			return LeftHandSkeleton && LeftHandSkeleton.IsInitialized &&
 				RightHandSkeleton && RightHandSkeleton.IsInitialized &&
 				LeftHandMesh && LeftHandMesh.IsInitialized &&

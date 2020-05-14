@@ -29,7 +29,7 @@ public class CursorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
+        // Move();
     }
 
     public void OnRecognizeGesture(string gestureName) {

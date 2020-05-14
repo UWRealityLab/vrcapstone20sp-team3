@@ -993,7 +993,7 @@ public static class OVRPlugin
 		Max = 5,
 	}
 
-    [Flags]
+	[Flags]
 	public enum HandFingerPinch
 	{
 		Thumb  = (1 << HandFinger.Thumb),

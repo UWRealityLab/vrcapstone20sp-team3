@@ -45,6 +45,9 @@ public class EditorHand : MonoBehaviour {
     }
   }
 
+  public void Start() {
+  }
+
   public void Update() {
     if (Input.GetKey(modKey)) {
       for (int i = 0; i < poses.Count; i++) {

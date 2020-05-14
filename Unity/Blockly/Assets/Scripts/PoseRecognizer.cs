@@ -25,13 +25,13 @@ public class PoseRecognizer : MonoBehaviour {
   public List<Pose> leftPoses;
   public List<Pose> rightPoses;
 
-  private IPlayer player;
+  private BlocklyPlayer player;
 
   private string currLeftPose;
   private string currRightPose;
 
   public void Start() {
-    player = GetComponent<PlayerManager>().GetPlayer();
+    player = GetComponent<BlocklyPlayer>();
   }
 
   public void Update() {
