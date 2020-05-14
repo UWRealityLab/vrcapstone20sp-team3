@@ -20,10 +20,6 @@ public class BlocklyModuleUIController : MonoBehaviour
 	{
 		Assert.IsNotNull(_startStopButton);
 		Assert.IsNotNull(_selectionCylinder);
-
-		// _bladesRotation = GetComponentInChildren<WindmillBladesController>();
-
-		// _bladesRotation.SetMoveState(true, _maxSpeed);
 	}
 
 	private void OnEnable()
@@ -41,41 +37,58 @@ public class BlocklyModuleUIController : MonoBehaviour
 
 	private void StartStopStateChanged(InteractableStateArgs obj)
 	{
-		bool inActionState = obj.NewInteractableState == InteractableState.ActionState;
-		if (inActionState)
-		{
-			if (_moduleMeshObj.GetComponent<Renderer>().material.color == Color.blue) {
-				_moduleMeshObj.GetComponent<Renderer>().material.color = Color.white;
-			} else {
-				_moduleMeshObj.GetComponent<Renderer>().material.color = Color.blue;
+		// bool inActionState = obj.NewInteractableState == InteractableState.ActionState;
+		// if (inActionState)
+		// {
+		// 	if (_moduleMeshObj.GetComponent<Renderer>().material.color == Color.blue) {
+		// 		_moduleMeshObj.GetComponent<Renderer>().material.color = Color.white;
+		// 	} else {
+		// 		_moduleMeshObj.GetComponent<Renderer>().material.color = Color.blue;
+		// 	}
+		// }
+		if (obj.Tool == null) return;
+
+
+		if (_toolInteractingWithMe == null) {
+			_toolInteractingWithMe = obj.Tool;
+		}
+
+		if (obj.Tool == _toolInteractingWithMe) {
+			if (obj.NewInteractableState > InteractableState.Default) {
+				_selectionCylinder.CurrSelectionState = SelectionCylinder.SelectionState.Selected;
 			}
-			// if (_bladesRotation.IsMoving)
-			// {
-			// 	_bladesRotation.SetMoveState(false, 0.0f);
-			// }
-			// else
-			// {
-			// 	_bladesRotation.SetMoveState(true, _maxSpeed);
-			// }
+
+			if (obj.Tool.ToolInputState == ToolInputState.PrimaryInputDown || obj.Tool.ToolInputState == ToolInputState.PrimaryInputDownStay) {
+				// finger is pinching
+				if ((obj.OldInteractableState == InteractableState.ProximityState || obj.OldInteractableState == InteractableState.ContactState)
+					&& obj.NewInteractableState == InteractableState.Default) {
+					// ray went outside of proximity zone while pinching (i.e., the module was dragged out of the library)
+					_moduleMeshObj.GetComponent<Renderer>().material.color = Color.red;
+					// TODO once we have the machinery to make a copy of the
+					// selected module that follows the ray, set the selection
+					// state to off
+					// _selectionCylinder.CurrSelectionState = SelectionCylinder.SelectionState.Off;
+				} else {
+					_selectionCylinder.CurrSelectionState = SelectionCylinder.SelectionState.Highlighted;
+					_moduleMeshObj.GetComponent<Renderer>().material.color = Color.cyan;
+				}
+			} else if (obj.Tool.ToolInputState == ToolInputState.PrimaryInputUp || obj.Tool.ToolInputState == ToolInputState.Inactive) {
+				// finger is not pinching
+				if (obj.NewInteractableState == InteractableState.Default) {
+					_toolInteractingWithMe = null;
+				}
+			}
 		}
 
-		_toolInteractingWithMe = obj.NewInteractableState > InteractableState.Default ?
-			obj.Tool : null;
-	}
-
-	private void Update()
-	{
-		if (_toolInteractingWithMe == null)
-		{
+		if (_toolInteractingWithMe == null) {
+			// tool stopped interacting with us
+			_moduleMeshObj.GetComponent<Renderer>().material.color = Color.white;
 			_selectionCylinder.CurrSelectionState = SelectionCylinder.SelectionState.Off;
-		}
-		else
-		{
-			_selectionCylinder.CurrSelectionState = (
-				_toolInteractingWithMe.ToolInputState == ToolInputState.PrimaryInputDown ||
-				_toolInteractingWithMe.ToolInputState == ToolInputState.PrimaryInputDownStay)
-				? SelectionCylinder.SelectionState.Highlighted
-				: SelectionCylinder.SelectionState.Selected;
+
+			if (obj.NewInteractableState > InteractableState.Default) {
+				// a new object is interacting with us
+				_toolInteractingWithMe = obj.Tool;
+			}
 		}
 	}
 }
