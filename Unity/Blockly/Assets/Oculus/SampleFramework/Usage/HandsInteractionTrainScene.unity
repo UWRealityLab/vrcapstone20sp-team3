@@ -966,6 +966,42 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 89921349}
   m_Mesh: {fileID: 4300100, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
+<<<<<<< HEAD:Unity/Blockly/Assets/Oculus/SampleFramework/Usage/HandsInteractionTrainScene.unity
+=======
+--- !u!1 &92438192
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 92438193}
+  m_Layer: 0
+  m_Name: Modules
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &92438193
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92438192}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 199607290}
+  - {fileID: 1148768493}
+  - {fileID: 387600475}
+  m_Father: {fileID: 617778626}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+>>>>>>> progress towards module library ui:Unity/Blockly/Assets/Scenes/BlocklyDebugUiScene.unity
 --- !u!1 &94551043
 GameObject:
   m_ObjectHideFlags: 0
@@ -1516,6 +1552,37 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 130028946}
   m_Mesh: {fileID: 4300030, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
+--- !u!1 &135439449
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 135439450}
+  m_Layer: 0
+  m_Name: Shelves
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &135439450
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135439449}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 635727971}
+  m_Father: {fileID: 2062910843}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &138460060
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,6 +1654,85 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 138460060}
   m_Mesh: {fileID: 4300090, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
+--- !u!1 &140139016
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 140139019}
+  - component: {fileID: 140139018}
+  - component: {fileID: 140139017}
+  m_Layer: 0
+  m_Name: GroundPlane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!23 &140139017
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140139016}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: ef9e1306ede8d0f48b798c2341d75ffc, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &140139018
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140139016}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &140139019
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140139016}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.70710677}
+  m_LocalPosition: {x: 4.81, y: -1.49, z: 8.89}
+  m_LocalScale: {x: 1000, y: 1000.0008, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!1 &144972704
 GameObject:
   m_ObjectHideFlags: 0
@@ -2084,6 +2230,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 186276229}
   m_Mesh: {fileID: 4300100, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
+<<<<<<< HEAD:Unity/Blockly/Assets/Oculus/SampleFramework/Usage/HandsInteractionTrainScene.unity
+=======
+--- !u!4 &199607290 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+    type: 3}
+  m_PrefabInstance: {fileID: 4218014794551085873}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> progress towards module library ui:Unity/Blockly/Assets/Scenes/BlocklyDebugUiScene.unity
 --- !u!1 &199736207
 GameObject:
   m_ObjectHideFlags: 0
@@ -2935,6 +3090,130 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 255276656}
   m_Mesh: {fileID: 4300024, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
+--- !u!1001 &256870387
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1620922654972176, guid: e1bdbe539d07b407dbf690816e73c396, type: 3}
+      propertyPath: m_Name
+      value: BlocklyDebugCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.807
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1200
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224586678184848430, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2721799365219636508, guid: e1bdbe539d07b407dbf690816e73c396,
+        type: 3}
+      propertyPath: uiHelpersToInstantiate
+      value: 
+      objectReference: {fileID: 1732808951507650, guid: 255acb7cc1fa44c4ab7c6486ab327235,
+        type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e1bdbe539d07b407dbf690816e73c396, type: 3}
 --- !u!1 &264094244
 GameObject:
   m_ObjectHideFlags: 0
@@ -4405,6 +4684,81 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 387460347}
   m_Mesh: {fileID: 4300080, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
+--- !u!1001 &387600474
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 92438193}
+    m_Modifications:
+    - target: {fileID: 4218014794397681865, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_Name
+      value: BlocklyModule (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.25800002
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.17699999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.564
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5165db14e055f46d6859d52be38e9302, type: 3}
+--- !u!4 &387600475 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+    type: 3}
+  m_PrefabInstance: {fileID: 387600474}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &391235312
 GameObject:
   m_ObjectHideFlags: 0
@@ -5041,6 +5395,17 @@ Prefab:
       propertyPath: m_BackGroundColor.b
       value: 0.52205884
       objectReference: {fileID: 0}
+<<<<<<< HEAD:Unity/Blockly/Assets/Oculus/SampleFramework/Usage/HandsInteractionTrainScene.unity
+=======
+    - target: {fileID: 2037080, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
+      propertyPath: _trackingOriginType
+      value: 1
+      objectReference: {fileID: 0}
+>>>>>>> progress towards module library ui:Unity/Blockly/Assets/Scenes/BlocklyDebugUiScene.unity
     - target: {fileID: 20000010189485334, guid: 126d619cf4daa52469682f85c1378b4a,
         type: 2}
       propertyPath: m_BackGroundColor.a
@@ -6567,6 +6932,38 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 614185655}
   m_Mesh: {fileID: 4300022, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
+--- !u!1 &617778625
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 617778626}
+  m_Layer: 0
+  m_Name: ModuleLibrary
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &617778626
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617778625}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.9, y: 0.46000004, z: 0.17}
+  m_LocalScale: {x: 1.9010329, y: 1.9010329, z: 1.9010329}
+  m_Children:
+  - {fileID: 2062910843}
+  - {fileID: 92438193}
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &626584864
 GameObject:
   m_ObjectHideFlags: 0
@@ -6776,10 +7173,111 @@ MeshRenderer:
 --- !u!33 &633361324
 MeshFilter:
   m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633361321}
+  m_Mesh: {fileID: 4300052, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
+--- !u!1 &635727970
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 635727971}
+  - component: {fileID: 635727974}
+  - component: {fileID: 635727973}
+  - component: {fileID: 635727972}
+  m_Layer: 0
+  m_Name: Shelf
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &635727971
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635727970}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.299, y: -0.545, z: 0.525}
+  m_LocalScale: {x: 0.17, y: 0.013833751, z: 1.0053424}
+  m_Children: []
+  m_Father: {fileID: 135439450}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &635727972
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635727970}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &635727973
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635727970}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &635727974
+MeshFilter:
+  m_ObjectHideFlags: 0
+<<<<<<< HEAD:Unity/Blockly/Assets/Oculus/SampleFramework/Usage/HandsInteractionTrainScene.unity
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 633361321}
   m_Mesh: {fileID: 4300052, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
+=======
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635727970}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+>>>>>>> progress towards module library ui:Unity/Blockly/Assets/Scenes/BlocklyDebugUiScene.unity
 --- !u!1 &663120113
 GameObject:
   m_ObjectHideFlags: 0
@@ -11195,8 +11693,14 @@ Transform:
 --- !u!23 &1132469965
 MeshRenderer:
   m_ObjectHideFlags: 0
+<<<<<<< HEAD:Unity/Blockly/Assets/Oculus/SampleFramework/Usage/HandsInteractionTrainScene.unity
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
+=======
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> progress towards module library ui:Unity/Blockly/Assets/Scenes/BlocklyDebugUiScene.unity
   m_GameObject: {fileID: 1132469963}
   m_Enabled: 1
   m_CastShadows: 1
@@ -11205,6 +11709,12 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+<<<<<<< HEAD:Unity/Blockly/Assets/Oculus/SampleFramework/Usage/HandsInteractionTrainScene.unity
+=======
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+>>>>>>> progress towards module library ui:Unity/Blockly/Assets/Scenes/BlocklyDebugUiScene.unity
   m_Materials:
   - {fileID: 2100000, guid: 38890965fd4d8414facf4aebde878c8b, type: 2}
   m_StaticBatchInfo:
@@ -11214,6 +11724,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+<<<<<<< HEAD:Unity/Blockly/Assets/Oculus/SampleFramework/Usage/HandsInteractionTrainScene.unity
+=======
+  m_ReceiveGI: 1
+>>>>>>> progress towards module library ui:Unity/Blockly/Assets/Scenes/BlocklyDebugUiScene.unity
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -11229,8 +11743,14 @@ MeshRenderer:
 --- !u!33 &1132469966
 MeshFilter:
   m_ObjectHideFlags: 0
+<<<<<<< HEAD:Unity/Blockly/Assets/Oculus/SampleFramework/Usage/HandsInteractionTrainScene.unity
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
+=======
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> progress towards module library ui:Unity/Blockly/Assets/Scenes/BlocklyDebugUiScene.unity
   m_GameObject: {fileID: 1132469963}
   m_Mesh: {fileID: 4300024, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
 --- !u!1 &1139899390
@@ -11375,6 +11895,81 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1148305633}
   m_Mesh: {fileID: 4300100, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
+--- !u!1001 &1148768492
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 92438193}
+    m_Modifications:
+    - target: {fileID: 4218014794397681865, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_Name
+      value: BlocklyModule (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.25800002
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.17699999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5165db14e055f46d6859d52be38e9302, type: 3}
+--- !u!4 &1148768493 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+    type: 3}
+  m_PrefabInstance: {fileID: 1148768492}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1154173441
 GameObject:
   m_ObjectHideFlags: 0
@@ -11958,7 +12553,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1197374433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11983,7 +12578,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1198796960
 GameObject:
@@ -12487,6 +13082,27 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1253976409}
   m_Mesh: {fileID: 4300028, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
+<<<<<<< HEAD:Unity/Blockly/Assets/Oculus/SampleFramework/Usage/HandsInteractionTrainScene.unity
+=======
+--- !u!1 &1262731021 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100004, guid: 126d619cf4daa52469682f85c1378b4a,
+    type: 3}
+  m_PrefabInstance: {fileID: 444521428}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1262731026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262731021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02f54dd788d92407fa95599431a84c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+>>>>>>> progress towards module library ui:Unity/Blockly/Assets/Scenes/BlocklyDebugUiScene.unity
 --- !u!1 &1271577573
 GameObject:
   m_ObjectHideFlags: 0
@@ -15549,12 +16165,120 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1611361687}
   m_Mesh: {fileID: 4300020, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
---- !u!1 &1618414511
+--- !u!1 &1616554640
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1616554641}
+  - component: {fileID: 1616554644}
+  - component: {fileID: 1616554643}
+  - component: {fileID: 1616554642}
+  m_Layer: 0
+  m_Name: Base
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1616554641
+Transform:
+  m_ObjectHideFlags: 0
+<<<<<<< HEAD:Unity/Blockly/Assets/Oculus/SampleFramework/Usage/HandsInteractionTrainScene.unity
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1618414511}
+  m_LocalRotation: {x: 0.000000015454305, y: 0.70710707, z: 0.000000015454315, w: 0.70710653}
+  m_LocalPosition: {x: 3.001, y: 1.987, z: -4.809}
+  m_LocalScale: {x: 1.102, y: 1.102, z: 1.102}
+=======
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616554640}
+  m_LocalRotation: {x: -0, y: -0, z: 0.09580971, w: 0.9953997}
+  m_LocalPosition: {x: -0.40737426, y: -0.49884748, z: 0.5151465}
+  m_LocalScale: {x: 0.023143481, y: 1.1832001, z: 1}
+>>>>>>> progress towards module library ui:Unity/Blockly/Assets/Scenes/BlocklyDebugUiScene.unity
+  m_Children: []
+  m_Father: {fileID: 2062910843}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 10.996}
+--- !u!65 &1616554642
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616554640}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1616554643
+MeshRenderer:
+  m_ObjectHideFlags: 0
+<<<<<<< HEAD:Unity/Blockly/Assets/Oculus/SampleFramework/Usage/HandsInteractionTrainScene.unity
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1618414511}
+=======
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616554640}
+>>>>>>> progress towards module library ui:Unity/Blockly/Assets/Scenes/BlocklyDebugUiScene.unity
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c47a8046d422cf44ab127456e4917876, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &1616554644
+MeshFilter:
+  m_ObjectHideFlags: 0
+<<<<<<< HEAD:Unity/Blockly/Assets/Oculus/SampleFramework/Usage/HandsInteractionTrainScene.unity
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+=======
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616554640}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1618414511
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 1618414512}
   - component: {fileID: 1618414514}
@@ -15569,8 +16293,9 @@ GameObject:
 --- !u!4 &1618414512
 Transform:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1618414511}
   m_LocalRotation: {x: 0.000000015454305, y: 0.70710707, z: 0.000000015454315, w: 0.70710653}
   m_LocalPosition: {x: 3.001, y: 1.987, z: -4.809}
@@ -15582,8 +16307,9 @@ Transform:
 --- !u!23 &1618414513
 MeshRenderer:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1618414511}
   m_Enabled: 1
   m_CastShadows: 1
@@ -15592,6 +16318,9 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: e95c781da52e2d14fb2fba44d7476164, type: 2}
   m_StaticBatchInfo:
@@ -15601,6 +16330,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -15616,8 +16346,10 @@ MeshRenderer:
 --- !u!33 &1618414514
 MeshFilter:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> progress towards module library ui:Unity/Blockly/Assets/Scenes/BlocklyDebugUiScene.unity
   m_GameObject: {fileID: 1618414511}
   m_Mesh: {fileID: 4300088, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
 --- !u!1 &1629135545
@@ -19533,6 +20265,38 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2060862468}
   m_Mesh: {fileID: 4300076, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
+--- !u!1 &2062910842
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2062910843}
+  m_Layer: 0
+  m_Name: Rack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2062910843
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062910842}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.027374268, y: 0.52884746, z: -0.29014653}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1616554641}
+  - {fileID: 135439450}
+  m_Father: {fileID: 617778626}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2085729278
 GameObject:
   m_ObjectHideFlags: 0
@@ -20060,15 +20824,15 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2134282311
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2134282310}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.603, y: -2.79, z: 7.4}
+  m_LocalRotation: {x: -0, y: 0.28383908, z: -0, w: 0.95887196}
+  m_LocalPosition: {x: 4.81, y: -2.79, z: 8.89}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1496688478}
@@ -20079,8 +20843,8 @@ Transform:
   - {fileID: 891580982}
   - {fileID: 1337028376}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 32.979, z: 0}
 --- !u!1 &2139489426
 GameObject:
   m_ObjectHideFlags: 0
@@ -20152,3 +20916,72 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2139489426}
   m_Mesh: {fileID: 4300040, guid: bd0bb729cb6159b4ab21c5f62cad24ee, type: 3}
+--- !u!1001 &4218014794551085873
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 92438193}
+    m_Modifications:
+    - target: {fileID: 4218014794397681865, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_Name
+      value: BlocklyModule
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.25800002
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.17699999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.174
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218014794397681867, guid: 5165db14e055f46d6859d52be38e9302,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5165db14e055f46d6859d52be38e9302, type: 3}
