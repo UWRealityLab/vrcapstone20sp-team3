@@ -13,7 +13,9 @@ public class BlocklyModuleUIController : MonoBehaviour
 
 	[SerializeField]
 	private GameObject _moduleMeshObj;
-	// private WindmillBladesController _bladesRotation;
+	[SerializeField]
+	private GameObject _dragModulePrefab;
+
 	private InteractableTool _toolInteractingWithMe = null;
 
 	private void Awake()
@@ -37,15 +39,6 @@ public class BlocklyModuleUIController : MonoBehaviour
 
 	private void StartStopStateChanged(InteractableStateArgs obj)
 	{
-		// bool inActionState = obj.NewInteractableState == InteractableState.ActionState;
-		// if (inActionState)
-		// {
-		// 	if (_moduleMeshObj.GetComponent<Renderer>().material.color == Color.blue) {
-		// 		_moduleMeshObj.GetComponent<Renderer>().material.color = Color.white;
-		// 	} else {
-		// 		_moduleMeshObj.GetComponent<Renderer>().material.color = Color.blue;
-		// 	}
-		// }
 		if (obj.Tool == null) return;
 
 
@@ -64,10 +57,9 @@ public class BlocklyModuleUIController : MonoBehaviour
 					&& obj.NewInteractableState == InteractableState.Default) {
 					// ray went outside of proximity zone while pinching (i.e., the module was dragged out of the library)
 					_moduleMeshObj.GetComponent<Renderer>().material.color = Color.red;
-					// TODO once we have the machinery to make a copy of the
-					// selected module that follows the ray, set the selection
-					// state to off
-					// _selectionCylinder.CurrSelectionState = SelectionCylinder.SelectionState.Off;
+					_selectionCylinder.CurrSelectionState = SelectionCylinder.SelectionState.Off;
+					// TODO make the drag module follow the end of the ray until pinching stops
+					Instantiate(_dragModulePrefab, _toolInteractingWithMe.ToolTransform);
 				} else {
 					_selectionCylinder.CurrSelectionState = SelectionCylinder.SelectionState.Highlighted;
 					_moduleMeshObj.GetComponent<Renderer>().material.color = Color.cyan;

@@ -75,7 +75,7 @@ public class BlocklyUIBuilder : MonoBehaviour
   LaserPointer lp;
   LineRenderer lr;
 
-  public LaserPointer.LaserBeamBehavior laserBeamBehavior;
+  // public LaserPointer.LaserBeamBehavior laserBeamBehavior;
 
   public void Awake()
   {
@@ -112,7 +112,7 @@ public class BlocklyUIBuilder : MonoBehaviour
       Debug.LogError("Debug UI requires use of a LaserPointer and will not function without it. Add one to your scene, or assign the UIHelpers prefab to the BlocklyUIBuilder in the inspector.");
       return;
     }
-    lp.laserBeamBehavior = laserBeamBehavior;
+    // lp.laserBeamBehavior = laserBeamBehavior;
 
     if (!toEnable.Contains(lp.gameObject))
     {

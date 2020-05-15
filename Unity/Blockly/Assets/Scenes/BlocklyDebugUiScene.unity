@@ -3510,12 +3510,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 2721799365219636508, guid: e1bdbe539d07b407dbf690816e73c396,
-        type: 3}
-      propertyPath: uiHelpersToInstantiate
-      value: 
-      objectReference: {fileID: 1732808951507650, guid: 255acb7cc1fa44c4ab7c6486ab327235,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1bdbe539d07b407dbf690816e73c396, type: 3}
 --- !u!1 &264094244
@@ -7948,7 +7942,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1f25ac922429d4acaad985ff7439dba0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

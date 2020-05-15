@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4218014794397681867}
   - component: {fileID: 4218014794397681864}
   m_Layer: 0
-  m_Name: BlocklyModule
+  m_Name: BlocklyUIModule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,6 +49,8 @@ MonoBehaviour:
   _maxSpeed: 10
   _selectionCylinder: {fileID: 4218014795328928474}
   _moduleMeshObj: {fileID: 4218014795902092780}
+  _dragModulePrefab: {fileID: 9101633930165598062, guid: def8150ca1bba427db399b8837fc9f97,
+    type: 3}
 --- !u!1 &4218014794491755714
 GameObject:
   m_ObjectHideFlags: 0

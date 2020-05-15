@@ -1,3 +1,4 @@
+- continue module dragging UI in BlocklyModuleUIController (look at line 68)
 - get debug logs in the quest working (follow this video: https://www.youtube.com/watch?v=AtOX6bXcQJE)
   - first see if we can use the hand pointer as an OVRCursor
   - then try the hand-interaction-train-scene approach where you have proximity
