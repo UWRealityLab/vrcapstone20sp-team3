@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 [logs at bottom of file are most recent]
 
+=======
+>>>>>>> move towards dragging modules from library
 - continue module dragging UI in BlocklyModuleUIController (look at line 68)
 - get debug logs in the quest working (follow this video: https://www.youtube.com/watch?v=AtOX6bXcQJE)
   - first see if we can use the hand pointer as an OVRCursor
