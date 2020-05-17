@@ -4,7 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Selectable
+  - Block
+  - Module Creation Block
+  - Library Block
+  - isHand
   layers:
   - Default
   - TransparentFX

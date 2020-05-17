@@ -7,6 +7,11 @@ public class CursorController : MonoBehaviour
 {
     public float gridSize = 1.0f;
     public GameObject blockPrefab;  // prefab for blocks, used when emitted
+    public GameObject moduleCreationBlockPrefab;  // prefab for the temporary blocks that show up during module creation
+
+    public GameObject recordButton;
+    private ModuleController moduleController;
+
     public AudioClip emitSound;
     public AudioClip moveSound;
 
@@ -19,6 +24,7 @@ public class CursorController : MonoBehaviour
     void Start()
     {
         source = GetComponent<AudioSource>();
+        moduleController = recordButton.GetComponent<ModuleController>();
     }
 
     void Awake()
@@ -32,56 +38,63 @@ public class CursorController : MonoBehaviour
         Move();
     }
 
-    public void OnRecognizeGesture(string gestureName) {
-      if (gestureName == "Left")
-      {
-          MoveLeft();
-          source.PlayOneShot(moveSound);
-      }
-      if (gestureName == "Right")
-      {
-          MoveRight();
-          source.PlayOneShot(moveSound);
-      }
-      if (gestureName == "Backward")
-      {
-          MoveBackward();
-          source.PlayOneShot(moveSound);
-      }
-      if (gestureName == "Forward")
-      {
-          MoveForward();
-          source.PlayOneShot(moveSound);
-      }
-      if (gestureName == "Up")
-      {
-          MoveUp();
-          source.PlayOneShot(moveSound);
-      }
-      if (gestureName == "Down")
-      {
-          MoveDown();
-          source.PlayOneShot(moveSound);
-      }
+    public void OnRecognizeGesture(string gestureName)
+    {
+        Vector3 oldPosition = this.gameObject.transform.position;
+        if (gestureName == "Emit")
+        {
+            Emit();
+            source.PlayOneShot(emitSound);
+        }
+        else
+        {
+            source.PlayOneShot(moveSound);
+            if (gestureName == "Left")
+            {
+                MoveLeft();
+            }
+            else if (gestureName == "Right")
+            {
+                MoveRight();
+            }
+            else if (gestureName == "Backward")
+            {
+                MoveBackward();
+            }
+            else if (gestureName == "Forward")
+            {
+                MoveForward();
+            }
+            else if (gestureName == "Up")
+            {
+                MoveUp();
+            }
+            else if (gestureName == "Down")
+            {
+                MoveDown();
+            }
+        }
+        if (gestureName == "CreateModule")
+        {
+            moduleController.OnPressRecord();
+        }
 
-      if (gestureName == "Emit")
-      {
-          Emit();
-          source.PlayOneShot(emitSound);
-      }
+        if (moduleController.IsRecording())
+        {
+            Debug.Log("OnRecognizeGesture: " + gestureName);
 
-      if (gestureName == "CreateModule")
-      {
-          // TODO: Replace with actual moving.
-          MoveForward();
-          MoveForward();
-          MoveForward();
-          MoveForward();
-      }
-      // if (Input.GetKeyDown(KeyCode.Delete))
-      // {
-      //     Delete();
-      // }
+            // only record if the move actually happens (don't record if cursor is at edge of valid region and doesn't actually move)
+            if (gestureName != "Emit" && this.gameObject.transform.position == oldPosition)
+            {
+                return;
+            }
+            moduleController.AddStatement(new Statement(gestureName, true));
+        }
+
+        // if (Input.GetKeyDown(KeyCode.Delete))
+        // {
+        //     Delete();
+        // }
     }
 
     public void MoveRight()
@@ -158,7 +171,8 @@ public class CursorController : MonoBehaviour
         Vector3 cursorPosition = this.gameObject.transform.position;
         if (isGridSpaceEmpty(cursorPosition))
         {
-            GameObject obj = Instantiate(blockPrefab, this.gameObject.transform.position, Quaternion.identity) as GameObject;
+            GameObject prefab = this.moduleController.IsRecording() ? this.moduleCreationBlockPrefab : this.blockPrefab;
+            GameObject obj = Instantiate(prefab, this.gameObject.transform.position, Quaternion.identity) as GameObject;
         }
     }
 
@@ -170,7 +184,7 @@ public class CursorController : MonoBehaviour
         {
             // only destroy emitted blocks, not the cursor/region
             // TODO: look into layer masks
-            if (collider.gameObject.tag == "Selectable")
+            if (collider.gameObject.tag == "Block")
             {
                 Destroy(collider.gameObject);
             }
@@ -181,6 +195,10 @@ public class CursorController : MonoBehaviour
     // TODO: eventually remove this as this will be replaced by gesture control
     private void Move()
     {
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            moduleController.OnPressRecord();
+        }
         if (Input.GetKeyDown(KeyCode.A))
         {
             MoveLeft();
@@ -223,7 +241,7 @@ public class CursorController : MonoBehaviour
         foreach (Collider collider in colliders)
         {
             // TODO: look into layer masks
-            if (collider.gameObject.tag == "Selectable")
+            if (collider.gameObject.tag == "Block")
             {
                 return false;
             }
@@ -231,4 +249,3 @@ public class CursorController : MonoBehaviour
         return true;
     }
 }
-
