@@ -212,12 +212,15 @@ public class ModuleController : MonoBehaviour
         Vector3 startPosition = this.moduleNameToLibraryPosition(moduleName);
         Debug.Log("AddToLibrary: module #" + moduleName + " at " + startPosition + "!");
         List<Statement> module = this.allModules[moduleName];
+        GameObject parentObject = new GameObject();
+        objectToName.Add(parentObject, moduleName);
         foreach (Statement statement in module)
         {
             switch (statement.name)
             {
                 case "Emit":
                     GameObject obj = Instantiate(this.libraryBlockPrefab, startPosition, Quaternion.identity);
+                    obj.transform.parent = parentObject.transform;
                     objectToName.Add(obj, moduleName);
                     break;
                 // case "Delete":
