@@ -40,6 +40,12 @@ public class CursorController : MonoBehaviour
 
     public void OnRecognizeGesture(string gestureName)
     {
+        if (gestureName == "CreateModule")
+        {
+            moduleController.OnPressRecord();
+            return;
+        }
+
         Vector3 oldPosition = this.gameObject.transform.position;
         if (gestureName == "Emit")
         {
@@ -73,10 +79,6 @@ public class CursorController : MonoBehaviour
             {
                 MoveDown();
             }
-        }
-        if (gestureName == "CreateModule")
-        {
-            moduleController.OnPressRecord();
         }
 
         if (moduleController.IsRecording())
