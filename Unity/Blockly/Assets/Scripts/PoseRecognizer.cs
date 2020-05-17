@@ -127,7 +127,7 @@ public class PoseRecognizer : MonoBehaviour {
 
   public void SaveLeftPose()
   {
-    Pose pose = player.GetCurrRightPose();
+    Pose pose = player.GetCurrLeftPose();
     SerializablePose serializablePose = toSerializablePose(pose);
     var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
     using (Stream filestream = File.Open(Application.persistentDataPath + "/gesture_left.dat", FileMode.Create))
