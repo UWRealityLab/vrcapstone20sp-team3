@@ -5,7 +5,8 @@ using OculusSampleFramework;
 namespace Blockly
 {
 
-public class BlocklyModuleUIController : MonoBehaviour
+// TODO rename to LibraryModule
+public class BlocklyLibraryModuleController : MonoBehaviour
 {
 	[SerializeField] private GameObject _startStopButton = null;
 	[SerializeField] float _maxSpeed = 10f;
@@ -59,7 +60,11 @@ public class BlocklyModuleUIController : MonoBehaviour
 					_moduleMeshObj.GetComponent<Renderer>().material.color = Color.red;
 					_selectionCylinder.CurrSelectionState = SelectionCylinder.SelectionState.Off;
 					// TODO make the drag module follow the end of the ray until pinching stops
-					Instantiate(_dragModulePrefab, _toolInteractingWithMe.ToolTransform);
+					GameObject dragModObj = Instantiate(_dragModulePrefab);
+					// GameObject dragModObj = Instantiate(_dragModulePrefab, _toolInteractingWithMe.ToolTransform);
+					// dragModObj.transform.position += _toolInteractingWithMe.ToolTransform.forward * 2f;
+					dragModObj.GetComponent<BlocklyDragModule>().toolInteractingWithMe = obj.Tool;
+					_toolInteractingWithMe = null;
 				} else {
 					_selectionCylinder.CurrSelectionState = SelectionCylinder.SelectionState.Highlighted;
 					_moduleMeshObj.GetComponent<Renderer>().material.color = Color.cyan;

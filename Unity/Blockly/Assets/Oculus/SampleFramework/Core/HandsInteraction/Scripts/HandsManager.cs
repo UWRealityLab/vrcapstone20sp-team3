@@ -302,15 +302,6 @@ namespace OculusSampleFramework
 
 		public bool IsInitialized()
 		{
-			Debug.Log("is initted?");
-			Debug.Log(LeftHandSkeleton);
-			Debug.Log(LeftHandSkeleton.IsInitialized);
-			Debug.Log(RightHandSkeleton);
-			Debug.Log(RightHandSkeleton.IsInitialized);
-			Debug.Log(LeftHandMesh);
-			Debug.Log(LeftHandMesh.IsInitialized);
-			Debug.Log(RightHandMesh);
-			Debug.Log(RightHandMesh.IsInitialized);
 			return LeftHandSkeleton && LeftHandSkeleton.IsInitialized &&
 				RightHandSkeleton && RightHandSkeleton.IsInitialized &&
 				LeftHandMesh && LeftHandMesh.IsInitialized &&

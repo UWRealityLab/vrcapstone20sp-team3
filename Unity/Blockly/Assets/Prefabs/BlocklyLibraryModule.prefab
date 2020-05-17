@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4218014794397681867}
-  - component: {fileID: 4218014794397681864}
+  - component: {fileID: 5908215222629583824}
   m_Layer: 0
-  m_Name: BlocklyUIModule
+  m_Name: BlocklyLibraryModule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24,16 +24,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4218014794397681865}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.25800002, y: 0.17699999, z: -0.174}
-  m_LocalScale: {x: 0.291028, y: 0.291028, z: 0.291028}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4218014796023716501}
   - {fileID: 4218014795902092752}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4218014794397681864
+--- !u!114 &5908215222629583824
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,7 +49,7 @@ MonoBehaviour:
   _maxSpeed: 10
   _selectionCylinder: {fileID: 4218014795328928474}
   _moduleMeshObj: {fileID: 4218014795902092780}
-  _dragModulePrefab: {fileID: 9101633930165598062, guid: def8150ca1bba427db399b8837fc9f97,
+  _dragModulePrefab: {fileID: 4218014794397681865, guid: 10250f6fb331944b488b08c0bef9ccf1,
     type: 3}
 --- !u!1 &4218014794491755714
 GameObject:
@@ -290,8 +290,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4218014795902092780}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.017499924, y: -0.22999994, z: 0.13000013}
-  m_LocalScale: {x: 0.41025937, y: 0.58917373, z: 0.4014045}
+  m_LocalPosition: {x: 0, y: 0.113, z: 0}
+  m_LocalScale: {x: 0.15406463, y: 0.22125232, z: 0.15073937}
   m_Children:
   - {fileID: 4218014795328928477}
   - {fileID: 4218014794929115450}
@@ -384,7 +384,7 @@ Transform:
   m_GameObject: {fileID: 4218014796023716499}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.40664002, y: 0.40664002, z: 0.40664002}
   m_Children:
   - {fileID: 4218014794491755719}
   - {fileID: 4218014796083173140}
