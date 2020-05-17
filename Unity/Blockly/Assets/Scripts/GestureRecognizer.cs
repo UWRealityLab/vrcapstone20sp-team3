@@ -45,6 +45,14 @@ public class GestureRecognizer : MonoBehaviour {
     }
 
     string gesture = RecognizeGesture(recentPoses);
+    if (gesture == "CreateModule")
+    {
+      string gestureOther = leftHand ? RecognizeGesture(recentRightPoses) : RecognizeGesture(recentLeftPoses);
+      if (gestureOther != "CreateModule")
+      {
+        gesture = null;
+      }
+    }
     if (gesture != null) {
       if (leftHand) {
         OnRecognizeLeftGesture.Invoke(gesture);
@@ -75,6 +83,12 @@ public class GestureRecognizer : MonoBehaviour {
       curr = curr.Next;
       if (curr.Value == "Fist" || (curr.Value == "No Pose" && curr.Next.Value == "Fist")) {
         return "Emit";
+      }
+    } else if (curr.Value == "Module") {
+      curr = curr.Next;
+      // Idea: If they hold the module pose, we only want to define one single module.
+      if (curr.Value != "Module" || curr.Next.Value != "Module") {
+        return "CreateModule";
       }
     }
     return null;

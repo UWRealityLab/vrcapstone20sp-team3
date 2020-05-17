@@ -29,7 +29,25 @@ public class PoseRecognizer : MonoBehaviour {
     // Load in saved poses.
     if (loadPoses)
     {
-      foreach (string file in Directory.GetFiles(Application.dataPath + "/Poses"))
+      foreach (string file in Directory.GetFiles(Application.dataPath + "/Poses/left"))
+      {
+        if (!file.EndsWith("dat"))
+        {
+          // Ignore any other generated files in this directory.
+          continue;
+        }
+        Debug.Log(file);
+        SerializablePose nextSerializablePose;
+        using (Stream filestream = File.Open(file, FileMode.Open))
+        {
+            var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            nextSerializablePose = (SerializablePose)formatter.Deserialize(filestream);
+        }
+        Pose nextPose = toPose(nextSerializablePose);
+        leftPoses.Add(nextPose);
+      }
+
+      foreach (string file in Directory.GetFiles(Application.dataPath + "/Poses/right"))
       {
         if (!file.EndsWith("dat"))
         {

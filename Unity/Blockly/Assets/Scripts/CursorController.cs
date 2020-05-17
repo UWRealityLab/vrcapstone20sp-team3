@@ -69,6 +69,15 @@ public class CursorController : MonoBehaviour
           Emit();
           source.PlayOneShot(emitSound);
       }
+
+      if (gestureName == "CreateModule")
+      {
+          // TODO: Replace with actual moving.
+          MoveForward();
+          MoveForward();
+          MoveForward();
+          MoveForward();
+      }
       // if (Input.GetKeyDown(KeyCode.Delete))
       // {
       //     Delete();
