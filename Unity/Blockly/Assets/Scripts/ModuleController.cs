@@ -17,6 +17,7 @@ public class ModuleController : MonoBehaviour
     public Material blockMaterial;
 
     /* module library */
+    public GameObject libraryModuleParentPrefab;
     public GameObject libraryBlockPrefab;
     private GameObject selectedModule;  // currently selected module (out of the module library)
     private Dictionary<GameObject, int> objectToName;  // module library block -> index of module in allModules
@@ -96,6 +97,11 @@ public class ModuleController : MonoBehaviour
         this.cursorController.gameObject.transform.position = this.originalCursorPosition;
         this.currentModule = null;
         setBlockMaterialTransparency(1f);
+    }
+
+    public void OnUseModule(GameObject module)
+    {
+        this.OnUseModule(this.objectToName[module]);
     }
 
     public void OnUseModule(int moduleName)
@@ -212,7 +218,10 @@ public class ModuleController : MonoBehaviour
         Vector3 startPosition = this.moduleNameToLibraryPosition(moduleName);
         Debug.Log("AddToLibrary: module #" + moduleName + " at " + startPosition + "!");
         List<Statement> module = this.allModules[moduleName];
+
         GameObject parentObject = new GameObject();
+        // GameObject parentObject = Instantiate(this.libraryModuleParentPrefab, startPosition, Quaternion.identity) as GameObject;
+
         objectToName.Add(parentObject, moduleName);
         foreach (Statement statement in module)
         {
