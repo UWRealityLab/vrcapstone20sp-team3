@@ -132,6 +132,7 @@ public class OVRSkeleton : MonoBehaviour
 	{
 		if (_skeletonType != SkeletonType.None)
 		{
+			Debug.Log($"initializing {_skeletonType}");
 			Initialize();
 		}
 	}
@@ -141,11 +142,13 @@ public class OVRSkeleton : MonoBehaviour
 		var skeleton = new OVRPlugin.Skeleton();
 		if (OVRPlugin.GetSkeleton((OVRPlugin.SkeletonType)_skeletonType, out skeleton))
 		{
+			Debug.Log("  successfully got skeleton");
 			InitializeBones(skeleton);
 			InitializeBindPose(skeleton);
 			InitializeCapsules(skeleton);
 
 			IsInitialized = true;
+			Debug.Log("  finished skeleton init");
 		}
 	}
 
