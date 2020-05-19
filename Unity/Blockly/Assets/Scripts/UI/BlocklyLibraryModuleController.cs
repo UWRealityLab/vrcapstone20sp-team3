@@ -17,10 +17,13 @@ public class BlocklyLibraryModuleController : MonoBehaviour
 	[SerializeField]
 	private GameObject _dragModulePrefab;
 
+	public int moduleName = -1;
+
 	private InteractableTool _toolInteractingWithMe = null;
 
 	private void Awake()
 	{
+		Debug.Assert(moduleName != -1);
 		Assert.IsNotNull(_startStopButton);
 		Assert.IsNotNull(_selectionCylinder);
 	}
@@ -42,7 +45,6 @@ public class BlocklyLibraryModuleController : MonoBehaviour
 	{
 		if (obj.Tool == null) return;
 
-
 		if (_toolInteractingWithMe == null) {
 			_toolInteractingWithMe = obj.Tool;
 		}
@@ -59,11 +61,10 @@ public class BlocklyLibraryModuleController : MonoBehaviour
 					// ray went outside of proximity zone while pinching (i.e., the module was dragged out of the library)
 					_moduleMeshObj.GetComponent<Renderer>().material.color = Color.red;
 					_selectionCylinder.CurrSelectionState = SelectionCylinder.SelectionState.Off;
-					// TODO make the drag module follow the end of the ray until pinching stops
 					GameObject dragModObj = Instantiate(_dragModulePrefab);
-					// GameObject dragModObj = Instantiate(_dragModulePrefab, _toolInteractingWithMe.ToolTransform);
-					// dragModObj.transform.position += _toolInteractingWithMe.ToolTransform.forward * 2f;
-					dragModObj.GetComponent<BlocklyDragModule>().toolInteractingWithMe = obj.Tool;
+					BlocklyDragModule dragMod = dragModObj.GetComponent<BlocklyDragModule>();
+					dragMod.toolInteractingWithMe = obj.Tool;
+					dragMod.moduleName = moduleName;
 					_toolInteractingWithMe = null;
 				} else {
 					_selectionCylinder.CurrSelectionState = SelectionCylinder.SelectionState.Highlighted;

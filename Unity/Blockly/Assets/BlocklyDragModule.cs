@@ -8,46 +8,58 @@ namespace Blockly {
 
 public class BlocklyDragModule : MonoBehaviour {
     [SerializeField] private GameObject _startStopButton = null;
+    [SerializeField] private BoxCollider _boxCollider = null;
     [SerializeField] float _maxSpeed = 10f;
 
     public InteractableTool toolInteractingWithMe = null;
+    public int moduleName;
 
     private Renderer moduleRenderer;
+    private DragModulePlayAreaChecker playAreaChecker;
 
-    // TODO try slowly uncommenting things in here to see what breaks.
-    // TODO try just stoppping tracking the ray tool when no longer pinching
-    // (maybe Destroy is breaking the code)
     // TODO idea for loop recognition: have one hand holding the module and draw
     // loops with the other hand (count loops by the number of times the other
     // hand enters proximity and exits)
 
     public void Awake()
     {
-        Debug.Log("doobs: awake");
         Assert.IsNotNull(_startStopButton);
+        Assert.IsNotNull(_boxCollider);
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
         Debug.Assert(renderers.Length == 1);
         moduleRenderer = renderers[0];
+        playAreaChecker = GetComponentInChildren<DragModulePlayAreaChecker>();
     }
 
     public void Start() {
         Assert.IsNotNull(toolInteractingWithMe);
-        SetTool(toolInteractingWithMe);
+        transform.position = CalcToolEnd();
     }
 
     public void Update()
     {
         if (toolInteractingWithMe == null) return;
 
-        Debug.Log($"doobs: tool state == {toolInteractingWithMe.ToolInputState}");
         if (toolInteractingWithMe.ToolInputState == ToolInputState.PrimaryInputDown || toolInteractingWithMe.ToolInputState == ToolInputState.PrimaryInputDownStay) {
             moduleRenderer.material.color = Color.blue;
+            transform.position = Vector3.Lerp(transform.position, CalcToolEnd(), 0.2f);
         } else {
-            transform.position = Vector3.Lerp(transform.position, CalcToolEnd(), 2f);
             moduleRenderer.material.color = Color.red;
-            // DetachTool();
+            toolInteractingWithMe.DeFocus();
+            toolInteractingWithMe = null;
+
+            if (playAreaChecker.InPlayArea()) {
+                Debug.Log($"doobs: placed module {moduleName}");
+            } else {
+                Debug.Log($"doobs: did NOT place module {moduleName}");
+            }
+
+            _startStopButton.SetActive(false);
+            gameObject.SetActive(false);
+            // TODO oculus code breaks when trying to delete interactables, so we just
+            // move it REALLY far away
+            transform.position.Set(0f, -100f, 0f);
         }
-        transform.position = Vector3.Lerp(transform.position, CalcToolEnd(), 1f);
     }
 
     private void OnEnable()
@@ -69,35 +81,16 @@ public class BlocklyDragModule : MonoBehaviour {
     private void StartStopStateChanged(InteractableStateArgs obj)
     {
         Debug.Log("doobs: state changed");
-        // Debug.Assert(toolInteractingWithMe != null);
-        // Debug.Assert(obj.Tool == toolInteractingWithMe);
-        // Debug.Assert(obj.OldInteractableState > InteractableState.Default);
-
         if (toolInteractingWithMe == null || obj.Tool == toolInteractingWithMe) {
             if (obj.Tool.ToolInputState == ToolInputState.PrimaryInputDown || obj.Tool.ToolInputState == ToolInputState.PrimaryInputDownStay) {
-                // moduleRenderer.material.color = Color.blue;
-                SetTool(obj.Tool);
-            } else {
-                // moduleRenderer.material.color = Color.red;
-                // DetachTool();
+                toolInteractingWithMe = obj.Tool;
             }
         }
-    }
-
-    private void SetTool(InteractableTool tool) {
-        toolInteractingWithMe = tool;
-        gameObject.transform.parent = toolInteractingWithMe.ToolTransform;
-        gameObject.transform.position = CalcToolEnd();
     }
 
     private Vector3 CalcToolEnd() {
         Transform toolTransform = toolInteractingWithMe.ToolTransform;
         return toolTransform.position + toolTransform.forward * 2f;
-    }
-
-    private void DetachTool() {
-        toolInteractingWithMe = null;
-        gameObject.transform.parent = null;
     }
 }
 

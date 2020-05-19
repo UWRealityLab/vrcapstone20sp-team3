@@ -51,6 +51,7 @@ MonoBehaviour:
   _moduleMeshObj: {fileID: 4218014795902092780}
   _dragModulePrefab: {fileID: 4218014794397681865, guid: 10250f6fb331944b488b08c0bef9ccf1,
     type: 3}
+  moduleName: -1
 --- !u!1 &4218014794491755714
 GameObject:
   m_ObjectHideFlags: 0
