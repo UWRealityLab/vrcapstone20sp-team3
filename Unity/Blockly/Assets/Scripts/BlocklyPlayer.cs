@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using static OVRSkeleton;
+﻿using UnityEngine;
 using OculusSampleFramework;
-using Oculus;
 using static OVRSkeleton;
 
 namespace Blockly {
@@ -44,6 +40,7 @@ public class BlocklyPlayer : MonoBehaviour {
   }
 
   public void Start() {
+    Debug.Log("weeeeeeeeeeeeee");
     handsManager = HandsManager.Instance;
     // TODO wait until hands manager is initialized before letting anything else happen
     Debug.Log($"hands manager is initialized? {handsManager.IsInitialized()}");
@@ -131,13 +128,11 @@ public class BlocklyPlayer : MonoBehaviour {
   }
 
   public SkeletonPoseData GetCurrLeftPose() {
-    // return handsManager.LeftHand.GetSkeletonPoseData();
-    return default(SkeletonPoseData);
+    return handsManager.LeftHand.GetComponent<IOVRSkeletonDataProvider>().GetSkeletonPoseData();
   }
 
   public SkeletonPoseData GetCurrRightPose() {
-    // return handsManager.RightHand.GetSkeletonPoseData();
-    return default(SkeletonPoseData);
+    return handsManager.RightHand.GetComponent<IOVRSkeletonDataProvider>().GetSkeletonPoseData();
   }
 }
 
