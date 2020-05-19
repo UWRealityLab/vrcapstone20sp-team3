@@ -337,6 +337,11 @@ namespace OculusSampleFramework
 		{
 			_rayToolView.SetFocusedInteractable(focusedInteractable);
 			_focusedInteractable = focusedInteractable;
+
+			var hand = IsRightHandedTool ? HandsManager.Instance.RightHand : HandsManager.Instance.LeftHand;
+			_pinchStateModule.UpdateState(hand, _focusedInteractable);
+			_rayToolView.ToolActivateState = _pinchStateModule.PinchSteadyOnFocusedObject ||
+				_pinchStateModule.PinchDownOnFocusedObject;
 		}
 
 		public override void DeFocus()
