@@ -114,7 +114,7 @@ namespace OculusSampleFramework
 
 			var hand = IsRightHandedTool ? HandsManager.Instance.RightHand : HandsManager.Instance.LeftHand;
 			var pointer = hand.PointerPose;
-			transform.position = pointer.position;
+			transform.position = hand.transform.GetComponentInParent<OVRCameraRig>().transform.position + pointer.localPosition;
 			transform.rotation = pointer.rotation;
 
 			var prevPosition = InteractionPosition;
