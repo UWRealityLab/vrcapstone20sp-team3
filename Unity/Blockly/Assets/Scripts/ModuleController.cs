@@ -39,6 +39,7 @@ public class ModuleController : MonoBehaviour
     {
         Select();
         ApplyModule();
+        LoopModule();
     }
 
     void OnApplicationQuit()
@@ -114,11 +115,11 @@ public class ModuleController : MonoBehaviour
                 Debug.Log("recognizing gesture");
                 cursorController.OnRecognizeGesture(statement.name);
             }
-/*            else
+            else if (statement.ToString().Equals("Loop"))
             {
-                // recursive apply submodule
-                this.OnUseModule(statement.name);
-            }*/
+                this.selectedModule = statement.module;
+                Loop(statement.times);                
+            }
         }
     }
 
@@ -140,7 +141,7 @@ public class ModuleController : MonoBehaviour
         this.blockMaterial.color = fadedColor;
     }
 
-    // if module is clicked on, set the module to be the currently selected module
+    // Set the module to be the currently selected module
     private void Select()
     {
         if (Input.GetKeyDown(KeyCode.C))
@@ -161,53 +162,57 @@ public class ModuleController : MonoBehaviour
                 }
             }
         }
-
-
-        //Collider[] hitColliders = Physics.OverlapSphere(center, radius);
-        //int i = 0;
-        //while (i < hitColliders.Length)
-        //{
-        //    hitColliders[i].SendMessage("AddDamage");
-        //    i++;
-        //}
-
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    Debug.Log("Mouse is down");
-        //    RaycastHit hitInfo = new RaycastHit();
-        //    bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-        //    if (hit)
-        //    {
-        //        Debug.Log("Hit " + hitInfo.transform.gameObject.name);
-        //        if (hitInfo.collider.gameObject.tag == "isModule")
-        //        {
-        //            this.selectedModule = hitInfo.collider.gameObject;
-        //            Debug.Log("module was successfully selected");
-        //        }
-        //        else
-        //        {
-        //            Debug.Log("not a module");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("No hit");
-        //    }
-        //}
     }
 
+    // Apply the selected module to the main area
     private void ApplyModule()
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            if (this.selectedModule != null)
+            Apply();
+        }
+    }
+
+    private void Apply()
+    {
+        if (this.selectedModule != null)
+        {
+            Debug.Log("calling on Use Module with " + objectToName[this.selectedModule]);
+            OnUseModule(objectToName[this.selectedModule]);
+        }
+        else
+        {
+            Debug.Log("no module was selected :(");
+        }
+    }
+
+    // Apply the selected module specified number of times
+    private void LoopModule()
+    {
+        for (int i = 4; i < 10; i++)
+        {
+            if (Input.GetKeyDown("" + i))
             {
-                Debug.Log("calling on Use Module with " + objectToName[this.selectedModule]);
-                OnUseModule(objectToName[this.selectedModule]);
-            } else
-            {
-                Debug.Log("no module was selected :(");
+                Debug.Log("looping " + i + " times");
+                Loop(i);
+                break;
             }
+        }
+    }
+
+    private void Loop(int times)
+    {
+        for (int i = 0; i < times; i++)
+        {
+            Debug.Log("looping " + i);
+            Apply();
+            cursorController.MoveRight();
+        }
+
+        if (IsRecording())
+        {
+            Statement s = new Statement("Loop", false, this.selectedModule, times);
+            AddStatement(s);
         }
     }
 
