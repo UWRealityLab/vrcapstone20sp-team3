@@ -34,7 +34,8 @@ public class PoseRecognizer : MonoBehaviour {
   private string currRightPose;
 
   public void Start() {
-    player = GetComponent<PlayerManager>().GetPlayer();
+    Debug.Log("awake pose recognizer");
+    player = GetComponent<BlocklyPlayer>();
 
     // Load in saved poses.
     if (loadPoses)
@@ -78,8 +79,12 @@ public class PoseRecognizer : MonoBehaviour {
   }
 
   public void Update() {
+    Debug.Log("recognizing left pose");
     string leftPose = Recognize(player.GetCurrLeftPose(), leftPoses);
+    Debug.Log($"leftPose: {leftPose}");
+    Debug.Log("recognizing right pose");
     string rightPose = Recognize(player.GetCurrRightPose(), rightPoses);
+    Debug.Log($"rightPose: {rightPose}");
     if (leftPose != currLeftPose) {
       OnUpdateLeftPose.Invoke(leftPose);
     }
@@ -97,6 +102,7 @@ public class PoseRecognizer : MonoBehaviour {
     // For each pose
     foreach (var targetPose in targetPoses) {
       // Debug.Assert(pose.fingers.Count == validPose.fingers.Count);
+      Debug.Log($"checking against pose {targetPose.name}");
       float error = 0f;
       bool discardPose = false;
       // for (int i = 0; i < pose.fingers.Count; i++) {

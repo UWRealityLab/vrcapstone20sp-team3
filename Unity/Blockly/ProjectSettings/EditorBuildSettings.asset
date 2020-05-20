@@ -23,7 +23,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/BlocklyModuleLibraryUI.unity
     guid: df93c613bd6ff4129b0dbaf64fdcf6ea
-  - enabled: 1
+  - enabled: 0
     path: Assets/Oculus/SampleFramework/Usage/HandsInteractionTrainScene.unity
     guid: a9c41884ef0c347628dfd8a4af4a022e
   m_configObjects:
