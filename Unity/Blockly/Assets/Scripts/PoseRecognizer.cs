@@ -23,6 +23,7 @@ public class PoseRecognizer : MonoBehaviour {
       this.name = name;
     }
   }
+
   public List<Pose> leftPoses;
   public List<Pose> rightPoses;
 
@@ -48,14 +49,22 @@ public class PoseRecognizer : MonoBehaviour {
           continue;
         }
         Debug.Log(file);
-        SerializablePose nextSerializablePose;
+        Pose pose;
         using (Stream filestream = File.Open(file, FileMode.Open))
         {
             var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            nextSerializablePose = (SerializablePose)formatter.Deserialize(filestream);
+            pose = (Pose) formatter.Deserialize(filestream);
         }
-        Pose nextPose = toPose(nextSerializablePose);
-        leftPoses.Add(nextPose);
+        Debug.Log(pose.data);
+        Debug.Log(pose.data.RootPose);
+        Debug.Log(pose.data.RootScale);
+        Debug.Log(pose.data.BoneRotations[0]);
+        Debug.Log(pose.data.BoneRotations[1]);
+        Debug.Log(pose.data.BoneRotations[2]);
+        Debug.Log(pose.data.BoneRotations[3]);
+        Debug.Log(pose.data.IsDataValid);
+        Debug.Log(pose.data.IsDataHighConfidence);
+        leftPoses.Add(pose);
       }
 
       foreach (string file in Directory.GetFiles(Application.dataPath + "/Poses/right"))
@@ -66,14 +75,13 @@ public class PoseRecognizer : MonoBehaviour {
           continue;
         }
         Debug.Log(file);
-        SerializablePose nextSerializablePose;
+        Pose pose;
         using (Stream filestream = File.Open(file, FileMode.Open))
         {
             var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            nextSerializablePose = (SerializablePose)formatter.Deserialize(filestream);
+            pose = (Pose) formatter.Deserialize(filestream);
         }
-        Pose nextPose = toPose(nextSerializablePose);
-        rightPoses.Add(nextPose);
+        rightPoses.Add(pose);
       }
     }
   }
@@ -128,94 +136,101 @@ public class PoseRecognizer : MonoBehaviour {
     }
     return bestCandidate;
   }
-  
-  public void SaveRightPose()
-  {
-    Pose pose = player.GetCurrRightPose();
-    SerializablePose serializablePose = toSerializablePose(pose);
-    var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-    using (Stream filestream = File.Open(Application.persistentDataPath + "/gesture_right.dat", FileMode.Create))
-    {
-        formatter.Serialize(filestream, serializablePose);
-    }
-  }
 
   public void SaveLeftPose()
   {
-    Pose pose = player.GetCurrLeftPose();
-    SerializablePose serializablePose = toSerializablePose(pose);
-    var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-    using (Stream filestream = File.Open(Application.persistentDataPath + "/gesture_left.dat", FileMode.Create))
-    {
-        formatter.Serialize(filestream, serializablePose);
-    }
-  }
-
-  private SerializablePose toSerializablePose(Pose p)
-  {
-    List<List<SerializableQuaternion>> serializableFingers = new List<List<SerializableQuaternion>>();
-    foreach (Finger finger in p.fingers)
-    {
-      List<SerializableQuaternion> next = new List<SerializableQuaternion>();
-      foreach (Quaternion q in finger.segmentRotations)
+      string filePath = Application.persistentDataPath + "/gesture_left.dat";
+      Debug.Log($"saving left pose to {filePath}");
+      SkeletonPoseData poseData = player.GetCurrLeftPose();
+      Pose pose = new Pose(poseData, "New Left Pose");
+      // SerializablePose serializablePose = toSerializablePose(pose);
+      var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+      using (Stream filestream = File.Open(filePath, FileMode.Create))
       {
-        next.Add(new SerializableQuaternion(q.x, q.y, q.z, q.w));
+          formatter.Serialize(filestream, pose);
       }
-      serializableFingers.Add(next);
-    }
-    SerializablePose serializablePose = new SerializablePose();
-    serializablePose.name = p.name;
-    serializablePose.fingers = serializableFingers;
-    serializablePose.wristRotation = new SerializableQuaternion(p.wristRotation.x, p.wristRotation.y, p.wristRotation.z, p.wristRotation.w);
-    return serializablePose;
   }
 
-  private Pose toPose(SerializablePose sP)
+  public void SaveRightPose()
   {
-    List<Finger> fingers = new List<Finger>();
-    foreach (List<SerializableQuaternion> finger in sP.fingers)
-    {
-      List<Quaternion> segmentRotations = new List<Quaternion>();
-      foreach (SerializableQuaternion rotation in finger)
+      string filePath = Application.persistentDataPath + "/gesture_right.dat";
+      Debug.Log($"saving right pose to {filePath}");
+      SkeletonPoseData poseData = player.GetCurrRightPose();
+      Pose pose = new Pose(poseData, "New Right Pose");
+      // SerializablePose serializablePose = toSerializablePose(pose);
+      var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+      using (Stream filestream = File.Open(filePath, FileMode.Create))
       {
-        segmentRotations.Add(new Quaternion(rotation.x, rotation.y, rotation.z, rotation.w));
-      } 
-      Finger next = new Finger();
-      next.segmentRotations = segmentRotations;
-      fingers.Add(next);
-    }
-
-    Pose pose = new Pose();
-    pose.name = sP.name;
-    pose.fingers = fingers;
-    pose.wristRotation = new Quaternion(sP.wristRotation.x, sP.wristRotation.y, sP.wristRotation.z, sP.wristRotation.w);
-    return pose;
+          // formatter.Serialize(filestream, serializablePose);
+          formatter.Serialize(filestream, pose);
+      }
   }
+
+  // private SerializablePose toSerializablePose(Pose p)
+  // {
+  //   List<List<SerializableQuaternion>> serializableFingers = new List<List<SerializableQuaternion>>();
+  //   foreach (Finger finger in p.fingers)
+  //   {
+  //     List<SerializableQuaternion> next = new List<SerializableQuaternion>();
+  //     foreach (Quaternion q in finger.segmentRotations)
+  //     {
+  //       next.Add(new SerializableQuaternion(q.x, q.y, q.z, q.w));
+  //     }
+  //     serializableFingers.Add(next);
+  //   }
+  //   SerializablePose serializablePose = new SerializablePose();
+  //   serializablePose.name = p.name;
+  //   serializablePose.fingers = serializableFingers;
+  //   serializablePose.wristRotation = new SerializableQuaternion(p.wristRotation.x, p.wristRotation.y, p.wristRotation.z, p.wristRotation.w);
+  //   return serializablePose;
+  // }
+
+  // private Pose toPose(SerializablePose sP)
+  // {
+  //   List<Finger> fingers = new List<Finger>();
+  //   foreach (List<SerializableQuaternion> finger in sP.fingers)
+  //   {
+  //     List<Quaternion> segmentRotations = new List<Quaternion>();
+  //     foreach (SerializableQuaternion rotation in finger)
+  //     {
+  //       segmentRotations.Add(new Quaternion(rotation.x, rotation.y, rotation.z, rotation.w));
+  //     }
+  //     Finger next = new Finger();
+  //     next.segmentRotations = segmentRotations;
+  //     fingers.Add(next);
+  //   }
+
+  //   Pose pose = new Pose();
+  //   pose.name = sP.name;
+  //   pose.fingers = fingers;
+  //   pose.wristRotation = new Quaternion(sP.wristRotation.x, sP.wristRotation.y, sP.wristRotation.z, sP.wristRotation.w);
+  //   return pose;
+  // }
 }
 
-[System.Serializable]
-public struct SerializableQuaternion
-{
-  public float x;
-  public float y;
-  public float z;
-  public float w;
+// [System.Serializable]
+// public struct SerializableQuaternion
+// {
+//   public float x;
+//   public float y;
+//   public float z;
+//   public float w;
 
-  public SerializableQuaternion(float rX, float rY, float rZ, float rW)
-  {
-    x = rX;
-    y = rY;
-    z = rZ;
-    w = rW;
-  }
-}
+//   public SerializableQuaternion(float rX, float rY, float rZ, float rW)
+//   {
+//     x = rX;
+//     y = rY;
+//     z = rZ;
+//     w = rW;
+//   }
+// }
 
-[System.Serializable]
-public struct SerializablePose
-{
-  public string name;
-  public List<List<SerializableQuaternion>> fingers;
-  public SerializableQuaternion wristRotation;
-}
+// [System.Serializable]
+// public struct SerializablePose
+// {
+//   public string name;
+//   public List<List<SerializableQuaternion>> fingers;
+//   public SerializableQuaternion wristRotation;
+// }
 
 }

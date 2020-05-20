@@ -7,9 +7,8 @@ public class ButtonPress : MonoBehaviour
 {
     public UnityEvent onTriggered;
 
-     void OnTriggerEnter (Collider Col)
+     void OnTriggerEnter(Collider Col)
     {
-        Debug.Log("ENTER");
         onTriggered.Invoke();
     }
 }

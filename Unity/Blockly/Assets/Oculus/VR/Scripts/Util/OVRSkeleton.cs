@@ -27,6 +27,7 @@ public class OVRSkeleton : MonoBehaviour
 		SkeletonPoseData GetSkeletonPoseData();
 	}
 
+	[System.Serializable]
 	public struct SkeletonPoseData
 	{
 		public OVRPlugin.Posef RootPose { get; set; }
