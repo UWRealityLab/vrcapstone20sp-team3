@@ -20,7 +20,7 @@ public class ModuleController : MonoBehaviour
     public GameObject libraryModuleParentPrefab;
     public GameObject libraryBlockPrefab;
     private GameObject selectedModule;  // currently selected module (out of the module library)
-    private Dictionary<GameObject, int> objectToName;  // module library block -> index of module in allModules
+    private Dictionary<GameObject, int> objectToId;  // module library block -> index of module in allModules
     private const int FIRST_ROW_OFFSET = -15;  // x-value of first row of module library
     private const int ROW_LENGTH = 5;  // number of modules in one row of the module library
     private const float LIBRARY_GRID_SIZE = 1f;  // size of blocks in module library
@@ -31,7 +31,7 @@ public class ModuleController : MonoBehaviour
         this.cursorController = cursor.GetComponent<CursorController>();
         this.isRecordingModule = false;
         this.allModules = new List<List<Statement>>();
-        this.objectToName = new Dictionary<GameObject, int>();
+        this.objectToId = new Dictionary<GameObject, int>();
     }
 
     // Update is called once per frame
@@ -76,16 +76,16 @@ public class ModuleController : MonoBehaviour
     {
         if (this.currentModule.Count > 0)  // only store if module has statements
         {
-            int moduleName = this.allModules.Count;
+            int moduleId = this.allModules.Count;
             this.allModules.Add(this.currentModule);
-            this.AddToLibrary(moduleName);
+            this.AddToLibrary(moduleId);
 
             string result = "";
             foreach (var item in this.currentModule)
             {
                 result += item.ToString() + ", ";
             }
-            Debug.Log("recorded module #" + moduleName + ": " + result);
+            Debug.Log("recorded module #" + moduleId + ": " + result);
         }
 
         // delete the temporary blocks that were created when recording the module
@@ -103,12 +103,12 @@ public class ModuleController : MonoBehaviour
 
     public void OnUseModule(GameObject module)
     {
-        this.OnUseModule(this.objectToName[module]);
+        this.OnUseModule(this.objectToId[module]);
     }
 
-    public void OnUseModule(int moduleName)
+    public void OnUseModule(int moduleId)
     {
-        List<Statement> module = this.allModules[moduleName];
+        List<Statement> module = this.allModules[moduleId];
         foreach (Statement statement in module)
         {
             if (statement.isGesture)
@@ -179,8 +179,8 @@ public class ModuleController : MonoBehaviour
     {
         if (this.selectedModule != null)
         {
-            Debug.Log("calling on Use Module with " + objectToName[this.selectedModule]);
-            OnUseModule(objectToName[this.selectedModule]);
+            Debug.Log("calling on Use Module with " + objectToId[this.selectedModule]);
+            OnUseModule(objectToId[this.selectedModule]);
         }
         else
         {
@@ -231,17 +231,17 @@ public class ModuleController : MonoBehaviour
     }
 
     // add given module to the module library: draw a copy of the module in the module library
-    // and add blocks to mapping of block->name
-    private void AddToLibrary(int moduleName)
+    // and add blocks to mapping of block->id
+    private void AddToLibrary(int moduleId)
     {
-        Vector3 startPosition = this.moduleNameToLibraryPosition(moduleName);
-        Debug.Log("AddToLibrary: module #" + moduleName + " at " + startPosition + "!");
-        List<Statement> module = this.allModules[moduleName];
+        Vector3 startPosition = this.moduleIdToLibraryPosition(moduleId);
+        Debug.Log("AddToLibrary: module #" + moduleId + " at " + startPosition + "!");
+        List<Statement> module = this.allModules[moduleId];
 
         GameObject parentObject = new GameObject();
         // GameObject parentObject = Instantiate(this.libraryModuleParentPrefab, startPosition, Quaternion.identity) as GameObject;
 
-        objectToName.Add(parentObject, moduleName);
+        objectToId.Add(parentObject, moduleId);
         foreach (Statement statement in module)
         {
             switch (statement.name)
@@ -249,7 +249,7 @@ public class ModuleController : MonoBehaviour
                 case "Emit":
                     GameObject obj = Instantiate(this.libraryBlockPrefab, startPosition, Quaternion.identity);
                     obj.transform.parent = parentObject.transform;
-                    objectToName.Add(obj, moduleName);
+                    objectToId.Add(obj, moduleId);
                     break;
                 // case "Delete":
                 //     break;
@@ -272,16 +272,16 @@ public class ModuleController : MonoBehaviour
                     startPosition.z -= LIBRARY_GRID_SIZE;
                     break;
                 default:
-                    Debug.Log("unrecognized statement in module #" + moduleName + ": " + statement.name);
+                    Debug.Log("unrecognized statement in module #" + moduleId + ": " + statement.name);
                     break;
             }
         }
     }
 
-    private Vector3 moduleNameToLibraryPosition(int moduleName)
+    private Vector3 moduleIdToLibraryPosition(int moduleId)
     {
-        float x = FIRST_ROW_OFFSET +- moduleName / 5;
-        float z = moduleName % ROW_LENGTH;
+        float x = FIRST_ROW_OFFSET +-moduleId / 5;
+        float z = moduleId % ROW_LENGTH;
         return new Vector3(x, 2f, z * 11);
     }
 }
