@@ -15,19 +15,19 @@ public class PoseRecognizer : MonoBehaviour {
   // the inspector
   [System.Serializable]
   public struct Pose {
-    public SkeletonPoseData data;
     public string name;
+    public SkeletonPoseData data;
 
-    public Pose(SkeletonPoseData data, string name) {
-      this.data = data;
+    public Pose(string name, SkeletonPoseData data) {
       this.name = name;
+      this.data = data;
     }
   }
 
   public List<Pose> leftPoses;
   public List<Pose> rightPoses;
 
-  public bool loadPoses;
+  public bool shouldLoadPoses;
 
   private IPlayer player;
 
@@ -39,54 +39,19 @@ public class PoseRecognizer : MonoBehaviour {
     player = GetComponent<BlocklyPlayer>();
 
     // Load in saved poses.
-    if (loadPoses)
+    if (shouldLoadPoses)
     {
-      foreach (string file in Directory.GetFiles(Application.dataPath + "/Poses/left"))
-      {
-        if (!file.EndsWith("dat"))
-        {
-          // Ignore any other generated files in this directory.
-          continue;
-        }
-        Debug.Log(file);
-        Pose pose;
-        using (Stream filestream = File.Open(file, FileMode.Open))
-        {
-            var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            pose = (Pose) formatter.Deserialize(filestream);
-        }
-        Debug.Log(pose.data);
-        Debug.Log(pose.data.RootPose);
-        Debug.Log(pose.data.RootScale);
-        Debug.Log(pose.data.BoneRotations[0]);
-        Debug.Log(pose.data.BoneRotations[1]);
-        Debug.Log(pose.data.BoneRotations[2]);
-        Debug.Log(pose.data.BoneRotations[3]);
-        Debug.Log(pose.data.IsDataValid);
-        Debug.Log(pose.data.IsDataHighConfidence);
-        leftPoses.Add(pose);
-      }
-
-      foreach (string file in Directory.GetFiles(Application.dataPath + "/Poses/right"))
-      {
-        if (!file.EndsWith("dat"))
-        {
-          // Ignore any other generated files in this directory.
-          continue;
-        }
-        Debug.Log(file);
-        Pose pose;
-        using (Stream filestream = File.Open(file, FileMode.Open))
-        {
-            var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            pose = (Pose) formatter.Deserialize(filestream);
-        }
-        rightPoses.Add(pose);
-      }
+      LoadPoses("left");
+      LoadPoses("right");
     }
   }
 
   public void Update() {
+    foreach (var targetPose in leftPoses) {
+      Debug.Log($"checking pose {targetPose.name}");
+      Debug.Log(targetPose.data);
+      Debug.Log(targetPose.data.BoneRotations);
+    }
     Debug.Log("recognizing left pose");
     string leftPose = Recognize(player.GetCurrLeftPose(), leftPoses);
     Debug.Log($"leftPose: {leftPose}");
@@ -104,31 +69,45 @@ public class PoseRecognizer : MonoBehaviour {
   }
 
   public string Recognize(SkeletonPoseData pose, List<Pose> targetPoses) {
+    if (!pose.IsDataValid || !pose.IsDataHighConfidence) {
+      Debug.Log("ignoring dodgy input pose");
+      if (targetPoses == leftPoses) {
+        return currLeftPose;
+      } else if (targetPoses == rightPoses) {
+        return currRightPose;
+      }
+      Debug.Assert(false);
+      return null;
+    }
     float bestError = Mathf.Infinity;
     string bestCandidate = null;
 
-    // For each pose
+    // use Unity quats to copy OVR quats into, so we can use `Quaternion.Angle`
+    // to calculate error terms
+    Quaternion quatA = new Quaternion();
+    Quaternion quatB = new Quaternion();
     foreach (var targetPose in targetPoses) {
-      // Debug.Assert(pose.fingers.Count == validPose.fingers.Count);
       Debug.Log($"checking against pose {targetPose.name}");
       float error = 0f;
-      bool discardPose = false;
-      // for (int i = 0; i < pose.fingers.Count; i++) {
-      //   Finger finger = pose.fingers[i];
-      //   Finger validFinger = validPose.fingers[i];
-      //   for (int j = 0; j < finger.segmentRotations.Count; j++) {
-      //     float currError = Quaternion.Angle(finger.segmentRotations[j], validFinger.segmentRotations[j]);
-      //     if (currError > threshold) {
-      //       discardPose = true;
-      //       break;
-      //     }
-      //     error += currError;
-      //   }
-      // }
-
-      // if (discardPose) {
-      //   continue;
-      // }
+      for (int i = 0; i < pose.BoneRotations.Length; i++) {
+        Debug.Log($"A error={error}");
+        OVRPlugin.Quatf inputQuat = pose.BoneRotations[i];
+        Debug.Log($"B inputQuat={inputQuat}");
+        Debug.Log($"B.5 targetPose.data={targetPose.data}");
+        Debug.Log($"B.75 targetPose.data.BoneRotations={targetPose.data.BoneRotations}");
+        OVRPlugin.Quatf targetQuat = targetPose.data.BoneRotations[i];
+        Debug.Log($"C targetQuat={targetQuat}");
+        quatA.Set(inputQuat.x, inputQuat.y, inputQuat.z, inputQuat.w);
+        Debug.Log($"D");
+        quatB.Set(targetQuat.x, targetQuat.y, targetQuat.z, targetQuat.w);
+        Debug.Log($"E");
+        error += Quaternion.Angle(quatA, quatB);
+        Debug.Log($"F error={error}");
+        if (error > threshold) {
+          Debug.Log($"  discarding pose (error={error} > threshold={threshold})");
+          break;
+        }
+      }
       if (error < bestError) {
         bestCandidate = targetPose.name;
         bestError = error;
@@ -137,100 +116,62 @@ public class PoseRecognizer : MonoBehaviour {
     return bestCandidate;
   }
 
+  private void LoadPoses(string hand) {
+    foreach (string file in Directory.GetFiles(Application.dataPath + "/Poses/" + hand))
+    {
+      if (!file.EndsWith("dat"))
+      {
+        // Ignore any other generated files in this directory.
+        continue;
+      }
+      string poseName = Path.GetFileNameWithoutExtension(file);
+      Debug.Log($"loading {poseName} from {file}");
+      SkeletonPoseData poseData;
+      using (Stream filestream = File.Open(file, FileMode.Open))
+      {
+        var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+        poseData = (SkeletonPoseData) formatter.Deserialize(filestream);
+      }
+      Debug.Log($"poseData: {poseData}");
+      Debug.Log($"poseData.BoneRotations: {poseData.BoneRotations}");
+      Debug.Log($"poseData.BoneRotations[3]: {poseData.BoneRotations[3]}");
+      Pose pose = new Pose(poseName, poseData);
+      if (hand == "left") {
+        leftPoses.Add(pose);
+      } else if (hand == "right") {
+        rightPoses.Add(pose);
+      } else {
+        Debug.Assert(false);
+      }
+    }
+  }
+
   public void SaveLeftPose()
   {
-      string filePath = Application.persistentDataPath + "/gesture_left.dat";
-      Debug.Log($"saving left pose to {filePath}");
-      SkeletonPoseData poseData = player.GetCurrLeftPose();
-      Pose pose = new Pose(poseData, "New Left Pose");
-      // SerializablePose serializablePose = toSerializablePose(pose);
-      var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-      using (Stream filestream = File.Open(filePath, FileMode.Create))
-      {
-          formatter.Serialize(filestream, pose);
-      }
+    SavePose("left");
   }
 
   public void SaveRightPose()
   {
-      string filePath = Application.persistentDataPath + "/gesture_right.dat";
-      Debug.Log($"saving right pose to {filePath}");
-      SkeletonPoseData poseData = player.GetCurrRightPose();
-      Pose pose = new Pose(poseData, "New Right Pose");
-      // SerializablePose serializablePose = toSerializablePose(pose);
-      var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-      using (Stream filestream = File.Open(filePath, FileMode.Create))
-      {
-          // formatter.Serialize(filestream, serializablePose);
-          formatter.Serialize(filestream, pose);
-      }
+    SavePose("right");
   }
 
-  // private SerializablePose toSerializablePose(Pose p)
-  // {
-  //   List<List<SerializableQuaternion>> serializableFingers = new List<List<SerializableQuaternion>>();
-  //   foreach (Finger finger in p.fingers)
-  //   {
-  //     List<SerializableQuaternion> next = new List<SerializableQuaternion>();
-  //     foreach (Quaternion q in finger.segmentRotations)
-  //     {
-  //       next.Add(new SerializableQuaternion(q.x, q.y, q.z, q.w));
-  //     }
-  //     serializableFingers.Add(next);
-  //   }
-  //   SerializablePose serializablePose = new SerializablePose();
-  //   serializablePose.name = p.name;
-  //   serializablePose.fingers = serializableFingers;
-  //   serializablePose.wristRotation = new SerializableQuaternion(p.wristRotation.x, p.wristRotation.y, p.wristRotation.z, p.wristRotation.w);
-  //   return serializablePose;
-  // }
-
-  // private Pose toPose(SerializablePose sP)
-  // {
-  //   List<Finger> fingers = new List<Finger>();
-  //   foreach (List<SerializableQuaternion> finger in sP.fingers)
-  //   {
-  //     List<Quaternion> segmentRotations = new List<Quaternion>();
-  //     foreach (SerializableQuaternion rotation in finger)
-  //     {
-  //       segmentRotations.Add(new Quaternion(rotation.x, rotation.y, rotation.z, rotation.w));
-  //     }
-  //     Finger next = new Finger();
-  //     next.segmentRotations = segmentRotations;
-  //     fingers.Add(next);
-  //   }
-
-  //   Pose pose = new Pose();
-  //   pose.name = sP.name;
-  //   pose.fingers = fingers;
-  //   pose.wristRotation = new Quaternion(sP.wristRotation.x, sP.wristRotation.y, sP.wristRotation.z, sP.wristRotation.w);
-  //   return pose;
-  // }
+  private void SavePose(string hand)  {
+    string filePath = Application.persistentDataPath + $"/pose_{hand}.dat";
+    Debug.Log($"saving {hand} pose to {filePath}");
+    // SerializablePose serializablePose = toSerializablePose(pose);
+    var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+    using (Stream filestream = File.Open(filePath, FileMode.Create))
+    {
+      if (hand == "left") {
+        formatter.Serialize(filestream, player.GetCurrLeftPose());
+      } else if (hand == "right") {
+        formatter.Serialize(filestream, player.GetCurrRightPose());
+      } else {
+        Debug.Assert(false);
+      }
+    }
+  }
 }
-
-// [System.Serializable]
-// public struct SerializableQuaternion
-// {
-//   public float x;
-//   public float y;
-//   public float z;
-//   public float w;
-
-//   public SerializableQuaternion(float rX, float rY, float rZ, float rW)
-//   {
-//     x = rX;
-//     y = rY;
-//     z = rZ;
-//     w = rW;
-//   }
-// }
-
-// [System.Serializable]
-// public struct SerializablePose
-// {
-//   public string name;
-//   public List<List<SerializableQuaternion>> fingers;
-//   public SerializableQuaternion wristRotation;
-// }
 
 }

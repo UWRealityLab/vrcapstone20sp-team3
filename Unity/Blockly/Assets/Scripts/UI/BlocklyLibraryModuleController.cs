@@ -9,7 +9,6 @@ namespace Blockly
 public class BlocklyLibraryModuleController : MonoBehaviour
 {
 	[SerializeField] private GameObject _startStopButton = null;
-	[SerializeField] float _maxSpeed = 10f;
 	[SerializeField] private SelectionCylinder _selectionCylinder = null;
 
 	[SerializeField]

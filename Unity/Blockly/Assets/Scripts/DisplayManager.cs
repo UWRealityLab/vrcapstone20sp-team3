@@ -5,11 +5,18 @@ using UnityEngine;
 namespace Blockly {
 
 public class DisplayManager : MonoBehaviour {
+  public static DisplayManager Instance;
+
   public TextMesh leftPoseDisplay;
   public TextMesh rightPoseDisplay;
 
   public TextMesh leftGestureDisplay;
   public TextMesh rightGestureDisplay;
+
+  public void Awake() {
+    Debug.Assert(Instance == null);
+    Instance = this;
+  }
 
   public void OnUpdateLeftPose(string poseName) {
     leftPoseDisplay.text = poseName;

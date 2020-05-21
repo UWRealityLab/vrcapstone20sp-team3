@@ -9,7 +9,6 @@ namespace Blockly {
 public class BlocklyDragModule : MonoBehaviour {
     [SerializeField] private GameObject _startStopButton = null;
     [SerializeField] private BoxCollider _boxCollider = null;
-    [SerializeField] float _maxSpeed = 10f;
 
     public InteractableTool toolInteractingWithMe = null;
     public int moduleName;

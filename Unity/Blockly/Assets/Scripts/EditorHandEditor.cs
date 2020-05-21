@@ -24,9 +24,9 @@ public class EditorHandEditor : Editor {
     SkeletonPoseData pose = hand.GetSkeleton().GetSkeletonPoseData();
     PoseRecognizer poseRecognizer = hand.GetComponentInParent<PoseRecognizer>();
     if (hand.GetSkeleton().GetSkeletonType() == SkeletonType.HandLeft) {
-      poseRecognizer.leftPoses.Add(new PoseRecognizer.Pose(pose, poseName));
+      poseRecognizer.leftPoses.Add(new PoseRecognizer.Pose(poseName, pose));
     } else {
-      poseRecognizer.rightPoses.Add(new PoseRecognizer.Pose(pose, poseName));
+      poseRecognizer.rightPoses.Add(new PoseRecognizer.Pose(poseName, pose));
     }
   }
 }

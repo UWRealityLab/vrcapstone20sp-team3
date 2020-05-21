@@ -30,11 +30,11 @@ public class OVRSkeleton : MonoBehaviour
 	[System.Serializable]
 	public struct SkeletonPoseData
 	{
-		public OVRPlugin.Posef RootPose { get; set; }
-		public float RootScale { get; set; }
-		public OVRPlugin.Quatf[] BoneRotations { get; set; }
-		public bool IsDataValid { get; set; }
-		public bool IsDataHighConfidence { get; set; }
+		public OVRPlugin.Posef RootPose;
+		public float RootScale;
+		public OVRPlugin.Quatf[] BoneRotations;
+		public bool IsDataValid;
+		public bool IsDataHighConfidence;
 	}
 
 	public enum SkeletonType
