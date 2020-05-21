@@ -21,6 +21,7 @@ public class ModuleController : MonoBehaviour
     /* module library */
     public GameObject libraryModuleParentPrefab;
     public GameObject libraryBlockPrefab;
+    public GameObject libraryModuleEndCursorPrefab;
     private GameObject selectedModule;  // currently selected module (out of the module library)
     private Dictionary<GameObject, int> objectToId;  // module library block -> index of module in allModules
     private Dictionary<int, Vector3> moduleLibraryPositions;  // module in library -> x, y, z position in library
@@ -140,6 +141,7 @@ public class ModuleController : MonoBehaviour
     {
         if (this.currentModule.Statements().Contains("Emit"))  // only store if module has blocks
         {
+            this.currentModule.Complete();
             int moduleId = this.allModules.Count;
             this.allModules.Add(this.currentModule);
             this.AddToLibrary(moduleId);
@@ -277,6 +279,9 @@ public class ModuleController : MonoBehaviour
                     break;
             }
         }
+        GameObject endCursor = Instantiate(this.libraryModuleEndCursorPrefab, startPosition, Quaternion.identity);
+        endCursor.transform.parent = parentObject.transform;
+        objectToId.Add(endCursor, moduleId);
     }
 
     private Vector3 moduleIdToLibraryPosition(int moduleId)

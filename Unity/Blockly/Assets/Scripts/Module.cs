@@ -56,6 +56,14 @@ public class Module : MonoBehaviour
         }
     }
 
+    // call this method to "complete" the module
+    // updates max/min to account for end cursor position of the module
+    public void Complete()
+    {
+        this.maximum = Vector3.Max(cursor, maximum);
+        this.minimum = Vector3.Min(cursor, minimum);
+    }
+
     public List<string> Statements()
     {
         return this.statements;
