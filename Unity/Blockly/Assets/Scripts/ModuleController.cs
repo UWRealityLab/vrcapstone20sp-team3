@@ -1,6 +1,7 @@
 ﻿using Blockly;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
@@ -41,7 +42,10 @@ public class ModuleController : MonoBehaviour
     void Update()
     {
         Select();
-        ApplyModule();
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            Apply();  // Apply the selected module to the main area based on given input
+        }
         LoopModule();
         DeleteModule();
     }
@@ -112,6 +116,21 @@ public class ModuleController : MonoBehaviour
     public void OnUseModule(int moduleId)
     {
         Module module = this.allModules[moduleId];
+        Vector3 cursorPos = this.cursorController.CursorPosition();
+        Vector3 minPos = module.MinPositionFromStart(cursorPos);
+        Vector3 maxPos = module.MaxPositionFromStart(cursorPos);
+        if (minPos.x < CursorController.MIN_POSITION
+            || minPos.y < CursorController.MIN_POSITION
+            || minPos.z < CursorController.MIN_POSITION
+            || maxPos.x > CursorController.MAX_POSITION
+            || maxPos.y > CursorController.MAX_POSITION
+            || maxPos.z > CursorController.MAX_POSITION)
+        {
+            Debug.Log("module can't be applied (would go out of bounds)");
+            // TODO: add error sound effect?
+            return;
+        }
+
         foreach (string statement in module.Statements())
         {
             Debug.Log("recognizing gesture");
@@ -145,7 +164,7 @@ public class ModuleController : MonoBehaviour
             GameObject hand = GameObject.FindGameObjectWithTag("isHand");
             Transform handTransform = hand.transform;
             Vector3 handPosition = handTransform.position;
-            Debug.Log("hand position: " + handPosition);
+            Debug.Log("select module - hand position: " + handPosition);
 
             Collider[] hitColliders = Physics.OverlapSphere(handPosition, 5);
             foreach (Collider collider in hitColliders)
@@ -157,15 +176,6 @@ public class ModuleController : MonoBehaviour
                     break;
                 }
             }
-        }
-    }
-
-    // Apply the selected module to the main area based on given input
-    private void ApplyModule()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            Apply();
         }
     }
 
@@ -290,7 +300,7 @@ public class ModuleController : MonoBehaviour
             }
             else
             {
-                minCorner.x = prevMax.x + 1f;
+                minCorner.x = prevMax.x + 2f;
                 minCorner.z = prevMin.z;
             }
         }

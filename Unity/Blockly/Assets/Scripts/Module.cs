@@ -28,6 +28,8 @@ public class Module : MonoBehaviour
         switch (action)
         {
             case "Emit":
+                this.maximum = Vector3.Max(cursor, maximum);
+                this.minimum = Vector3.Min(cursor, minimum);
                 break;
             // case "Delete":
             //     break;
@@ -52,8 +54,6 @@ public class Module : MonoBehaviour
             default:
                 break;
         }
-        this.maximum = Vector3.Max(cursor, maximum);
-        this.minimum = Vector3.Min(cursor, minimum);
     }
 
     public List<string> Statements()
@@ -82,23 +82,10 @@ public class Module : MonoBehaviour
         return minCorner - this.minimum;
     }
 
+    // returns a vector representing the total size of the module in the
+    // x, y, z dimensions
     public Vector3 TotalSize()
     {
         return this.maximum - this.minimum;
-    }
-
-    public Vector3 Maximum()
-    {
-        return this.maximum;
-    }
-
-    public Vector3 Minimum()
-    {
-        return this.minimum;
-    }
-
-    public int Size()
-    {
-        return this.statements.Count;
     }
 }

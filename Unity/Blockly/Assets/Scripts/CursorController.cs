@@ -15,8 +15,8 @@ public class CursorController : MonoBehaviour
     public AudioClip emitSound;
     public AudioClip moveSound;
 
-    private const float MIN_POSITION = 0;  // inclusive
-    private const float MAX_POSITION = 9;  // inclusive
+    public const float MIN_POSITION = 0;  // inclusive
+    public const float MAX_POSITION = 9;  // inclusive
 
     private AudioSource source;
 
@@ -251,5 +251,10 @@ public class CursorController : MonoBehaviour
             }
         }
         return true;
+    }
+
+    public Vector3 CursorPosition()
+    {
+        return this.gameObject.transform.position;
     }
 }
