@@ -245,7 +245,7 @@ public class CursorController : MonoBehaviour
         foreach (Collider collider in colliders)
         {
             // TODO: look into layer masks
-            if (collider.gameObject.tag == "Block")
+            if (collider.gameObject.tag == "Block" && !this.moduleController.IsRecording())
             {
                 return false;
             }
