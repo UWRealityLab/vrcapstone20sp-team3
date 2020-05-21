@@ -40,6 +40,7 @@ public class ModuleController : MonoBehaviour
         Select();
         ApplyModule();
         LoopModule();
+        DeleteModule();
     }
 
     void OnApplicationQuit()
@@ -164,7 +165,7 @@ public class ModuleController : MonoBehaviour
         }
     }
 
-    // Apply the selected module to the main area
+    // Apply the selected module to the main area based on given input
     private void ApplyModule()
     {
         if (Input.GetKeyDown(KeyCode.Z))
@@ -173,6 +174,7 @@ public class ModuleController : MonoBehaviour
         }
     }
 
+    // Apply the selected module once
     private void Apply()
     {
         if (this.selectedModule != null)
@@ -186,7 +188,10 @@ public class ModuleController : MonoBehaviour
         }
     }
 
-    // Apply the selected module specified number of times
+    // Apply module however many times the input suggests
+    // currently valid from 4 - 9 (inclusive) only
+    // TODO: currently, 1 2 and 3 are used for emitting and moving, so 1-3 cannot be used
+    // TODO: do we want them to be able to loop more than 10 times?
     private void LoopModule()
     {
         for (int i = 4; i < 10; i++)
@@ -200,19 +205,28 @@ public class ModuleController : MonoBehaviour
         }
     }
 
+    // Apply the selected module specified number of times
     private void Loop(int times)
     {
         for (int i = 0; i < times; i++)
         {
             Debug.Log("looping " + i);
             Apply();
-            cursorController.MoveRight();
+            //cursorController.MoveRight();
         }
 
         if (IsRecording())
         {
             Statement s = new Statement("Loop", false, this.selectedModule, times);
             AddStatement(s);
+        }
+    }
+
+    private void DeleteModule()
+    {
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            Destroy(this.selectedModule);
         }
     }
 
