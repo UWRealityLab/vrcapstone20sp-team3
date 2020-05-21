@@ -1,6 +1,7 @@
 ﻿using Blockly;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class ModuleController : MonoBehaviour
@@ -21,6 +22,7 @@ public class ModuleController : MonoBehaviour
     public GameObject libraryBlockPrefab;
     private GameObject selectedModule;  // currently selected module (out of the module library)
     private Dictionary<GameObject, int> objectToId;  // module library block -> index of module in allModules
+    private Dictionary<int, Vector3> moduleLibraryPositions;  // module in library -> x, y, z position in library
     private const int FIRST_ROW_OFFSET = -15;  // x-value of first row of module library
     private const int ROW_LENGTH = 5;  // number of modules in one row of the module library
     private const float LIBRARY_GRID_SIZE = 1f;  // size of blocks in module library
@@ -32,6 +34,7 @@ public class ModuleController : MonoBehaviour
         this.isRecordingModule = false;
         this.allModules = new List<Module>();
         this.objectToId = new Dictionary<GameObject, int>();
+        this.moduleLibraryPositions = new Dictionary<int, Vector3>();
     }
 
     // Update is called once per frame
@@ -74,7 +77,7 @@ public class ModuleController : MonoBehaviour
 
     public void OnEndModule()
     {
-        if (this.currentModule.Size() > 0)  // only store if module has statements
+        if (this.currentModule.Statements().Contains("Emit"))  // only store if module has blocks
         {
             int moduleId = this.allModules.Count;
             this.allModules.Add(this.currentModule);
@@ -266,8 +269,33 @@ public class ModuleController : MonoBehaviour
 
     private Vector3 moduleIdToLibraryPosition(int moduleId)
     {
-        float x = FIRST_ROW_OFFSET +-moduleId / 5;
+        /*float x = FIRST_ROW_OFFSET + -moduleId / 5;
         float z = moduleId % ROW_LENGTH;
-        return new Vector3(x, 2f, z * 11);
+        return new Vector3(x, 2f, z * 11);*/
+
+        Module module = this.allModules[moduleId];
+        Vector3 minCorner = new Vector3(-20.5f, 2f, -1f);  // min corner of entire library area
+
+        if (moduleId != 0)  // if not first module, base position on preceding module
+        {
+            Module prevModule = this.allModules[moduleId - 1];
+            Vector3 prevStart = this.moduleLibraryPositions[moduleId - 1];
+            Vector3 prevMax = prevModule.MaxPositionFromStart(prevStart);
+            Vector3 prevMin = prevModule.MinPositionFromStart(prevStart);
+
+            if (prevMax.x > -9.5f - 1 - prevModule.TotalSize().x)  // need to go to next row
+            {
+                minCorner.x = -20.5f;
+                minCorner.z = prevMin.z + 10f;
+            }
+            else
+            {
+                minCorner.x = prevMax.x + 1f;
+                minCorner.z = prevMin.z;
+            }
+        }
+
+        this.moduleLibraryPositions[moduleId] = module.StartPositionFromMinCorner(minCorner);
+        return this.moduleLibraryPositions[moduleId];
     }
 }

@@ -201,6 +201,7 @@ public class CursorController : MonoBehaviour
         {
             moduleController.OnPressRecord();
         }
+        /*
         if (Input.GetKeyDown(KeyCode.A))
         {
             MoveLeft();
@@ -230,6 +231,7 @@ public class CursorController : MonoBehaviour
         {
             Emit();
         }
+        */
         if (Input.GetKeyDown(KeyCode.Delete))
         {
             Delete();
