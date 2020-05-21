@@ -6,8 +6,8 @@ using UnityEngine;
 public class ModuleController : MonoBehaviour
 {
     private bool isRecordingModule;
-    private List<Statement> currentModule;
-    private List<List<Statement>> allModules;  // list of modules (which are lists of actions)
+    private Module currentModule;
+    private List<Module> allModules;  // list of modules (which are lists of actions)
 
     /* cursor-related, module creation/recording */
     public GameObject cursor;
@@ -30,7 +30,7 @@ public class ModuleController : MonoBehaviour
     {
         this.cursorController = cursor.GetComponent<CursorController>();
         this.isRecordingModule = false;
-        this.allModules = new List<List<Statement>>();
+        this.allModules = new List<Module>();
         this.objectToId = new Dictionary<GameObject, int>();
     }
 
@@ -67,21 +67,21 @@ public class ModuleController : MonoBehaviour
     public void OnBeginModule()
     {
         this.isRecordingModule = true;
-        this.currentModule = new List<Statement>();
+        this.currentModule = new Module();
         this.originalCursorPosition = this.cursorController.gameObject.transform.position;
         setBlockMaterialTransparency(0.1f);
     }
 
     public void OnEndModule()
     {
-        if (this.currentModule.Count > 0)  // only store if module has statements
+        if (this.currentModule.Size() > 0)  // only store if module has statements
         {
             int moduleId = this.allModules.Count;
             this.allModules.Add(this.currentModule);
             this.AddToLibrary(moduleId);
 
             string result = "";
-            foreach (var item in this.currentModule)
+            foreach (var item in this.currentModule.Statements())
             {
                 result += item.ToString() + ", ";
             }
@@ -108,25 +108,17 @@ public class ModuleController : MonoBehaviour
 
     public void OnUseModule(int moduleId)
     {
-        List<Statement> module = this.allModules[moduleId];
-        foreach (Statement statement in module)
+        Module module = this.allModules[moduleId];
+        foreach (string statement in module.Statements())
         {
-            if (statement.isGesture)
-            {
-                Debug.Log("recognizing gesture");
-                cursorController.OnRecognizeGesture(statement.name);
-            }
-            else if (statement.ToString().Equals("Loop"))
-            {
-                this.selectedModule = statement.module;
-                Loop(statement.times);                
-            }
+            Debug.Log("recognizing gesture");
+            cursorController.OnRecognizeGesture(statement);
         }
     }
 
-    public void AddStatement(Statement statement)
+    public void AddStatement(string statement)
     {
-        this.currentModule.Add(statement);
+        this.currentModule.AddStatement(statement);
     }
 
     public bool IsRecording()
@@ -214,12 +206,6 @@ public class ModuleController : MonoBehaviour
             Apply();
             //cursorController.MoveRight();
         }
-
-        if (IsRecording())
-        {
-            Statement s = new Statement("Loop", false, this.selectedModule, times);
-            AddStatement(s);
-        }
     }
 
     private void DeleteModule()
@@ -236,15 +222,15 @@ public class ModuleController : MonoBehaviour
     {
         Vector3 startPosition = this.moduleIdToLibraryPosition(moduleId);
         Debug.Log("AddToLibrary: module #" + moduleId + " at " + startPosition + "!");
-        List<Statement> module = this.allModules[moduleId];
+        Module module = this.allModules[moduleId];
 
         GameObject parentObject = new GameObject();
         // GameObject parentObject = Instantiate(this.libraryModuleParentPrefab, startPosition, Quaternion.identity) as GameObject;
 
         objectToId.Add(parentObject, moduleId);
-        foreach (Statement statement in module)
+        foreach (string statement in module.Statements())
         {
-            switch (statement.name)
+            switch (statement)
             {
                 case "Emit":
                     GameObject obj = Instantiate(this.libraryBlockPrefab, startPosition, Quaternion.identity);
@@ -272,7 +258,7 @@ public class ModuleController : MonoBehaviour
                     startPosition.z -= LIBRARY_GRID_SIZE;
                     break;
                 default:
-                    Debug.Log("unrecognized statement in module #" + moduleId + ": " + statement.name);
+                    Debug.Log("unrecognized statement in module #" + moduleId + ": " + statement);
                     break;
             }
         }

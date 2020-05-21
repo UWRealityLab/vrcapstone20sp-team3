@@ -90,7 +90,7 @@ public class CursorController : MonoBehaviour
             {
                 return;
             }
-            moduleController.AddStatement(new Statement(gestureName, true));
+            moduleController.AddStatement(gestureName);
         }
 
         // if (Input.GetKeyDown(KeyCode.Delete))
