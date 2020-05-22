@@ -15,8 +15,8 @@ public class CursorController : MonoBehaviour
     public AudioClip emitSound;
     public AudioClip moveSound;
 
-    private const float MIN_POSITION = 0;  // inclusive
-    private const float MAX_POSITION = 9;  // inclusive
+    public const float MIN_POSITION = 0;  // inclusive
+    public const float MAX_POSITION = 9;  // inclusive
 
     private AudioSource source;
 
@@ -90,7 +90,7 @@ public class CursorController : MonoBehaviour
             {
                 return;
             }
-            moduleController.AddStatement(new Statement(gestureName, true));
+            moduleController.AddStatement(gestureName);
         }
 
         // if (Input.GetKeyDown(KeyCode.Delete))
@@ -201,6 +201,7 @@ public class CursorController : MonoBehaviour
         {
             moduleController.OnPressRecord();
         }
+        /*
         if (Input.GetKeyDown(KeyCode.A))
         {
             MoveLeft();
@@ -230,6 +231,7 @@ public class CursorController : MonoBehaviour
         {
             Emit();
         }
+        */
         if (Input.GetKeyDown(KeyCode.Delete))
         {
             Delete();
@@ -243,11 +245,16 @@ public class CursorController : MonoBehaviour
         foreach (Collider collider in colliders)
         {
             // TODO: look into layer masks
-            if (collider.gameObject.tag == "Block")
+            if (collider.gameObject.tag == "Block" && !this.moduleController.IsRecording())
             {
                 return false;
             }
         }
         return true;
+    }
+
+    public Vector3 CursorPosition()
+    {
+        return this.gameObject.transform.position;
     }
 }
