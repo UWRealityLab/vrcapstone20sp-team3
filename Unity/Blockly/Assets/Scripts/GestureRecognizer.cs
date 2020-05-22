@@ -81,7 +81,7 @@ public class GestureRecognizer : MonoBehaviour {
       }
     } else if (curr.Value == "Open") {
       curr = curr.Next;
-      if (curr.Value == "Fist" || (curr.Value == "No Pose" && curr.Next.Value == "Fist")) {
+      if (curr.Value == "Fist" || (curr.Value == "Default" && curr.Next.Value == "Fist")) {
         return "Emit";
       }
     } else if (curr.Value == "Module") {

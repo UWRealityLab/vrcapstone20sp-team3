@@ -7,31 +7,42 @@ namespace Blockly {
 public class DisplayManager : MonoBehaviour {
   public static DisplayManager Instance;
 
-  public TextMesh leftPoseDisplay;
-  public TextMesh rightPoseDisplay;
+  public TextMesh LeftGestureDisplay;
+  public TextMesh RightGestureDisplay;
 
-  public TextMesh leftGestureDisplay;
-  public TextMesh rightGestureDisplay;
+  public TextMesh LeftPoseDisplay;
+  public TextMesh RightPoseDisplay;
+
+  public TextMesh LeftPoseErrorDisplay;
+  public TextMesh RightPoseErrorDisplay;
 
   public void Awake() {
     Debug.Assert(Instance == null);
     Instance = this;
   }
 
-  public void OnUpdateLeftPose(string poseName) {
-    leftPoseDisplay.text = poseName;
-  }
-
-  public void OnUpdateRightPose(string poseName) {
-    rightPoseDisplay.text = poseName;
-  }
-
   public void OnUpdateLeftGesture(string gestureName) {
-    leftGestureDisplay.text = gestureName;
+    LeftGestureDisplay.text = gestureName;
   }
 
   public void OnUpdateRightGesture(string gestureName) {
-    rightGestureDisplay.text = gestureName;
+    RightGestureDisplay.text = gestureName;
+  }
+
+  public void OnUpdateLeftPose(string poseName) {
+    LeftPoseDisplay.text = poseName;
+  }
+
+  public void OnUpdateRightPose(string poseName) {
+    RightPoseDisplay.text = poseName;
+  }
+
+  public void SetLeftPoseError(float error) {
+    LeftPoseErrorDisplay.text = "Error: " + error.ToString("F2");
+  }
+
+  public void SetRightPoseError(float error) {
+    RightPoseErrorDisplay.text = "Error: " + error.ToString("F2");
   }
 }
 

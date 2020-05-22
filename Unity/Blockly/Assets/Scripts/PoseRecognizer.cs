@@ -47,33 +47,27 @@ public class PoseRecognizer : MonoBehaviour {
   }
 
   public void Update() {
-    foreach (var targetPose in leftPoses) {
-      Debug.Log($"checking pose {targetPose.name}");
-      Debug.Log(targetPose.data);
-      Debug.Log(targetPose.data.BoneRotations);
-    }
-    Debug.Log("recognizing left pose");
-    string leftPose = Recognize(player.GetCurrLeftPose(), leftPoses);
-    Debug.Log($"leftPose: {leftPose}");
-    Debug.Log("recognizing right pose");
-    string rightPose = Recognize(player.GetCurrRightPose(), rightPoses);
-    Debug.Log($"rightPose: {rightPose}");
-    if (leftPose != currLeftPose) {
+    string leftPose = Recognize(player.GetCurrLeftPose(), "left", leftPoses);
+    string rightPose = Recognize(player.GetCurrRightPose(), "right", rightPoses);
+    if (leftPose != null && leftPose != currLeftPose) {
+      Debug.Log($"leftPose: {leftPose}");
       OnUpdateLeftPose.Invoke(leftPose);
     }
-    if (rightPose != currRightPose) {
+    if (rightPose != null && rightPose != currRightPose) {
+      Debug.Log($"rightPose: {rightPose}");
       OnUpdateRightPose.Invoke(rightPose);
     }
     currLeftPose = leftPose;
     currRightPose = rightPose;
   }
 
-  public string Recognize(SkeletonPoseData pose, List<Pose> targetPoses) {
+  // TODO shouldn't need both hand and targetposes
+  public string Recognize(SkeletonPoseData pose, string hand, List<Pose> targetPoses) {
     if (!pose.IsDataValid || !pose.IsDataHighConfidence) {
-      Debug.Log("ignoring dodgy input pose");
-      if (targetPoses == leftPoses) {
+      // Debug.Log("ignoring dodgy input pose");
+      if (hand == "left") {
         return currLeftPose;
-      } else if (targetPoses == rightPoses) {
+      } else if (hand == "right") {
         return currRightPose;
       }
       Debug.Assert(false);
@@ -87,31 +81,30 @@ public class PoseRecognizer : MonoBehaviour {
     Quaternion quatA = new Quaternion();
     Quaternion quatB = new Quaternion();
     foreach (var targetPose in targetPoses) {
-      Debug.Log($"checking against pose {targetPose.name}");
       float error = 0f;
+      bool poseDiscarded = false;
       for (int i = 0; i < pose.BoneRotations.Length; i++) {
-        Debug.Log($"A error={error}");
         OVRPlugin.Quatf inputQuat = pose.BoneRotations[i];
-        Debug.Log($"B inputQuat={inputQuat}");
-        Debug.Log($"B.5 targetPose.data={targetPose.data}");
-        Debug.Log($"B.75 targetPose.data.BoneRotations={targetPose.data.BoneRotations}");
         OVRPlugin.Quatf targetQuat = targetPose.data.BoneRotations[i];
-        Debug.Log($"C targetQuat={targetQuat}");
         quatA.Set(inputQuat.x, inputQuat.y, inputQuat.z, inputQuat.w);
-        Debug.Log($"D");
         quatB.Set(targetQuat.x, targetQuat.y, targetQuat.z, targetQuat.w);
-        Debug.Log($"E");
         error += Quaternion.Angle(quatA, quatB);
-        Debug.Log($"F error={error}");
         if (error > threshold) {
-          Debug.Log($"  discarding pose (error={error} > threshold={threshold})");
+          poseDiscarded = true;
           break;
         }
       }
-      if (error < bestError) {
+      if (!poseDiscarded && error < bestError) {
         bestCandidate = targetPose.name;
         bestError = error;
       }
+    }
+    if (hand == "left") {
+      DisplayManager.Instance.SetLeftPoseError(bestError);
+    } else if (hand == "right") {
+      DisplayManager.Instance.SetRightPoseError(bestError);
+    } else {
+      Debug.Assert(false);
     }
     return bestCandidate;
   }
@@ -132,9 +125,6 @@ public class PoseRecognizer : MonoBehaviour {
         var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
         poseData = (SkeletonPoseData) formatter.Deserialize(filestream);
       }
-      Debug.Log($"poseData: {poseData}");
-      Debug.Log($"poseData.BoneRotations: {poseData.BoneRotations}");
-      Debug.Log($"poseData.BoneRotations[3]: {poseData.BoneRotations[3]}");
       Pose pose = new Pose(poseName, poseData);
       if (hand == "left") {
         leftPoses.Add(pose);

@@ -83,8 +83,6 @@ public class CursorController : MonoBehaviour
 
         if (moduleController.IsRecording())
         {
-            Debug.Log("OnRecognizeGesture: " + gestureName);
-
             // only record if the move actually happens (don't record if cursor is at edge of valid region and doesn't actually move)
             if (gestureName != "Emit" && this.gameObject.transform.position == oldPosition)
             {
@@ -199,42 +197,42 @@ public class CursorController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.X))
         {
-            moduleController.OnPressRecord();
+          OnRecognizeGesture("CreateModule");
         }
         /*
         if (Input.GetKeyDown(KeyCode.A))
         {
-            MoveLeft();
+          OnRecognizeGesture("Left");
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            MoveRight();
+          OnRecognizeGesture("Right");
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            MoveBackward();
+          OnRecognizeGesture("Backward");
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            MoveForward();
+          OnRecognizeGesture("Forward");
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            MoveDown();
+          OnRecognizeGesture("Down");
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            MoveUp();
+          OnRecognizeGesture("Up");
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Emit();
+          OnRecognizeGesture("Emit");
         }
         */
         if (Input.GetKeyDown(KeyCode.Delete))
         {
-            Delete();
+          OnRecognizeGesture("Delete");
         }
     }
 

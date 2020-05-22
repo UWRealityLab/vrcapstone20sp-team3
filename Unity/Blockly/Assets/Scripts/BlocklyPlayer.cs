@@ -5,44 +5,45 @@ using static OVRSkeleton;
 namespace Blockly {
 
 public class BlocklyPlayer : MonoBehaviour {
+  public static BlocklyPlayer Instance;
+
   private HandsManager handsManager;
 
   private Transform leftIndexTip;
   private Transform rightIndexTip;
 
-  #if UNITY_EDITOR
+#if UNITY_EDITOR
   // positional velocity
   private Vector3 posV;
   // positional acceleration
-  private float posA = 1f;
+  private float posA = 5f;
 
   // rotational velocity
   private Vector3 rotV;
   // rotational acceleration
   private float rotA = 30f;
 
-    // TODO would be ideal if there was an editor-integrated variable, so we could
-    // get less janky focus detection.
-    private bool isFocused;
-  #else
-    // TODO is `#else` required?
-  #endif
+  // TODO would be ideal if there was an editor-integrated variable, so we could
+  // get less janky focus detection.
+  private bool isFocused;
+#endif
 
   public void Awake() {
+    Debug.Assert(Instance == null);
+    Instance = this;
+
     #if UNITY_EDITOR
       // lock the cursor. don't worry. you can unlock it (in the Unity editor, at
       // least) by pressing escape.
       Cursor.visible = false;
       Cursor.lockState = CursorLockMode.Locked;
       isFocused = true;
-    #else
     #endif
   }
 
   public void Start() {
-    Debug.Log("weeeeeeeeeeeeee");
     handsManager = HandsManager.Instance;
-    // TODO wait until hands manager is initialized before letting anything else happen
+    // TODO wait until hands manager is initialized before letting anything else happen (use coroutines)
     Debug.Log($"hands manager is initialized? {handsManager.IsInitialized()}");
 
     leftIndexTip = handsManager.LeftHandSkeleton.Bones[(int) BoneId.Hand_IndexTip].Transform;
@@ -50,15 +51,10 @@ public class BlocklyPlayer : MonoBehaviour {
     Debug.Assert(handsManager.LeftHandSkeleton.Bones[(int) BoneId.Hand_IndexTip].Id == BoneId.Hand_IndexTip);
     rightIndexTip = handsManager.RightHandSkeleton.Bones[(int) BoneId.Hand_IndexTip].Transform;
     Debug.Log($"setting right index tip to: {leftIndexTip}");
-    // IOVRSkeletonDataProvider leftProvider = handsManager.LeftHand;
-    // leftIndexTip = leftProvider.GetSkeletonPoseData().Bones[BoneId.Hand_IndexTip].Transform;
-    // rightIndexTip = handsManager.RightHand.GetSkeletonPoseData().Bones[BoneId.Hand_IndexTip].Transform;
   }
 
   #if UNITY_EDITOR
     public void Update() {
-      Debug.Log($"hands manager is null? {handsManager == null}");
-      Debug.Log($"hands manager is initialized? {handsManager.IsInitialized()}");
       if (Input.GetKeyDown(KeyCode.Escape)) {
         isFocused = !isFocused;
       }
@@ -110,7 +106,6 @@ public class BlocklyPlayer : MonoBehaviour {
 
       transform.eulerAngles = rotV;
     }
-  #else
   #endif
 
   // player interface implementations

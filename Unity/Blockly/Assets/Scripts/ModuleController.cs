@@ -1,5 +1,4 @@
 ﻿using Blockly;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -233,6 +232,74 @@ public class ModuleController : MonoBehaviour
         this.blockMaterial.color = fadedColor;
     }
 
+    // if module is clicked on, set the module to be the currently selected module
+    private void Select()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Vector3 playerPosition = BlocklyPlayer.Instance.transform.position;
+
+            Collider[] hitColliders = Physics.OverlapSphere(playerPosition, 5);
+            foreach (Collider collider in hitColliders)
+            {
+                if (collider.gameObject.tag == "Library Block")
+                {
+                    this.selectedModule = collider.gameObject;
+                    Debug.Log("module was selected!");
+                    break;
+                }
+            }
+        }
+
+
+        //Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+        //int i = 0;
+        //while (i < hitColliders.Length)
+        //{
+        //    hitColliders[i].SendMessage("AddDamage");
+        //    i++;
+        //}
+
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    Debug.Log("Mouse is down");
+        //    RaycastHit hitInfo = new RaycastHit();
+        //    bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+        //    if (hit)
+        //    {
+        //        Debug.Log("Hit " + hitInfo.transform.gameObject.name);
+        //        if (hitInfo.collider.gameObject.tag == "isModule")
+        //        {
+        //            this.selectedModule = hitInfo.collider.gameObject;
+        //            Debug.Log("module was successfully selected");
+        //        }
+        //        else
+        //        {
+        //            Debug.Log("not a module");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("No hit");
+        //    }
+        //}
+    }
+
+    private void ApplyModule()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            if (this.selectedModule != null)
+            {
+                Debug.Log("calling on Use Module with " + objectToName[this.selectedModule]);
+                OnUseModule(objectToName[this.selectedModule]);
+            } else
+            {
+                Debug.Log("no module was selected :(");
+            }
+        }
+    }
+
     // add given module to the module library: draw a copy of the module in the module library
     // and add blocks to mapping of block->id
     private void AddToLibrary(int moduleId)
@@ -241,17 +308,16 @@ public class ModuleController : MonoBehaviour
         Debug.Log("AddToLibrary: module #" + moduleId + " at " + startPosition + "!");
         Module module = this.allModules[moduleId];
 
-        GameObject parentObject = new GameObject();
-        // GameObject parentObject = Instantiate(this.libraryModuleParentPrefab, startPosition, Quaternion.identity) as GameObject;
+        GameObject moduleMeshObj = new GameObject();
 
-        objectToId.Add(parentObject, moduleId);
+        objectToId.Add(moduleMeshObj, moduleId);
         foreach (string statement in module.Statements())
         {
             switch (statement)
             {
                 case "Emit":
                     GameObject obj = Instantiate(this.libraryBlockPrefab, startPosition, Quaternion.identity);
-                    obj.transform.parent = parentObject.transform;
+                    obj.transform.parent = moduleMeshObj.transform;
                     objectToId.Add(obj, moduleId);
                     break;
                 // case "Delete":
@@ -280,8 +346,37 @@ public class ModuleController : MonoBehaviour
             }
         }
         GameObject endCursor = Instantiate(this.libraryModuleEndCursorPrefab, startPosition, Quaternion.identity);
-        endCursor.transform.parent = parentObject.transform;
+        endCursor.transform.parent = moduleMeshObj.transform;
         objectToId.Add(endCursor, moduleId);
+
+        // find bounding box of module
+        var colliders = moduleMeshObj.GetComponentsInChildren<Collider>();
+        Bounds meshBounds = colliders[0].bounds;
+        foreach(var c in colliders) meshBounds.Encapsulate(c.bounds);
+
+        // TODO make the allowed bounds a static field of ModuleLibrary, rather
+        // than a field of the lib module prefab
+        GameObject parentObject = Instantiate(this.libraryModuleParentPrefab);
+        Bounds allowedBounds = parentObject.transform.Find("Mesh").GetComponent<Collider>().bounds;
+        Debug.Log($"meshBounds.center: {meshBounds.center}");
+        Debug.Log($"allowedBounds.center: {allowedBounds.center}");
+        // recenter blocks within moduleMeshObj
+        Vector3 delta = allowedBounds.center - meshBounds.center;
+        Transform[] children = moduleMeshObj.transform.GetComponentsInChildren<Transform>();
+        foreach (Transform child in children) {
+          if (child.parent == moduleMeshObj.transform) {
+            child.transform.position += delta;
+          }
+        }
+
+        // scale according to calculated bounding box so it fits in the library module's
+        // box collider
+        var szA = allowedBounds.size;
+        var szB = meshBounds.size;
+        float[] scales = {szA.x / szB.x, szA.y / szB.y, szA.z / szB.z};
+        moduleMeshObj.transform.localScale *= scales.Min();
+
+        ModuleLibrary.Instance.AddModule(moduleId, moduleMeshObj);
     }
 
     private Vector3 moduleIdToLibraryPosition(int moduleId)

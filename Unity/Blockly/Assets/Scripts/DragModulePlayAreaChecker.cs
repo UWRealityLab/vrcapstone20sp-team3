@@ -10,7 +10,10 @@ public class DragModulePlayAreaChecker : MonoBehaviour {
 
     public void Awake() {
         collider = GetComponent<BoxCollider>();
-        validAreaCollider = GameObject.Find("/Valid Area").GetComponent<BoxCollider>();
+        GameObject validBlockAreaObj = GameObject.FindGameObjectWithTag("Valid Block Area");
+        Debug.Log($"Valid Block Area: {validBlockAreaObj}");
+        validAreaCollider = validBlockAreaObj.GetComponent<BoxCollider>();
+        Debug.Log($"Valid Area Collider: {validAreaCollider}");
     }
 
     public void OnTriggerEnter(Collider other) {

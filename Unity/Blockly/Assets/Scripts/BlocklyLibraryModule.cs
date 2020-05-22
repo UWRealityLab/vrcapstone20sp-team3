@@ -5,8 +5,7 @@ using OculusSampleFramework;
 namespace Blockly
 {
 
-// TODO rename to LibraryModule
-public class BlocklyLibraryModuleController : MonoBehaviour
+public class BlocklyLibraryModule : MonoBehaviour
 {
 	[SerializeField] private GameObject _startStopButton = null;
 	[SerializeField] private SelectionCylinder _selectionCylinder = null;
@@ -22,7 +21,7 @@ public class BlocklyLibraryModuleController : MonoBehaviour
 
 	private void Awake()
 	{
-		Debug.Assert(moduleName != -1);
+		// Debug.Assert(moduleName != -1);
 		Assert.IsNotNull(_startStopButton);
 		Assert.IsNotNull(_selectionCylinder);
 	}
@@ -61,9 +60,11 @@ public class BlocklyLibraryModuleController : MonoBehaviour
 					_moduleMeshObj.GetComponent<Renderer>().material.color = Color.red;
 					_selectionCylinder.CurrSelectionState = SelectionCylinder.SelectionState.Off;
 					GameObject dragModObj = Instantiate(_dragModulePrefab);
+					dragModObj.transform.position = transform.position;
 					BlocklyDragModule dragMod = dragModObj.GetComponent<BlocklyDragModule>();
 					dragMod.toolInteractingWithMe = obj.Tool;
 					dragMod.moduleName = moduleName;
+					Debug.Log($"created drag module with moduleName={moduleName}");
 					_toolInteractingWithMe = null;
 				} else {
 					_selectionCylinder.CurrSelectionState = SelectionCylinder.SelectionState.Highlighted;
