@@ -3,14 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Blockly {
+
 public class CursorController : MonoBehaviour
 {
+    public static CursorController Instance = null;
+
     public float gridSize = 1.0f;
     public GameObject blockPrefab;  // prefab for blocks, used when emitted
     public GameObject moduleCreationBlockPrefab;  // prefab for the temporary blocks that show up during module creation
 
     public GameObject recordButton;
-    private ModuleController moduleController;
 
     public AudioClip emitSound;
     public AudioClip moveSound;
@@ -20,14 +23,15 @@ public class CursorController : MonoBehaviour
 
     private AudioSource source;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        Debug.Assert(Instance == null, "singleton class instantiated multiple times");
+        Instance = this;
         source = GetComponent<AudioSource>();
-        moduleController = recordButton.GetComponent<ModuleController>();
     }
 
-    void Awake()
+    // Start is called before the first frame update
+    void Start()
     {
         source = GetComponent<AudioSource>();
     }
@@ -42,7 +46,7 @@ public class CursorController : MonoBehaviour
     {
         if (gestureName == "CreateModule")
         {
-            moduleController.OnPressRecord();
+            ModuleController.Instance.OnPressRecord();
             return;
         }
 
@@ -81,14 +85,14 @@ public class CursorController : MonoBehaviour
             }
         }
 
-        if (moduleController.IsRecording())
+        if (ModuleController.Instance.IsRecording())
         {
             // only record if the move actually happens (don't record if cursor is at edge of valid region and doesn't actually move)
             if (gestureName != "Emit" && this.gameObject.transform.position == oldPosition)
             {
                 return;
             }
-            moduleController.AddStatement(gestureName);
+            ModuleController.Instance.AddStatement(gestureName);
         }
 
         // if (Input.GetKeyDown(KeyCode.Delete))
@@ -171,7 +175,7 @@ public class CursorController : MonoBehaviour
         Vector3 cursorPosition = this.gameObject.transform.position;
         if (isGridSpaceEmpty(cursorPosition))
         {
-            GameObject prefab = this.moduleController.IsRecording() ? this.moduleCreationBlockPrefab : this.blockPrefab;
+            GameObject prefab = ModuleController.Instance.IsRecording() ? this.moduleCreationBlockPrefab : this.blockPrefab;
             GameObject obj = Instantiate(prefab, this.gameObject.transform.position, Quaternion.identity) as GameObject;
         }
     }
@@ -255,4 +259,6 @@ public class CursorController : MonoBehaviour
     {
         return this.gameObject.transform.position;
     }
+}
+
 }

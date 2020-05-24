@@ -11,7 +11,7 @@ public class BlocklyLibraryModule : MonoBehaviour
 	[SerializeField] private SelectionCylinder _selectionCylinder = null;
 
 	[SerializeField]
-	private GameObject _moduleMeshObj;
+	private GameObject _baseMeshObj;
 	[SerializeField]
 	private GameObject _dragModulePrefab;
 
@@ -57,18 +57,27 @@ public class BlocklyLibraryModule : MonoBehaviour
 				if ((obj.OldInteractableState == InteractableState.ProximityState || obj.OldInteractableState == InteractableState.ContactState)
 					&& obj.NewInteractableState == InteractableState.Default) {
 					// ray went outside of proximity zone while pinching (i.e., the module was dragged out of the library)
-					_moduleMeshObj.GetComponent<Renderer>().material.color = Color.red;
+					_baseMeshObj.GetComponent<Renderer>().material.color = Color.red;
 					_selectionCylinder.CurrSelectionState = SelectionCylinder.SelectionState.Off;
 					GameObject dragModObj = Instantiate(_dragModulePrefab);
 					dragModObj.transform.position = transform.position;
 					BlocklyDragModule dragMod = dragModObj.GetComponent<BlocklyDragModule>();
 					dragMod.toolInteractingWithMe = obj.Tool;
 					dragMod.moduleName = moduleName;
-					Debug.Log($"created drag module with moduleName={moduleName}");
+					Debug.Log($"creating drag module with moduleName={moduleName}");
+
+					GameObject moduleMeshObj = _baseMeshObj.transform.Find("Module Mesh").gameObject;
+					GameObject moduleMeshObjCopy = Instantiate(moduleMeshObj);
+					moduleMeshObjCopy.transform.parent = dragModObj.transform.Find("Mesh");
+					moduleMeshObjCopy.transform.localPosition = Vector3.zero;
+					moduleMeshObjCopy.transform.localScale = moduleMeshObj.transform.localScale;
+
+					Debug.Log($"finished creating drag module");
+
 					_toolInteractingWithMe = null;
 				} else {
 					_selectionCylinder.CurrSelectionState = SelectionCylinder.SelectionState.Highlighted;
-					_moduleMeshObj.GetComponent<Renderer>().material.color = Color.cyan;
+					_baseMeshObj.GetComponent<Renderer>().material.color = Color.cyan;
 				}
 			} else if (obj.Tool.ToolInputState == ToolInputState.PrimaryInputUp || obj.Tool.ToolInputState == ToolInputState.Inactive) {
 				// finger is not pinching
@@ -80,7 +89,7 @@ public class BlocklyLibraryModule : MonoBehaviour
 
 		if (_toolInteractingWithMe == null) {
 			// tool stopped interacting with us
-			_moduleMeshObj.GetComponent<Renderer>().material.color = Color.white;
+			_baseMeshObj.GetComponent<Renderer>().material.color = Color.white;
 			_selectionCylinder.CurrSelectionState = SelectionCylinder.SelectionState.Off;
 
 			if (obj.NewInteractableState > InteractableState.Default) {

@@ -48,7 +48,8 @@ public class BlocklyDragModule : MonoBehaviour {
             toolInteractingWithMe = null;
 
             if (playAreaChecker.InPlayArea()) {
-                Debug.Log($"doobs: placed module {moduleName}");
+              ModuleController.Instance.OnUseModule(moduleName);
+              Debug.Log($"doobs: placed module {moduleName}");
             } else {
                 Debug.Log($"doobs: did NOT place module {moduleName}");
             }

@@ -47,7 +47,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startStopButton: {fileID: 4218014796023716499}
   _boxCollider: {fileID: 4218014795902092783}
-  _maxSpeed: 10
   toolInteractingWithMe: {fileID: 0}
   moduleName: -1
 --- !u!1 &4218014794491755714
@@ -188,7 +187,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4218014795902092780}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -228,7 +227,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4218014795902092780}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -259,7 +258,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &4218014796023716499
 GameObject:

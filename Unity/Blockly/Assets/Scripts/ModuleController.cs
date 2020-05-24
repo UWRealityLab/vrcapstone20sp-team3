@@ -4,15 +4,18 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
+namespace Blockly {
+
 public class ModuleController : MonoBehaviour
 {
+    public static ModuleController Instance = null;
+
     private bool isRecordingModule;
     private Module currentModule;
     private List<Module> allModules;  // list of modules (which are lists of actions)
 
     /* cursor-related, module creation/recording */
     public GameObject cursor;
-    private CursorController cursorController;
     private Vector3 originalCursorPosition;  // for resetting cursor after completing module recording
 
     public Material blockMaterial;
@@ -28,10 +31,14 @@ public class ModuleController : MonoBehaviour
     private const int ROW_LENGTH = 5;  // number of modules in one row of the module library
     private const float LIBRARY_GRID_SIZE = 1f;  // size of blocks in module library
 
+    void Awake() {
+        Debug.Assert(Instance == null, "singleton class instantiated multiple times");
+        Instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        this.cursorController = cursor.GetComponent<CursorController>();
         this.isRecordingModule = false;
         this.allModules = new List<Module>();
         this.objectToId = new Dictionary<GameObject, int>();
@@ -132,7 +139,7 @@ public class ModuleController : MonoBehaviour
     {
         this.isRecordingModule = true;
         this.currentModule = new Module();
-        this.originalCursorPosition = this.cursorController.gameObject.transform.position;
+        this.originalCursorPosition = CursorController.Instance.gameObject.transform.position;
         setBlockMaterialTransparency(0.1f);
     }
 
@@ -161,7 +168,7 @@ public class ModuleController : MonoBehaviour
         }
 
         this.isRecordingModule = false;
-        this.cursorController.gameObject.transform.position = this.originalCursorPosition;
+        CursorController.Instance.gameObject.transform.position = this.originalCursorPosition;
         this.currentModule = null;
         setBlockMaterialTransparency(1f);
     }
@@ -194,7 +201,7 @@ public class ModuleController : MonoBehaviour
         foreach (string statement in module.Statements())
         {
             Debug.Log("recognizing gesture");
-            cursorController.OnRecognizeGesture(statement);
+            CursorController.Instance.OnRecognizeGesture(statement);
         }
     }
 
@@ -309,6 +316,7 @@ public class ModuleController : MonoBehaviour
         Module module = this.allModules[moduleId];
 
         GameObject moduleMeshObj = new GameObject();
+        moduleMeshObj.name = "Module Mesh";
 
         objectToId.Add(moduleMeshObj, moduleId);
         foreach (string statement in module.Statements())
@@ -376,6 +384,9 @@ public class ModuleController : MonoBehaviour
         float[] scales = {szA.x / szB.x, szA.y / szB.y, szA.z / szB.z};
         moduleMeshObj.transform.localScale *= scales.Min();
 
+        // TODO ANOTHER reason we should be using a static field, because we wrote shit that creates a library module *JUST* to get its allowed bounds.
+        Destroy(parentObject);
+
         ModuleLibrary.Instance.AddModule(moduleId, moduleMeshObj);
     }
 
@@ -406,4 +417,6 @@ public class ModuleController : MonoBehaviour
         this.moduleLibraryPositions[moduleId] = module.StartPositionFromMinCorner(minCorner);
         return this.moduleLibraryPositions[moduleId];
     }
+}
+
 }
