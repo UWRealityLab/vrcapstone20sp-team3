@@ -27,7 +27,7 @@ public class ModuleController : MonoBehaviour
     private Dictionary<int, Vector3> moduleLibraryPositions;  // module in library -> x, y, z position in library
     private const int FIRST_ROW_OFFSET = -15;  // x-value of first row of module library
     private const int ROW_LENGTH = 5;  // number of modules in one row of the module library
-    private const float LIBRARY_GRID_SIZE = 1f;  // size of blocks in module library
+    private const float LIBRARY_GRID_SIZE = 0.5f;  // size of blocks in module library
 
     // Start is called before the first frame update
     void Start()
