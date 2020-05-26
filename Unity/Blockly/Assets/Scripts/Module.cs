@@ -9,7 +9,7 @@ public class Module : MonoBehaviour
     private Vector3 minimum;  // min x, y, z offset
     private List<string> statements;
 
-    private const float GRID_SIZE = 1f;
+    private const float GRID_SIZE = 0.5f;
 
     public Module()
     {
