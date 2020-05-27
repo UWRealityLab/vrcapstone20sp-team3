@@ -66,7 +66,7 @@ public class BlocklyLibraryModule : MonoBehaviour
 					dragMod.moduleName = moduleName;
 					Debug.Log($"creating drag module with moduleName={moduleName}");
 
-					GameObject moduleMeshObj = _baseMeshObj.transform.Find("Module Mesh").gameObject;
+					GameObject moduleMeshObj = _baseMeshObj.transform.Find("ModuleMesh").gameObject;
 					GameObject moduleMeshObjCopy = Instantiate(moduleMeshObj);
 					moduleMeshObjCopy.transform.parent = dragModObj.transform.Find("Mesh");
 					moduleMeshObjCopy.transform.localPosition = Vector3.zero;

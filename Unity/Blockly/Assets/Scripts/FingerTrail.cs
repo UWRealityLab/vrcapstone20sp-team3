@@ -17,6 +17,12 @@ public class FingerTrail : MonoBehaviour {
   private Transform indexFingerTip;
 
   public void Awake() {
+    #if UNITY_EDITOR
+      // finger trails don't work in the editor
+      Destroy(this);
+      return;
+    #endif
+
     trailObj = new GameObject("Finger Trail");
     trailTransform = trailObj.transform;
     trail = trailObj.AddComponent<TrailRenderer>();

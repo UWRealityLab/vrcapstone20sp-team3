@@ -315,8 +315,7 @@ public class ModuleController : MonoBehaviour
         Debug.Log("AddToLibrary: module #" + moduleId + " at " + startPosition + "!");
         Module module = this.allModules[moduleId];
 
-        GameObject moduleMeshObj = new GameObject();
-        moduleMeshObj.name = "Module Mesh";
+        GameObject moduleMeshObj = new GameObject("ModuleMesh");
 
         objectToId.Add(moduleMeshObj, moduleId);
         foreach (string statement in module.Statements())
@@ -356,36 +355,6 @@ public class ModuleController : MonoBehaviour
         GameObject endCursor = Instantiate(this.libraryModuleEndCursorPrefab, startPosition, Quaternion.identity);
         endCursor.transform.parent = moduleMeshObj.transform;
         objectToId.Add(endCursor, moduleId);
-
-        // find bounding box of module
-        var colliders = moduleMeshObj.GetComponentsInChildren<Collider>();
-        Bounds meshBounds = colliders[0].bounds;
-        foreach(var c in colliders) meshBounds.Encapsulate(c.bounds);
-
-        // TODO make the allowed bounds a static field of ModuleLibrary, rather
-        // than a field of the lib module prefab
-        GameObject parentObject = Instantiate(this.libraryModuleParentPrefab);
-        Bounds allowedBounds = parentObject.transform.Find("Mesh").GetComponent<Collider>().bounds;
-        Debug.Log($"meshBounds.center: {meshBounds.center}");
-        Debug.Log($"allowedBounds.center: {allowedBounds.center}");
-        // recenter blocks within moduleMeshObj
-        Vector3 delta = allowedBounds.center - meshBounds.center;
-        Transform[] children = moduleMeshObj.transform.GetComponentsInChildren<Transform>();
-        foreach (Transform child in children) {
-          if (child.parent == moduleMeshObj.transform) {
-            child.transform.position += delta;
-          }
-        }
-
-        // scale according to calculated bounding box so it fits in the library module's
-        // box collider
-        var szA = allowedBounds.size;
-        var szB = meshBounds.size;
-        float[] scales = {szA.x / szB.x, szA.y / szB.y, szA.z / szB.z};
-        moduleMeshObj.transform.localScale *= scales.Min();
-
-        // TODO ANOTHER reason we should be using a static field, because we wrote shit that creates a library module *JUST* to get its allowed bounds.
-        Destroy(parentObject);
 
         ModuleLibrary.Instance.AddModule(moduleId, moduleMeshObj);
     }
