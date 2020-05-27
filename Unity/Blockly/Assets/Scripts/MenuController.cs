@@ -9,26 +9,25 @@ public class MenuController : MonoBehaviour
 {
     private GameObject puzzleButton;
     private GameObject freePlayButton;
-    private GameObject level1Button;
-    private GameObject level2Button;
-    private GameObject level3Button;
+    //private GameObject level1Button;
+    //private GameObject level2Button;
+    //private GameObject level3Button;
+
+    public GameObject level;
+    private LevelController levelController;
 
     private void Start()
     {
+        levelController = level.GetComponent<LevelController>();
         puzzleButton = GameObject.Find("Puzzle Button");
         freePlayButton = GameObject.Find("Free Play Button");
-        level1Button = GameObject.Find("Level 1 Button");
-        level2Button = GameObject.Find("Level 2 Button");
-        level3Button = GameObject.Find("Level 3 Button");
-        SetButtonActive(false);
+        levelController.SetButtonActive(false);
     }
 
     public void BeginPuzzleMode()
     {
-        //puzzleButton.gameObject.GetComponent<Renderer>().enabled = f;
         puzzleButton.SetActive(false);
-        SetButtonActive(true);
-        //freePlayButton.gameObject.GetComponent<Renderer>().enabled = true;
+        levelController.SetButtonActive(true);
         freePlayButton.SetActive(false);
     }
 
@@ -40,23 +39,25 @@ public class MenuController : MonoBehaviour
         freePlayButton.SetActive(false);
     }
 
-    public void BeginLevel1()
-    {
-        SetButtonActive(false);
-        LoadScene();
-    }
+    //public void BeginLevel1()
+    //{
+    //    popupMessage.Open("Step 1: Emit a block.");
 
-    public void BeginLevel2()
-    {
-        SetButtonActive(false);
-        LoadScene();
-    }
+    //    SetButtonActive(false);
+    //    LoadScene();
+    //}
 
-    public void BeginLevel3()
-    {
-        SetButtonActive(false);
-        LoadScene();
-    }
+    //public void BeginLevel2()
+    //{
+    //    SetButtonActive(false);
+    //    LoadScene();
+    //}
+
+    //public void BeginLevel3()
+    //{
+    //    SetButtonActive(false);
+    //    LoadScene();
+    //}
 
     private void LoadScene()
     {
@@ -64,10 +65,10 @@ public class MenuController : MonoBehaviour
         //SceneManager.LoadScene("GestureRecognition", LoadSceneMode.Additive);
     }
 
-    public void SetButtonActive(bool active)
-    {
-        level1Button.SetActive(active);
-        level2Button.SetActive(active);
-        level3Button.SetActive(active);
-    }
+    //public void SetButtonActive(bool active)
+    //{
+    //    level1Button.SetActive(active);
+    //    level2Button.SetActive(active);
+    //    level3Button.SetActive(active);
+    //}
 }
