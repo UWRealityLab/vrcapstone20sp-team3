@@ -16,7 +16,7 @@ public class CursorController : MonoBehaviour
 
     public const float GRID_SIZE = 0.5f;
     public const float MIN_POSITION = 0;  // inclusive
-    public const float MAX_POSITION = 4.5;  // inclusive
+    public const float MAX_POSITION = 4.5f;  // inclusive
 
     private AudioSource source;
 
