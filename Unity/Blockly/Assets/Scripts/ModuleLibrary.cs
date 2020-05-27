@@ -8,10 +8,14 @@ namespace Blockly {
 public class ModuleLibrary : MonoBehaviour {
   public static ModuleLibrary Instance;
 
+  private static int MODULES_PER_SHELF = 5;
+  private static int MAX_MODULES = 15;
+
   [SerializeField] [NotNull]
   private GameObject libraryModulePrefab;
-  [SerializeField]
-  private Transform modulesContainerTransform;
+  [SerializeField] [NotNull]
+  // ordered from top to bottom shelf
+  private Transform[] modulesContainerTransforms;
 
   [SerializeField]
   private BoxCollider moduleAllowedBoundsCol;
@@ -31,8 +35,10 @@ public class ModuleLibrary : MonoBehaviour {
   }
 
   public void AddModule(int moduleName, GameObject modBlockMeshObj) {
+    Debug.Assert(numModules < MAX_MODULES);
+    Transform modulesContainerTransform = modulesContainerTransforms[numModules / MODULES_PER_SHELF];
     GameObject libModObj = Instantiate(libraryModulePrefab, modulesContainerTransform);
-    libModObj.transform.localPosition = new Vector3(0f, 0f, numModules * 0.64f);
+    libModObj.transform.localPosition = new Vector3(0f, 0f, (numModules % MODULES_PER_SHELF) * 0.43f);
 
     libModObj.GetComponent<BlocklyLibraryModule>().moduleName = moduleName;
     GameObject libModMeshObj = libModObj.transform.Find($"Mesh").gameObject;
