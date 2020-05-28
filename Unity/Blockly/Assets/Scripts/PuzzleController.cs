@@ -10,8 +10,10 @@ public class PuzzleController : MonoBehaviour
     private CursorController cursorController;
 
     public GameObject puzzleBlockPrefab;
+    public GameObject submitBlockPrefab;
 
     private int selectedPuzzleId;  // index of currently selected puzzle
+    private Vector3 submitBlockPosition;
     private List<Module> puzzles;
 
     // Start is called before the first frame update
@@ -31,16 +33,26 @@ public class PuzzleController : MonoBehaviour
         level1.AddStatement("Emit");
         level1.AddStatement("Right");
         level1.AddStatement("Emit");
+        level1.AddStatement("Up");
+        level1.AddStatement("Up");
+        level1.AddStatement("Backward");  // cursor end position ("submit" block)
         level1.Complete();
         puzzles.Add(level1);
         StartPuzzle(0);
     }
 
     // Update is called once per frame
-    // hardcoded keypress stuff
     void Update()
     {
-        /* P - verify puzzle */
+        if (cursorController.CursorPosition() == this.submitBlockPosition)
+        {
+            Boolean result = VerifyPuzzle();
+            Debug.Log("verify puzzle result: " + result);
+        }
+
+        /* TODO: hardcoded for testing in play mode
+         * P - verify puzzle
+         */
         if (Input.GetKeyDown(KeyCode.P))
         {
             Boolean result = VerifyPuzzle();
@@ -82,6 +94,8 @@ public class PuzzleController : MonoBehaviour
                     break;
             }
         }
+        Instantiate(this.submitBlockPrefab, puzzleCursorPosition, Quaternion.identity);  // add submit block
+        this.submitBlockPosition = puzzleCursorPosition;
     }
 
     // verifies the user's blocks against the puzzle's target structure
