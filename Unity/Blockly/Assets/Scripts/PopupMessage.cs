@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class PopupMessage : MonoBehaviour
 {
     public GameObject ui;
+    private PuzzleController puzzleController;
+    private bool verified;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +19,10 @@ public class PopupMessage : MonoBehaviour
     void Update()
     {
         clickButton();
+        if (puzzleController != null && !verified)
+        {
+            MoveToNextLevel();
+        }
     }
 
     public void Open(string message)
@@ -36,7 +42,7 @@ public class PopupMessage : MonoBehaviour
     {
         ui.SetActive(!ui.activeSelf);
 
-        PuzzleController puzzleController = GameObject.Find("Puzzle Controller").GetComponent<PuzzleController>();
+        puzzleController = GameObject.Find("Puzzle Controller").GetComponent<PuzzleController>();
         puzzleController.StartPuzzle(0);
     }
 
@@ -46,6 +52,15 @@ public class PopupMessage : MonoBehaviour
         {
             Button okButton = GameObject.Find("OK").GetComponent<Button>();
             okButton.onClick.Invoke();
+        }
+    }
+
+    public void MoveToNextLevel()
+    {
+        if (puzzleController.VerifyPuzzle())
+        {
+            Open("Do you want to move on to the next level?");
+            verified = true;
         }
     }
 }
