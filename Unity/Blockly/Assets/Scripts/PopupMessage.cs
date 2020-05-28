@@ -29,7 +29,6 @@ public class PopupMessage : MonoBehaviour
                 Text textObject = ui.gameObject.GetComponentInChildren<Text>();
                 textObject.text = message;
             }
-            Time.timeScale = 0f;
         }
     }
 
