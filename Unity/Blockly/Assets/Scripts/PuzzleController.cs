@@ -22,7 +22,7 @@ public class PuzzleController : MonoBehaviour
         this.cursorController = cursor.GetComponent<CursorController>();
         this.puzzles = new List<Module>();
 
-        // TODO: hardcoded level 1, maybe remove later
+        /* level 1 - 2 random emits */
         Module level1 = new Module();
         level1.AddStatement("Right");
         level1.AddStatement("Right");
@@ -38,6 +38,33 @@ public class PuzzleController : MonoBehaviour
         level1.AddStatement("Up");  // cursor end position ("submit" block)
         level1.Complete();
         puzzles.Add(level1);
+
+        /* level 2 - a flat 2x2 square */
+        Module level2 = new Module();
+        level2.AddStatement("Emit");
+        level2.AddStatement("Forward");
+        level2.AddStatement("Emit");
+        level2.AddStatement("Right");
+        level2.AddStatement("Emit");
+        level2.AddStatement("Backward");
+        level2.AddStatement("Emit");
+        level2.AddStatement("Up");
+        puzzles.Add(level2);
+
+        /* level 3 - "stair" shape using the square from level 2 */
+        Module level3 = new Module();
+        for (int i = 0; i < 9; i++)
+        {
+            level3.AddStatement("Emit");
+            level3.AddStatement("Forward");
+            level3.AddStatement("Emit");
+            level3.AddStatement("Right");
+            level3.AddStatement("Emit");
+            level3.AddStatement("Backward");
+            level3.AddStatement("Emit");
+            level3.AddStatement("Up");
+        }
+        puzzles.Add(level3);
     }
 
     // Update is called once per frame
