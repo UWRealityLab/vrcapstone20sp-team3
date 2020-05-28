@@ -21,15 +21,11 @@ public class PopupMessage : MonoBehaviour
 
     public void Open(string message)
     {
-        ui.SetActive(!ui.activeSelf);
-        if (ui.activeSelf)
+        ui.SetActive(true);
+        if (!string.IsNullOrEmpty(message))
         {
-            if (!string.IsNullOrEmpty(message))
-            {
-                Text textObject = ui.gameObject.GetComponentInChildren<Text>();
-                textObject.text = message;
-            }
-            Time.timeScale = 0f;
+            Text textObject = ui.gameObject.GetComponentInChildren<Text>();
+            textObject.text = message;
         }
     }
 

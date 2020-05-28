@@ -38,12 +38,12 @@ public class LevelController : MonoBehaviour
 
     public void BeginLevel1()
     {
-        string dir = "Introduction to gestures\n";
+        SetButtonActive(false);
+        LoadScene();
+        string dir = "Introduction to gestures";
         dir += "1. Move a block to the right.\nPoint your pointer finger and drag in desired direction.\n";
         dir += "2. Emit block at cursor.\nStart with a fist and release,\nmaking a 5 with your fingers, hand facing down.";
         popupMessage.Open(dir);
-        SetButtonActive(false);
-        LoadScene();
     }
 
     public void BeginLevel2()
