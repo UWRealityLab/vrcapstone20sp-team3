@@ -2005,6 +2005,8 @@ MonoBehaviour:
   cursor: {fileID: 2043039209}
   puzzleBlockPrefab: {fileID: 5966132431626884807, guid: 05fa188c5fc6744409c1de4ce082dded,
     type: 3}
+  submitBlockPrefab: {fileID: 5768872339636739573, guid: 1858f5d5be6867942aab6de36bf01438,
+    type: 3}
 --- !u!4 &1152802558
 Transform:
   m_ObjectHideFlags: 0
@@ -2458,7 +2460,7 @@ GameObject:
   - component: {fileID: 2043039215}
   m_Layer: 0
   m_Name: Cursor
-  m_TagString: Untagged
+  m_TagString: Cursor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

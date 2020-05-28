@@ -9,6 +9,8 @@ TagManager:
   - Library Block
   - isHand
   - Puzzle Block
+  - Cursor
+  - Submit Block
   layers:
   - Default
   - TransparentFX
