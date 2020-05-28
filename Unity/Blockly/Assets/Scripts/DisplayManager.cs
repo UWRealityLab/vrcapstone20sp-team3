@@ -7,13 +7,21 @@ namespace Blockly {
 public class DisplayManager : MonoBehaviour {
   public static DisplayManager Instance;
 
+  [NotNull]
   public TextMesh LeftGestureDisplay;
+  [NotNull]
   public TextMesh RightGestureDisplay;
+  [NotNull]
+  public TextMesh JointGestureDisplay;
 
+  [NotNull]
   public TextMesh LeftPoseDisplay;
+  [NotNull]
   public TextMesh RightPoseDisplay;
 
+  [NotNull]
   public TextMesh LeftPoseErrorDisplay;
+  [NotNull]
   public TextMesh RightPoseErrorDisplay;
 
   public void Awake() {
@@ -27,6 +35,10 @@ public class DisplayManager : MonoBehaviour {
 
   public void OnUpdateRightGesture(string gestureName) {
     RightGestureDisplay.text = gestureName;
+  }
+
+  public void OnUpdateJointGesture(string gestureName) {
+    JointGestureDisplay.text = gestureName;
   }
 
   public void OnUpdateLeftPose(string poseName) {
