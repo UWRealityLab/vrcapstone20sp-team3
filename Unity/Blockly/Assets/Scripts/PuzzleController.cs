@@ -130,4 +130,13 @@ public class PuzzleController : MonoBehaviour
         }
         return true;
     }
+
+    // returns true if the given puzzleId exists
+    // puzzleId has to be >= 0
+    // TODO: for tomorrow and use it in popupMessage before incrementing current level
+            // could also be used for when they user completes all levels and we give them a CONGRATULATIONS!!!
+    public Boolean VerifyPuzzleId(int puzzleId)
+    {
+        return puzzleId < puzzles.Count;
+    }
 }

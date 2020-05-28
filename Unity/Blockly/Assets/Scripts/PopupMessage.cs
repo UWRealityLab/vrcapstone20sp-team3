@@ -8,11 +8,13 @@ public class PopupMessage : MonoBehaviour
     public GameObject ui;
     private PuzzleController puzzleController;
     private bool verified;
+    private int currentLevel;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentLevel = -1;
+        verified = true;
     }
 
     // Update is called once per frame
@@ -42,8 +44,20 @@ public class PopupMessage : MonoBehaviour
     {
         ui.SetActive(!ui.activeSelf);
 
-        puzzleController = GameObject.Find("Puzzle Controller").GetComponent<PuzzleController>();
-        puzzleController.StartPuzzle(0);
+        if (puzzleController == null)
+        {
+            puzzleController = GameObject.Find("Puzzle Controller").GetComponent<PuzzleController>();
+        }
+
+        if (verified)
+        {
+            if (puzzleController.VerifyPuzzleId(currentLevel + 1))
+            {
+                currentLevel++;
+                puzzleController.StartPuzzle(currentLevel);
+                verified = false;
+            }
+        }
     }
 
     private void clickButton()
