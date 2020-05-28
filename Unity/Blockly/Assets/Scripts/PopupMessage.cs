@@ -51,12 +51,16 @@ public class PopupMessage : MonoBehaviour
 
         if (verified)
         {
+            if (currentLevel >= 0)
+            {
+                puzzleController.ClearGrid();
+            }
             if (puzzleController.VerifyPuzzleId(currentLevel + 1))
             {
                 currentLevel++;
                 puzzleController.StartPuzzle(currentLevel);
                 verified = false;
-            }
+            } // an else which means they are completed with all possible levels --> give them a congratulations :D
         }
     }
 

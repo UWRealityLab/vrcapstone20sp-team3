@@ -133,10 +133,21 @@ public class PuzzleController : MonoBehaviour
 
     // returns true if the given puzzleId exists
     // puzzleId has to be >= 0
-    // TODO: for tomorrow and use it in popupMessage before incrementing current level
-            // could also be used for when they user completes all levels and we give them a CONGRATULATIONS!!!
     public Boolean VerifyPuzzleId(int puzzleId)
     {
         return puzzleId < puzzles.Count;
+    }
+
+    // clears the main grid and puts cursor in original position
+    public void ClearGrid()
+    {
+        List<GameObject> objectsToClear = new List<GameObject>(GameObject.FindGameObjectsWithTag("Block"));
+        objectsToClear.AddRange(GameObject.FindGameObjectsWithTag("Puzzle Block"));
+        objectsToClear.AddRange(GameObject.FindGameObjectsWithTag("Submit Block"));
+        foreach (GameObject block in objectsToClear)
+        {
+            Destroy(block);
+        }
+        this.cursorController.gameObject.transform.position = new Vector3(CursorController.MIN_POSITION, CursorController.MIN_POSITION, CursorController.MIN_POSITION);
     }
 }
