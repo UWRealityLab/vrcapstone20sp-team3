@@ -33,7 +33,6 @@ public class PuzzleController : MonoBehaviour
         level1.AddStatement("Emit");
         level1.Complete();
         puzzles.Add(level1);
-        StartPuzzle(0);
     }
 
     // Update is called once per frame

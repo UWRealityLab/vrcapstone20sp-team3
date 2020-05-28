@@ -36,6 +36,9 @@ public class PopupMessage : MonoBehaviour
     public void Close()
     {
         ui.SetActive(!ui.activeSelf);
+
+        PuzzleController puzzleController = GameObject.Find("Puzzle Controller").GetComponent<PuzzleController>();
+        puzzleController.StartPuzzle(0);
     }
 
     private void clickButton()
