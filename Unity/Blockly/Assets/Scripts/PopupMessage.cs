@@ -21,7 +21,7 @@ public class PopupMessage : MonoBehaviour
     void Update()
     {
         clickButton();
-        if (puzzleController != null && !verified)
+        if (puzzleController != null && !verified && puzzleController.UserSubmitted())
         {
             MoveToNextLevel();
         }

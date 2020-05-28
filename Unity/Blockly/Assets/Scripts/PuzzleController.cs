@@ -35,7 +35,7 @@ public class PuzzleController : MonoBehaviour
         level1.AddStatement("Emit");
         level1.AddStatement("Up");
         level1.AddStatement("Up");
-        level1.AddStatement("Backward");  // cursor end position ("submit" block)
+        level1.AddStatement("Up");  // cursor end position ("submit" block)
         level1.Complete();
         puzzles.Add(level1);
     }
@@ -149,5 +149,10 @@ public class PuzzleController : MonoBehaviour
             Destroy(block);
         }
         this.cursorController.gameObject.transform.position = new Vector3(CursorController.MIN_POSITION, CursorController.MIN_POSITION, CursorController.MIN_POSITION);
+    }
+
+    public Boolean UserSubmitted()
+    {
+        return this.cursorController.CursorPosition() == this.submitBlockPosition;
     }
 }
