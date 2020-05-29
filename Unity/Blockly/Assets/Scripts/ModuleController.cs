@@ -1,4 +1,5 @@
 ﻿using Blockly;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -235,7 +236,7 @@ public class ModuleController : MonoBehaviour
     // and add blocks to mapping of block->id
     private void AddToLibrary(int moduleId)
     {
-        Vector3 startPosition = this.moduleIdToLibraryPosition(moduleId);
+        Vector3 startPosition = this.ModuleIdToLibraryPosition(moduleId);
         Debug.Log("AddToLibrary: module #" + moduleId + " at " + startPosition + "!");
         Module module = this.allModules[moduleId];
 
@@ -282,7 +283,7 @@ public class ModuleController : MonoBehaviour
         objectToId.Add(endCursor, moduleId);
     }
 
-    private Vector3 moduleIdToLibraryPosition(int moduleId)
+    private Vector3 ModuleIdToLibraryPosition(int moduleId)
     {
         Module module = this.allModules[moduleId];
         Vector3 minCorner = new Vector3(-20.5f, 2f, -1f);  // min corner of entire library area
@@ -308,5 +309,22 @@ public class ModuleController : MonoBehaviour
 
         this.moduleLibraryPositions[moduleId] = module.StartPositionFromMinCorner(minCorner);
         return this.moduleLibraryPositions[moduleId];
+    }
+
+    // return true if there are no modules in the library
+    public Boolean ModuleLibraryIsEmpty()
+    {
+        return this.allModules.Count == 0;
+    }
+
+    // returns the position in the library for the most recently saved module
+    // returns zero vector if there are no saved modules
+    public Vector3 MostRecentModuleLibraryPosition()
+    {
+        if (this.allModules.Count == 0)
+        {
+            return Vector3.zero;
+        }
+        return this.moduleLibraryPositions[this.allModules.Count - 1];
     }
 }

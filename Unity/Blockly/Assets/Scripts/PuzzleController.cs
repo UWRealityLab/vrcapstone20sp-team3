@@ -9,6 +9,10 @@ public class PuzzleController : MonoBehaviour
     public GameObject cursor;
     private CursorController cursorController;
 
+    public GameObject recordButton;
+    private ModuleController moduleController;
+    private bool userSubmittedWithModule;
+
     public GameObject puzzleBlockPrefab;
     public GameObject submitBlockPrefab;
 
@@ -20,6 +24,7 @@ public class PuzzleController : MonoBehaviour
     void Start()
     {
         this.cursorController = cursor.GetComponent<CursorController>();
+        this.moduleController = recordButton.GetComponent<ModuleController>();
         this.puzzles = new List<Module>();
 
         /* level 1 - 2 random emits */
@@ -72,8 +77,19 @@ public class PuzzleController : MonoBehaviour
     {
         if (cursorController.CursorPosition() == this.submitBlockPosition)
         {
-            Boolean result = VerifyPuzzle();
-            Debug.Log("verify puzzle result: " + result);
+            Debug.Log("puzzle mode: cursor is on submit block!");
+            if (moduleController.IsRecording())
+            {
+                this.userSubmittedWithModule = true;
+            }
+        }
+        else
+        {
+            // if they moved off the submit block without ending/saving the module
+            if (this.userSubmittedWithModule && moduleController.IsRecording())
+            {
+                this.userSubmittedWithModule = false;
+            }
         }
 
         /* TODO: hardcoded for testing in play mode
@@ -128,6 +144,13 @@ public class PuzzleController : MonoBehaviour
     // returns true if correct, false if not
     public Boolean VerifyPuzzle()
     {
+        Boolean needsModule = this.selectedPuzzleId == 1;  // for level 2, compare with module library not main grid
+        if (needsModule && this.moduleController.ModuleLibraryIsEmpty())
+        {
+            return false;
+        }
+        Vector3 moduleLibraryPosition = this.moduleController.MostRecentModuleLibraryPosition();
+
         for (float x = CursorController.MIN_POSITION; x <= CursorController.MAX_POSITION; x += CursorController.GRID_SIZE)
         {
             for (float y = CursorController.MIN_POSITION; y <= CursorController.MAX_POSITION; y += CursorController.GRID_SIZE)
@@ -147,9 +170,22 @@ public class PuzzleController : MonoBehaviour
                             puzzleBlock = true;
                         }
                     }
-                    if (userBlock != puzzleBlock)  // fail if user is missing block or has extra block
+                    Boolean libraryBlock = false;
+                    if (needsModule)
                     {
-                        Debug.Log("verifying... user: " + userBlock + ", puzzle: " + puzzleBlock + " at " + new Vector3(x, y, z));
+                        Collider[] libraryCcolliders = Physics.OverlapSphere(moduleLibraryPosition + new Vector3(x, y, z), 0.2f);
+                        foreach (Collider collider in libraryCcolliders)
+                        {
+                            if (collider.gameObject.tag == "Library Block")
+                            {
+                                libraryBlock = true;
+                            }
+                        }
+                    }
+
+                    if ((needsModule && libraryBlock != puzzleBlock) || (!needsModule && userBlock != puzzleBlock))
+                    {
+                        Debug.Log("verify fail... user: " + userBlock + ", puzzle: " + puzzleBlock + ", module: " + libraryBlock + " at " + new Vector3(x, y, z));
                         return false;
                     }
                 }
@@ -180,6 +216,10 @@ public class PuzzleController : MonoBehaviour
 
     public Boolean UserSubmitted()
     {
-        return this.cursorController.CursorPosition() == this.submitBlockPosition;
+        if (this.moduleController.IsRecording())
+        {
+            return false;
+        }
+        return this.cursorController.CursorPosition() == this.submitBlockPosition || this.userSubmittedWithModule;
     }
 }
