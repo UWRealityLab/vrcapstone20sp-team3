@@ -14,7 +14,7 @@ public class EditorPlayer : MonoBehaviour, IPlayer {
   // positional velocity
   private Vector3 posV;
   // positional acceleration
-  private float posA = 1f;
+  private float posA = 5f;
 
   // rotational velocity
   private Vector3 rotV;
