@@ -77,7 +77,6 @@ public class PuzzleController : MonoBehaviour
     {
         if (cursorController.CursorPosition() == this.submitBlockPosition)
         {
-            Debug.Log("puzzle mode: cursor is on submit block!");
             if (moduleController.IsRecording())
             {
                 this.userSubmittedWithModule = true;
@@ -111,7 +110,22 @@ public class PuzzleController : MonoBehaviour
             switch (statement)
             {
                 case "Emit":
-                    GameObject obj = Instantiate(this.puzzleBlockPrefab, puzzleCursorPosition, Quaternion.identity);
+                    bool blockExisted = false;
+                    Collider[] colliders = Physics.OverlapSphere(this.gameObject.transform.position, CursorController.GRID_SIZE / 3);
+                    foreach (Collider collider in colliders)
+                    {
+                        if (collider.gameObject.tag == "Puzzle Block")
+                        {
+                            blockExisted = true;
+                            Destroy(collider.gameObject);
+                            break;
+                        }
+                    }
+
+                    if (!blockExisted)
+                    {
+                        GameObject obj = Instantiate(this.puzzleBlockPrefab, puzzleCursorPosition, Quaternion.identity);
+                    }
                     break;
                 case "Right":
                     puzzleCursorPosition.x += CursorController.GRID_SIZE;

@@ -236,49 +236,74 @@ public class ModuleController : MonoBehaviour
     // and add blocks to mapping of block->id
     private void AddToLibrary(int moduleId)
     {
-        Vector3 startPosition = this.ModuleIdToLibraryPosition(moduleId);
-        Debug.Log("AddToLibrary: module #" + moduleId + " at " + startPosition + "!");
+        Vector3 libraryCursorPosition = this.ModuleIdToLibraryPosition(moduleId);
+        Debug.Log("AddToLibrary: module #" + moduleId + " at " + libraryCursorPosition + "!");
         Module module = this.allModules[moduleId];
 
         GameObject parentObject = new GameObject();
         // GameObject parentObject = Instantiate(this.libraryModuleParentPrefab, startPosition, Quaternion.identity) as GameObject;
 
         objectToId.Add(parentObject, moduleId);
+
+        HashSet<Vector3> blockPositions = new HashSet<Vector3>();  // set containing positions where blocks exist
         foreach (string statement in module.Statements())
         {
             switch (statement)
             {
                 case "Emit":
-                    GameObject obj = Instantiate(this.libraryBlockPrefab, startPosition, Quaternion.identity);
-                    obj.transform.parent = parentObject.transform;
-                    objectToId.Add(obj, moduleId);
+                    bool blockExisted = false;
+                    Collider[] colliders = Physics.OverlapSphere(libraryCursorPosition, CursorController.GRID_SIZE / 4);
+
+                    foreach (Collider collider in colliders)
+                    {
+                        if (collider.gameObject.tag == "Library Block")
+                        {
+                            Vector3 cursorCopy = new Vector3(libraryCursorPosition.x, libraryCursorPosition.y, libraryCursorPosition.z);
+                            if (blockPositions.Contains(cursorCopy))
+                            {
+                                Debug.Log("adding to library: emit: delete obj @ " + collider.gameObject.transform.position);
+                                blockExisted = true;
+                                Destroy(collider.gameObject);
+                                blockPositions.Remove(cursorCopy);
+
+                            }
+                            break;
+                        }
+                    }
+
+                    if (!blockExisted)
+                    {
+                        Debug.Log("adding to library: emit: actually emit @ " + libraryCursorPosition);
+                        GameObject obj = Instantiate(this.libraryBlockPrefab, libraryCursorPosition, Quaternion.identity);
+                        obj.transform.parent = parentObject.transform;
+                        objectToId.Add(obj, moduleId);
+                        blockPositions.Add(new Vector3(libraryCursorPosition.x, libraryCursorPosition.y, libraryCursorPosition.z));
+                    }
                     break;
-                // case "Delete":
-                //     break;
                 case "Right":
-                    startPosition.x += LIBRARY_GRID_SIZE;
+                    libraryCursorPosition.x += LIBRARY_GRID_SIZE;
                     break;
                 case "Left":
-                    startPosition.x -= LIBRARY_GRID_SIZE;
+                    libraryCursorPosition.x -= LIBRARY_GRID_SIZE;
                     break;
                 case "Up":
-                    startPosition.y += LIBRARY_GRID_SIZE;
+                    libraryCursorPosition.y += LIBRARY_GRID_SIZE;
                     break;
                 case "Down":
-                    startPosition.y -= LIBRARY_GRID_SIZE;
+                    libraryCursorPosition.y -= LIBRARY_GRID_SIZE;
                     break;
                 case "Forward":
-                    startPosition.z += LIBRARY_GRID_SIZE;
+                    libraryCursorPosition.z += LIBRARY_GRID_SIZE;
                     break;
                 case "Backward":
-                    startPosition.z -= LIBRARY_GRID_SIZE;
+                    libraryCursorPosition.z -= LIBRARY_GRID_SIZE;
                     break;
                 default:
                     Debug.Log("unrecognized statement in module #" + moduleId + ": " + statement);
                     break;
             }
         }
-        GameObject endCursor = Instantiate(this.libraryModuleEndCursorPrefab, startPosition, Quaternion.identity);
+        GameObject endCursor = Instantiate(this.libraryModuleEndCursorPrefab, libraryCursorPosition, Quaternion.identity);
         endCursor.transform.parent = parentObject.transform;
         objectToId.Add(endCursor, moduleId);
     }

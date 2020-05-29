@@ -23,6 +23,12 @@ public class Module : MonoBehaviour
     // updates the max or min x/y/z value accordingly
     public void AddStatement(string action)
     {
+        if (action == "Emit" && this.statements.Count > 0 && this.statements[this.statements.Count - 1] == "Emit")
+        {
+            this.statements.RemoveAt(this.statements.Count - 1);
+            return;
+        }
+
         this.statements.Add(action);
 
         switch (action)
@@ -31,8 +37,6 @@ public class Module : MonoBehaviour
                 this.maximum = Vector3.Max(cursor, maximum);
                 this.minimum = Vector3.Min(cursor, minimum);
                 break;
-            // case "Delete":
-            //     break;
             case "Right":
                 cursor.x += GRID_SIZE;
                 break;

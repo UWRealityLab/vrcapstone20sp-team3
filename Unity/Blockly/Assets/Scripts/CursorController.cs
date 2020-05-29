@@ -11,6 +11,8 @@ public class CursorController : MonoBehaviour
     public GameObject recordButton;
     private ModuleController moduleController;
 
+    private HashSet<Vector3> blockPositions;  // the positions for all blocks existing on grid right now
+
     public AudioClip emitSound;
     public AudioClip moveSound;
 
@@ -25,6 +27,7 @@ public class CursorController : MonoBehaviour
     {
         source = GetComponent<AudioSource>();
         moduleController = recordButton.GetComponent<ModuleController>();
+        blockPositions = new HashSet<Vector3>();
     }
 
     void Awake()
@@ -168,13 +171,33 @@ public class CursorController : MonoBehaviour
     }
 
     // emit a new block at the cursor's current position, if there isn't a block there already
+    // if there is a block there, deletes it
     public void Emit()
     {
-        Vector3 cursorPosition = this.gameObject.transform.position;
-        if (isGridSpaceEmpty(cursorPosition))
+        bool blockExisted = false;
+        Vector3 blockPosition = this.gameObject.transform.position;
+        Collider[] colliders = Physics.OverlapSphere(blockPosition, CursorController.GRID_SIZE / 3);
+        foreach (Collider collider in colliders)
+        {
+            if (this.moduleController.IsRecording() ? collider.gameObject.tag == "Module Creation Block" : collider.gameObject.tag == "Block")
+            {
+                Vector3 cursorCopy = new Vector3(blockPosition.x, blockPosition.y, blockPosition.z);
+                if (blockPositions.Contains(cursorCopy))
+                {
+                    blockExisted = true;
+                    Destroy(collider.gameObject);
+                    blockPositions.Remove(cursorCopy);
+
+                }
+                break;
+            }
+        }
+
+        if (!blockExisted)
         {
             GameObject prefab = this.moduleController.IsRecording() ? this.moduleCreationBlockPrefab : this.blockPrefab;
-            GameObject obj = Instantiate(prefab, this.gameObject.transform.position, Quaternion.identity) as GameObject;
+            GameObject obj = Instantiate(prefab, blockPosition, Quaternion.identity) as GameObject;
+            blockPositions.Add(new Vector3(blockPosition.x, blockPosition.y, blockPosition.z));
         }
     }
 
