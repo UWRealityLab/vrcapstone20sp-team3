@@ -181,7 +181,7 @@ public class CursorController : MonoBehaviour
     // delete the block at the cursor's current position, if there is one
     public void Delete()
     {
-        Collider[] colliders = Physics.OverlapSphere(this.gameObject.transform.position, 0.2f);
+        Collider[] colliders = Physics.OverlapSphere(this.gameObject.transform.position, GRID_SIZE / 3);
         foreach (Collider collider in colliders)
         {
             // only destroy emitted blocks, not the cursor/region
@@ -241,7 +241,7 @@ public class CursorController : MonoBehaviour
     // returns true if there is not currently a block at the given position
     private bool isGridSpaceEmpty(Vector3 position)
     {
-        Collider[] colliders = Physics.OverlapSphere(this.gameObject.transform.position, 0.2f);
+        Collider[] colliders = Physics.OverlapSphere(this.gameObject.transform.position, GRID_SIZE / 3);
         foreach (Collider collider in colliders)
         {
             // TODO: look into layer masks

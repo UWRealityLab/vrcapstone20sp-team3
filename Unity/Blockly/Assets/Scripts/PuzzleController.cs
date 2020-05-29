@@ -157,7 +157,7 @@ public class PuzzleController : MonoBehaviour
             {
                 for (float z = CursorController.MIN_POSITION; z <= CursorController.MAX_POSITION; z += CursorController.GRID_SIZE)
                 {
-                    Collider[] colliders = Physics.OverlapSphere(new Vector3(x, y, z), 0.2f);
+                    Collider[] colliders = Physics.OverlapSphere(new Vector3(x, y, z), CursorController.GRID_SIZE / 3);
                     Boolean userBlock = false;
                     Boolean puzzleBlock = false;
                     foreach (Collider collider in colliders)
@@ -173,7 +173,7 @@ public class PuzzleController : MonoBehaviour
                     Boolean libraryBlock = false;
                     if (needsModule)
                     {
-                        Collider[] libraryCcolliders = Physics.OverlapSphere(moduleLibraryPosition + new Vector3(x, y, z), 0.2f);
+                        Collider[] libraryCcolliders = Physics.OverlapSphere(moduleLibraryPosition + new Vector3(x, y, z), CursorController.GRID_SIZE / 3);
                         foreach (Collider collider in libraryCcolliders)
                         {
                             if (collider.gameObject.tag == "Library Block")
