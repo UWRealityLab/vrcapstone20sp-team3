@@ -183,7 +183,7 @@ public class ModuleController : MonoBehaviour
     public void OnUseModule(int moduleId)
     {
         Module module = this.allModules[moduleId];
-        Vector3 cursorPos = this.cursorController.CursorPosition();
+        Vector3 cursorPos = CursorController.Instance.CursorPosition();
         Vector3 minPos = module.MinPositionFromStart(cursorPos);
         Vector3 maxPos = module.MaxPositionFromStart(cursorPos);
         if (minPos.x < CursorController.MIN_POSITION
@@ -237,74 +237,6 @@ public class ModuleController : MonoBehaviour
         Color fadedColor = this.blockMaterial.color;
         fadedColor.a = alpha;
         this.blockMaterial.color = fadedColor;
-    }
-
-    // if module is clicked on, set the module to be the currently selected module
-    private void Select()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            Vector3 playerPosition = BlocklyPlayer.Instance.transform.position;
-
-            Collider[] hitColliders = Physics.OverlapSphere(playerPosition, 5);
-            foreach (Collider collider in hitColliders)
-            {
-                if (collider.gameObject.tag == "Library Block")
-                {
-                    this.selectedModule = collider.gameObject;
-                    Debug.Log("module was selected!");
-                    break;
-                }
-            }
-        }
-
-
-        //Collider[] hitColliders = Physics.OverlapSphere(center, radius);
-        //int i = 0;
-        //while (i < hitColliders.Length)
-        //{
-        //    hitColliders[i].SendMessage("AddDamage");
-        //    i++;
-        //}
-
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    Debug.Log("Mouse is down");
-        //    RaycastHit hitInfo = new RaycastHit();
-        //    bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-        //    if (hit)
-        //    {
-        //        Debug.Log("Hit " + hitInfo.transform.gameObject.name);
-        //        if (hitInfo.collider.gameObject.tag == "isModule")
-        //        {
-        //            this.selectedModule = hitInfo.collider.gameObject;
-        //            Debug.Log("module was successfully selected");
-        //        }
-        //        else
-        //        {
-        //            Debug.Log("not a module");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("No hit");
-        //    }
-        //}
-    }
-
-    private void ApplyModule()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            if (this.selectedModule != null)
-            {
-                Debug.Log("calling on Use Module with " + objectToName[this.selectedModule]);
-                OnUseModule(objectToName[this.selectedModule]);
-            } else
-            {
-                Debug.Log("no module was selected :(");
-            }
-        }
     }
 
     // add given module to the module library: draw a copy of the module in the module library

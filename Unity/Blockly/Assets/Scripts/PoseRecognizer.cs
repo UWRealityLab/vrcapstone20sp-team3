@@ -29,7 +29,7 @@ public class PoseRecognizer : MonoBehaviour {
 
   public bool shouldLoadPoses;
 
-  private IPlayer player;
+  private BlocklyPlayer player;
 
   private string currLeftPose;
   private string currRightPose;
