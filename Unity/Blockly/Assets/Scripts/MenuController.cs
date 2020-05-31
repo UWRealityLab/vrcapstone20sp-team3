@@ -21,6 +21,9 @@ public class MenuController : MonoBehaviour
         level2Button = GameObject.Find("Level 2 Button");
         level3Button = GameObject.Find("Level 3 Button");
         SetButtonActive(false);
+
+        // TODO remove once the main menu works in VR
+        BeginFreePlayMode();
     }
 
     public void BeginPuzzleMode()

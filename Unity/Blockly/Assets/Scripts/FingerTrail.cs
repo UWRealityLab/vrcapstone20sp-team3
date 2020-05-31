@@ -17,8 +17,10 @@ public class FingerTrail : MonoBehaviour {
   private Transform indexFingerTip;
 
   public void Awake() {
+    Debug.Log("AYY");
     #if UNITY_EDITOR
       // finger trails don't work in the editor
+      Debug.Log("destroying finger trail");
       Destroy(this);
       return;
     #endif
@@ -28,6 +30,7 @@ public class FingerTrail : MonoBehaviour {
     trail = trailObj.AddComponent<TrailRenderer>();
     trail.time = -1f;
     trail.enabled = false;
+    Debug.Log("LMAO");
 
     trail.time = trailTime;
     trail.startWidth = startWidth;
@@ -38,11 +41,15 @@ public class FingerTrail : MonoBehaviour {
     trail.receiveShadows = false;
     trail.sharedMaterial = new Material(Shader.Find("Unlit/Color"));
     trail.sharedMaterial.color = trailColor;
+    Debug.Log("BRUH");
   }
 
   public void Start() {
-    IPlayer player = GetComponent<PlayerManager>().GetPlayer();
+    Debug.Log("HERE");
+    BlocklyPlayer player = GetComponent<BlocklyPlayer>();
+    Debug.Log($"player == {player}");
     playerTransform = player.GetTransform();
+    Debug.Log($"playerTransform == {playerTransform}");
     indexFingerTip = player.GetLeftIndexTipTransform();
     Debug.Log(indexFingerTip);
     Debug.Assert(indexFingerTip != null);

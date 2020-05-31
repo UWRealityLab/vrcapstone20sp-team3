@@ -606,7 +606,7 @@ PrefabInstance:
     - target: {fileID: 849708947602592877, guid: b0661ade7ad54448cafa5b4ee980864d,
         type: 3}
       propertyPath: OnUpdateRightPose.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 849708947602592877, guid: b0661ade7ad54448cafa5b4ee980864d,
         type: 3}
@@ -677,7 +677,7 @@ PrefabInstance:
         type: 3}
       propertyPath: OnUpdateLeftPose.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1461507261}
     - target: {fileID: 849708947602592877, guid: b0661ade7ad54448cafa5b4ee980864d,
         type: 3}
       propertyPath: OnUpdateLeftPose.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -5023,6 +5023,16 @@ PrefabInstance:
       propertyPath: rightPoses.Array.data[4].data.IsDataHighConfidence
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 849708947602592877, guid: b0661ade7ad54448cafa5b4ee980864d,
+        type: 3}
+      propertyPath: OnUpdateRightPose.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1461507261}
+    - target: {fileID: 849708947602592877, guid: b0661ade7ad54448cafa5b4ee980864d,
+        type: 3}
+      propertyPath: OnUpdateRightPose.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OnUpdateRightPose
+      objectReference: {fileID: 0}
     - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
         type: 3}
       propertyPath: OnRecognizeJointGesture.m_PersistentCalls.m_Calls.Array.size
@@ -5030,43 +5040,53 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
         type: 3}
-      propertyPath: OnRecognizeLeftGesture.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
+      propertyPath: OnRecognizeLeftGesture.m_PersistentCalls.m_Calls.Array.size
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
         type: 3}
+      propertyPath: OnRecognizeRightGesture.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
+        type: 3}
+      propertyPath: OnRecognizeLeftGesture.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2043039214}
+    - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
+        type: 3}
       propertyPath: OnRecognizeLeftGesture.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnUpdateLeftGesture
+      value: OnRecognizeGesture
       objectReference: {fileID: 0}
     - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
         type: 3}
       propertyPath: OnRecognizeRightGesture.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2043039214}
     - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
         type: 3}
       propertyPath: OnRecognizeRightGesture.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnUpdateRightGesture
+      value: OnRecognizeGesture
       objectReference: {fileID: 0}
     - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
         type: 3}
       propertyPath: OnRecognizeLeftGesture.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 2043039214}
+      objectReference: {fileID: 1461507261}
     - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
         type: 3}
       propertyPath: OnRecognizeLeftGesture.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: OnRecognizeGesture
+      value: OnUpdateLeftGesture
       objectReference: {fileID: 0}
     - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
         type: 3}
       propertyPath: OnRecognizeRightGesture.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 2043039214}
+      objectReference: {fileID: 1461507261}
     - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
         type: 3}
       propertyPath: OnRecognizeRightGesture.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: OnRecognizeGesture
+      value: OnUpdateRightGesture
       objectReference: {fileID: 0}
     - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
         type: 3}
@@ -5082,11 +5102,11 @@ PrefabInstance:
         type: 3}
       propertyPath: OnRecognizeJointGesture.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2043039214}
     - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
         type: 3}
       propertyPath: OnRecognizeJointGesture.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnUpdateJointGesture
+      value: OnRecognizeGesture
       objectReference: {fileID: 0}
     - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
         type: 3}
@@ -5107,15 +5127,35 @@ PrefabInstance:
         type: 3}
       propertyPath: OnRecognizeJointGesture.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 2043039214}
+      objectReference: {fileID: 1461507261}
     - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
         type: 3}
       propertyPath: OnRecognizeJointGesture.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: OnRecognizeGesture
+      value: OnUpdateJointGesture
       objectReference: {fileID: 0}
     - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
         type: 3}
       propertyPath: OnRecognizeJointGesture.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
+        type: 3}
+      propertyPath: OnRecognizeLeftGesture.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
+        type: 3}
+      propertyPath: OnRecognizeLeftGesture.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
+        type: 3}
+      propertyPath: OnRecognizeRightGesture.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 849708947602592878, guid: b0661ade7ad54448cafa5b4ee980864d,
+        type: 3}
+      propertyPath: OnRecognizeRightGesture.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 849708947602592880, guid: b0661ade7ad54448cafa5b4ee980864d,
@@ -5574,6 +5614,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 381f6396675a24890aaad2d774b9b15e, type: 3}
+--- !u!114 &1461507261 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5851354867635219622, guid: 381f6396675a24890aaad2d774b9b15e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1461507260}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8194983fa3641eeac06e60be5cae93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1916311261
 GameObject:
   m_ObjectHideFlags: 0
