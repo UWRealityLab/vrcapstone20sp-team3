@@ -15,6 +15,11 @@ public class PoseRecognizer : MonoBehaviour {
 
   public bool loadPoses;
 
+  // Number of update calls to wait until updating a pose
+  // (ie. excludes poses that are held for less update calls
+  // than this value).
+  public int frameLag;
+
   private IPlayer player;
 
   private Pose currLeftPose;
@@ -23,8 +28,20 @@ public class PoseRecognizer : MonoBehaviour {
   private Pose currRightPose;
   public Pose CurrRightPose { get => currRightPose; }
 
+  private Queue<Pose> recentLeftPoses;
+  private Queue<Pose> recentRightPoses;
+
   public void Start() {
     player = GetComponent<PlayerManager>().GetPlayer();
+
+    recentLeftPoses = new Queue<Pose>();
+    recentRightPoses = new Queue<Pose>();
+
+    for (int i = 0; i < frameLag; i++)
+    {
+      recentLeftPoses.Enqueue(new Pose());
+      recentRightPoses.Enqueue(new Pose());
+    }
 
     // Load in saved poses.
     if (loadPoses)
@@ -70,14 +87,20 @@ public class PoseRecognizer : MonoBehaviour {
   public void Update() {
     Pose leftPose = Recognize(player.GetCurrLeftPose(), leftPoses);
     Pose rightPose = Recognize(player.GetCurrRightPose(), rightPoses);
-    if (leftPose.name != currLeftPose.name) {
+
+    recentLeftPoses.Dequeue();
+    recentRightPoses.Dequeue();
+    recentLeftPoses.Enqueue(leftPose);
+    recentRightPoses.Enqueue(rightPose);
+
+    if (allPosesMatch(recentLeftPoses, leftPose) && currLeftPose.name != leftPose.name) {
       OnUpdateLeftPose.Invoke(leftPose.name);
+      currLeftPose = leftPose;
     }
-    if (rightPose.name != currRightPose.name) {
+    if (allPosesMatch(recentRightPoses, rightPose) && currRightPose.name != rightPose.name) {
       OnUpdateRightPose.Invoke(rightPose.name);
+      currRightPose = rightPose;
     }
-    currLeftPose = leftPose;
-    currRightPose = rightPose;
   }
 
   public Pose Recognize(Pose pose, List<Pose> validPoses) {
@@ -112,6 +135,18 @@ public class PoseRecognizer : MonoBehaviour {
       }
     }
     return bestCandidate;
+  }
+
+  private bool allPosesMatch(Queue<Pose> recentPoses, Pose target)
+  {
+    foreach(Pose p in recentPoses)
+    {
+      if (p.name != target.name)
+      {
+        return false;
+      }
+    }
+    return true;
   }
   
   public void SaveRightPose()
