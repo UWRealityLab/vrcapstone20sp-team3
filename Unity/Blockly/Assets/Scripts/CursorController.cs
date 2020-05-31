@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Blockly {
+
 public class CursorController : MonoBehaviour
 {
+    public static CursorController Instance = null;
+
     public GameObject blockPrefab;  // prefab for blocks, used when emitted
     public GameObject moduleCreationBlockPrefab;  // prefab for the temporary blocks that show up during module creation
 
     public GameObject recordButton;
-    private ModuleController moduleController;
 
     private HashSet<Vector3> blockPositions;  // the positions for all blocks existing on grid right now
 
@@ -22,15 +25,17 @@ public class CursorController : MonoBehaviour
 
     private AudioSource source;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        Debug.Assert(Instance == null, "singleton class instantiated multiple times");
+        Instance = this;
         source = GetComponent<AudioSource>();
         moduleController = recordButton.GetComponent<ModuleController>();
         blockPositions = new HashSet<Vector3>();
     }
 
-    void Awake()
+    // Start is called before the first frame update
+    void Start()
     {
         source = GetComponent<AudioSource>();
     }
@@ -45,7 +50,7 @@ public class CursorController : MonoBehaviour
     {
         if (gestureName == "CreateModule")
         {
-            moduleController.OnPressRecord();
+            ModuleController.Instance.OnPressRecord();
             return;
         }
 
@@ -84,16 +89,14 @@ public class CursorController : MonoBehaviour
             }
         }
 
-        if (moduleController.IsRecording())
+        if (ModuleController.Instance.IsRecording())
         {
-            Debug.Log("OnRecognizeGesture: " + gestureName);
-
             // only record if the move actually happens (don't record if cursor is at edge of valid region and doesn't actually move)
             if (gestureName != "Emit" && this.gameObject.transform.position == oldPosition)
             {
                 return;
             }
-            moduleController.AddStatement(gestureName);
+            ModuleController.Instance.AddStatement(gestureName);
         }
 
         // if (Input.GetKeyDown(KeyCode.Delete))
@@ -222,42 +225,42 @@ public class CursorController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.X))
         {
-            moduleController.OnPressRecord();
+          OnRecognizeGesture("CreateModule");
         }
         /*
         if (Input.GetKeyDown(KeyCode.A))
         {
-            MoveLeft();
+          OnRecognizeGesture("Left");
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            MoveRight();
+          OnRecognizeGesture("Right");
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            MoveBackward();
+          OnRecognizeGesture("Backward");
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            MoveForward();
+          OnRecognizeGesture("Forward");
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            MoveDown();
+          OnRecognizeGesture("Down");
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            MoveUp();
+          OnRecognizeGesture("Up");
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Emit();
+          OnRecognizeGesture("Emit");
         }
         */
         if (Input.GetKeyDown(KeyCode.Delete))
         {
-            Delete();
+          OnRecognizeGesture("Delete");
         }
     }
 
@@ -268,7 +271,7 @@ public class CursorController : MonoBehaviour
         foreach (Collider collider in colliders)
         {
             // TODO: look into layer masks
-            if (collider.gameObject.tag == "Block" && !this.moduleController.IsRecording())
+            if (collider.gameObject.tag == "Block" && !ModuleController.Instance.IsRecording())
             {
                 return false;
             }
@@ -280,4 +283,6 @@ public class CursorController : MonoBehaviour
     {
         return this.gameObject.transform.position;
     }
+}
+
 }

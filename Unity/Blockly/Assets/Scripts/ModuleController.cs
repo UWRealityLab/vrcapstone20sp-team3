@@ -6,15 +6,18 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
+namespace Blockly {
+
 public class ModuleController : MonoBehaviour
 {
+    public static ModuleController Instance = null;
+
     private bool isRecordingModule;
     private Module currentModule;
     private List<Module> allModules;  // list of modules (which are lists of actions)
 
     /* cursor-related, module creation/recording */
     public GameObject cursor;
-    private CursorController cursorController;
     private Vector3 originalCursorPosition;  // for resetting cursor after completing module recording
 
     public Material blockMaterial;
@@ -28,10 +31,14 @@ public class ModuleController : MonoBehaviour
     private Dictionary<int, Vector3> moduleLibraryPositions;  // module in library -> x, y, z position in library
     private const float LIBRARY_GRID_SIZE = CursorController.GRID_SIZE;  // size of blocks in module library
 
+    void Awake() {
+        Debug.Assert(Instance == null, "singleton class instantiated multiple times");
+        Instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        this.cursorController = cursor.GetComponent<CursorController>();
         this.isRecordingModule = false;
         this.allModules = new List<Module>();
         this.objectToId = new Dictionary<GameObject, int>();
@@ -132,7 +139,7 @@ public class ModuleController : MonoBehaviour
     {
         this.isRecordingModule = true;
         this.currentModule = new Module();
-        this.originalCursorPosition = this.cursorController.gameObject.transform.position;
+        this.originalCursorPosition = CursorController.Instance.gameObject.transform.position;
         setBlockMaterialTransparency(0.1f);
     }
 
@@ -161,7 +168,7 @@ public class ModuleController : MonoBehaviour
         }
 
         this.isRecordingModule = false;
-        this.cursorController.gameObject.transform.position = this.originalCursorPosition;
+        CursorController.Instance.gameObject.transform.position = this.originalCursorPosition;
         this.currentModule = null;
         setBlockMaterialTransparency(1f);
     }
@@ -176,7 +183,7 @@ public class ModuleController : MonoBehaviour
     public void OnUseModule(int moduleId)
     {
         Module module = this.allModules[moduleId];
-        Vector3 cursorPos = this.cursorController.CursorPosition();
+        Vector3 cursorPos = CursorController.Instance.CursorPosition();
         Vector3 minPos = module.MinPositionFromStart(cursorPos);
         Vector3 maxPos = module.MaxPositionFromStart(cursorPos);
         if (minPos.x < CursorController.MIN_POSITION
@@ -194,7 +201,7 @@ public class ModuleController : MonoBehaviour
         foreach (string statement in module.Statements())
         {
             Debug.Log("recognizing gesture");
-            cursorController.OnRecognizeGesture(statement);
+            CursorController.Instance.OnRecognizeGesture(statement);
         }
     }
 
@@ -240,10 +247,8 @@ public class ModuleController : MonoBehaviour
         Debug.Log("AddToLibrary: module #" + moduleId + " at " + libraryCursorPosition + "!");
         Module module = this.allModules[moduleId];
 
-        GameObject parentObject = new GameObject();
-        // GameObject parentObject = Instantiate(this.libraryModuleParentPrefab, startPosition, Quaternion.identity) as GameObject;
-
-        objectToId.Add(parentObject, moduleId);
+        GameObject moduleMeshObj = new GameObject("ModuleMesh");
+        objectToId.Add(moduleMeshObj, moduleId);
 
         HashSet<Vector3> blockPositions = new HashSet<Vector3>();  // set containing positions where blocks exist
         foreach (string statement in module.Statements())
@@ -304,8 +309,10 @@ public class ModuleController : MonoBehaviour
             }
         }
         GameObject endCursor = Instantiate(this.libraryModuleEndCursorPrefab, libraryCursorPosition, Quaternion.identity);
-        endCursor.transform.parent = parentObject.transform;
+        endCursor.transform.parent = moduleMeshObj.transform;
         objectToId.Add(endCursor, moduleId);
+
+        ModuleLibrary.Instance.AddModule(moduleId, moduleMeshObj);
     }
 
     private Vector3 ModuleIdToLibraryPosition(int moduleId)
@@ -352,4 +359,6 @@ public class ModuleController : MonoBehaviour
         }
         return this.moduleLibraryPositions[this.allModules.Count - 1];
     }
+}
+
 }

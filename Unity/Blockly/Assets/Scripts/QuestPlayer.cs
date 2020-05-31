@@ -1,22 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static OVRSkeleton;
 
 namespace Blockly {
 
 public class QuestPlayer : MonoBehaviour, IPlayer {
+
   public GameObject leftHandObj;
   public GameObject rightHandObj;
 
   public Transform leftIndexTip;
   public Transform rightIndexTip;
 
-  private QuestHand leftHand;
-  private QuestHand rightHand;
+  private IOVRSkeletonDataProvider leftHand;
+  private IOVRSkeletonDataProvider rightHand;
 
   public void Awake() {
-    leftHand = leftHandObj.GetComponent<QuestHand>();
-    rightHand = rightHandObj.GetComponent<QuestHand>();
+    leftHand = leftHandObj.GetComponent<IOVRSkeletonDataProvider>();
+    Debug.Assert(leftHand.GetSkeletonType() == SkeletonType.HandLeft);
+    rightHand = rightHandObj.GetComponent<IOVRSkeletonDataProvider>();
+    Debug.Assert(rightHand.GetSkeletonType() == SkeletonType.HandRight);
   }
 
   // player interface implementations
@@ -26,23 +30,21 @@ public class QuestPlayer : MonoBehaviour, IPlayer {
   }
 
   public Transform GetLeftIndexTipTransform() {
-    Debug.Assert(leftHand.GetChirality() == Chirality.Left);
     return leftIndexTip;
   }
 
   public Transform GetRightIndexTipTransform() {
-    Debug.Assert(rightHand.GetChirality() == Chirality.Right);
     return rightIndexTip;
   }
 
-  public Pose GetCurrLeftPose() {
-    Debug.Assert(leftHand.GetChirality() == Chirality.Left);
-    return leftHand.GetCurrentPose();
+  public SkeletonPoseData GetCurrLeftPose() {
+    Debug.Assert(leftHand.GetSkeletonType() == SkeletonType.HandLeft);
+    return leftHand.GetSkeletonPoseData();
   }
 
-  public Pose GetCurrRightPose() {
-    Debug.Assert(rightHand.GetChirality() == Chirality.Right);
-    return rightHand.GetCurrentPose();
+  public SkeletonPoseData GetCurrRightPose() {
+    Debug.Assert(rightHand.GetSkeletonType() == SkeletonType.HandRight);
+    return rightHand.GetSkeletonPoseData();
   }
 }
 

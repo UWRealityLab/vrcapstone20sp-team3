@@ -11,6 +11,7 @@ TagManager:
   - Puzzle Block
   - Cursor
   - Submit Block
+  - Valid Block Area
   layers:
   - Default
   - TransparentFX
