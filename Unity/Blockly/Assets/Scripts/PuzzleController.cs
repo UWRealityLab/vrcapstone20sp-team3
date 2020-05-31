@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
+namespace Blockly {
+
 public class PuzzleController : MonoBehaviour
 {
     public GameObject cursor;
@@ -236,4 +238,6 @@ public class PuzzleController : MonoBehaviour
         }
         return this.cursorController.CursorPosition() == this.submitBlockPosition || this.userSubmittedWithModule;
     }
+}
+
 }

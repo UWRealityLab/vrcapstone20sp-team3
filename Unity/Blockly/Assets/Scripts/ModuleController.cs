@@ -280,7 +280,7 @@ public class ModuleController : MonoBehaviour
                     {
                         Debug.Log("adding to library: emit: actually emit @ " + libraryCursorPosition);
                         GameObject obj = Instantiate(this.libraryBlockPrefab, libraryCursorPosition, Quaternion.identity);
-                        obj.transform.parent = parentObject.transform;
+                        obj.transform.parent = moduleMeshObj.transform;
                         objectToId.Add(obj, moduleId);
                         blockPositions.Add(new Vector3(libraryCursorPosition.x, libraryCursorPosition.y, libraryCursorPosition.z));
                     }

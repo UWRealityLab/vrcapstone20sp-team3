@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+namespace Blockly {
+
 public class MenuController : MonoBehaviour
 {
     private GameObject puzzleButton;
@@ -72,10 +74,5 @@ public class MenuController : MonoBehaviour
     //    level3Button.SetActive(active);
     //}
 }
-    public void SetButtonActive(bool active)
-    {
-        level1Button.SetActive(active);
-        level2Button.SetActive(active);
-        level3Button.SetActive(active);
-    }
+
 }

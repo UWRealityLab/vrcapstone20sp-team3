@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+namespace Blockly {
+
 public class LevelController : MonoBehaviour
 {
     private GameObject level1Button;
@@ -70,4 +72,6 @@ public class LevelController : MonoBehaviour
         SceneManager.LoadScene("Blockly", LoadSceneMode.Additive);
         //SceneManager.LoadScene("GestureRecognition", LoadSceneMode.Additive);
     }
+}
+
 }

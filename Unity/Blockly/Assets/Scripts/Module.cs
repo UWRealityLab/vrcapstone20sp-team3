@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Blockly {
+
 public class Module : MonoBehaviour
 {
     private Vector3 cursor;
@@ -100,4 +102,5 @@ public class Module : MonoBehaviour
     {
         return this.maximum - this.minimum;
     }
+}
 }

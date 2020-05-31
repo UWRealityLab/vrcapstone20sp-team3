@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+namespace Blockly {
+
 public class PopupMessage : MonoBehaviour
 {
     public GameObject ui;
@@ -98,4 +100,6 @@ public class PopupMessage : MonoBehaviour
             verified = true;
         }
     }
+}
+
 }
