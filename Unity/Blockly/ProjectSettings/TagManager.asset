@@ -8,6 +8,9 @@ TagManager:
   - Module Creation Block
   - Library Block
   - isHand
+  - Puzzle Block
+  - Cursor
+  - Submit Block
   layers:
   - Default
   - TransparentFX

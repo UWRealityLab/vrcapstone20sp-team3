@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class CursorController : MonoBehaviour
 {
-    public float gridSize = 1.0f;
     public GameObject blockPrefab;  // prefab for blocks, used when emitted
     public GameObject moduleCreationBlockPrefab;  // prefab for the temporary blocks that show up during module creation
 
@@ -15,8 +14,9 @@ public class CursorController : MonoBehaviour
     public AudioClip emitSound;
     public AudioClip moveSound;
 
+    public const float GRID_SIZE = 0.5f;
     public const float MIN_POSITION = 0;  // inclusive
-    public const float MAX_POSITION = 9;  // inclusive
+    public const float MAX_POSITION = 4.5f;  // inclusive
 
     private AudioSource source;
 
@@ -102,7 +102,7 @@ public class CursorController : MonoBehaviour
     public void MoveRight()
     {
         Vector3 position = this.gameObject.transform.position;
-        position.x += gridSize;
+        position.x += GRID_SIZE;
         if (position.x > MAX_POSITION)
         {
             return;
@@ -114,7 +114,7 @@ public class CursorController : MonoBehaviour
     {
         Vector3 position = this.gameObject.transform.position;
         Debug.Log("old pos = " + this.gameObject.transform.position);
-        position.x -= gridSize;
+        position.x -= GRID_SIZE;
         if (position.x < MIN_POSITION)
         {
             return;
@@ -126,7 +126,7 @@ public class CursorController : MonoBehaviour
     public void MoveUp()
     {
         Vector3 position = this.gameObject.transform.position;
-        position.y += gridSize;
+        position.y += GRID_SIZE;
         if (position.y > MAX_POSITION)
         {
             return;
@@ -137,7 +137,7 @@ public class CursorController : MonoBehaviour
     public void MoveDown()
     {
         Vector3 position = this.gameObject.transform.position;
-        position.y -= gridSize;
+        position.y -= GRID_SIZE;
         if (position.y < MIN_POSITION)
         {
             return;
@@ -148,7 +148,7 @@ public class CursorController : MonoBehaviour
     public void MoveBackward()
     {
         Vector3 position = this.gameObject.transform.position;
-        position.z -= gridSize;
+        position.z -= GRID_SIZE;
         if (position.z < MIN_POSITION)
         {
             return;
@@ -159,7 +159,7 @@ public class CursorController : MonoBehaviour
     public void MoveForward()
     {
         Vector3 position = this.gameObject.transform.position;
-        position.z += gridSize;
+        position.z += GRID_SIZE;
         if (position.z > MAX_POSITION)
         {
             return;

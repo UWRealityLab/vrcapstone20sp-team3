@@ -1973,6 +1973,54 @@ Transform:
   m_Father: {fileID: 431367348}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1152802556
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1152802558}
+  - component: {fileID: 1152802557}
+  m_Layer: 0
+  m_Name: Puzzle Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1152802557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1152802556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ef86a1695b418141b6031d6e2e4b784, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursor: {fileID: 2043039209}
+  puzzleBlockPrefab: {fileID: 5966132431626884807, guid: 05fa188c5fc6744409c1de4ce082dded,
+    type: 3}
+  submitBlockPrefab: {fileID: 5768872339636739573, guid: 1858f5d5be6867942aab6de36bf01438,
+    type: 3}
+--- !u!4 &1152802558
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1152802556}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.7148256, y: 3.8983355, z: 1.0860281}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1171979773 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6405805160049995646, guid: 15905d23892d043a59dd2cf0590d3a26,
@@ -2412,7 +2460,7 @@ GameObject:
   - component: {fileID: 2043039215}
   m_Layer: 0
   m_Name: Cursor
-  m_TagString: Untagged
+  m_TagString: Cursor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2486,7 +2534,7 @@ Transform:
   m_GameObject: {fileID: 2043039209}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -2503,7 +2551,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a160d3734bafd804caf4bcb68901dc9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: 1
   blockPrefab: {fileID: 2226868214865433724, guid: 30435ee68dd949240b41c43e071564fd,
     type: 3}
   moduleCreationBlockPrefab: {fileID: 7777705353893656173, guid: fdb8a83bbee38cc4890dc0877cc50653,
@@ -2706,8 +2753,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2096479407}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.5, y: 4.5, z: 4.5}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalPosition: {x: 2.25, y: 2.25, z: 2.25}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
