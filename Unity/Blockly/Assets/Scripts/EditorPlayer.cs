@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static OVRSkeleton;
 
 namespace Blockly {
 
 public class EditorPlayer : MonoBehaviour, IPlayer {
-  public Transform leftIndexTip;
-  public Transform rightIndexTip;
+  private Transform leftIndexTip;
+  private Transform rightIndexTip;
 
   private EditorHand leftHand;
   private EditorHand rightHand;
@@ -35,17 +36,17 @@ public class EditorPlayer : MonoBehaviour, IPlayer {
     List<EditorHand> hands = new List<EditorHand>();
     GetComponentsInChildren<EditorHand>(hands);
     Debug.Assert(hands.Count == 2);
-    if (hands[0].GetChirality() == Chirality.Left) {
+    if (hands[0].GetSkeleton().GetSkeletonType() == SkeletonType.HandLeft) {
       leftHand = hands[0];
       rightHand = hands[1];
     } else {
       leftHand = hands[1];
       rightHand = hands[0];
     }
-    Debug.Log(hands[0].GetChirality());
-    Debug.Log(hands[1].GetChirality());
-    Debug.Assert(leftHand.GetChirality() == Chirality.Left);
-    Debug.Assert(rightHand.GetChirality() == Chirality.Right);
+    Debug.Assert(leftHand.GetSkeleton().GetSkeletonType() == SkeletonType.HandLeft);
+    Debug.Assert(rightHand.GetSkeleton().GetSkeletonType() == SkeletonType.HandRight);
+    leftIndexTip = leftHand.GetBoneTransform(BoneId.Hand_IndexTip);
+    rightIndexTip = rightHand.GetBoneTransform(BoneId.Hand_IndexTip);
   }
 
   public void Update() {
@@ -108,23 +109,23 @@ public class EditorPlayer : MonoBehaviour, IPlayer {
   }
 
   public Transform GetLeftIndexTipTransform() {
-    Debug.Assert(leftHand.GetChirality() == Chirality.Left);
+    // Debug.Assert(leftHand.GetChirality() == Chirality.Left);
     return leftIndexTip;
   }
 
   public Transform GetRightIndexTipTransform() {
-    Debug.Assert(rightHand.GetChirality() == Chirality.Right);
+    // Debug.Assert(rightHand.GetChirality() == Chirality.Right);
     return rightIndexTip;
   }
 
-  public Pose GetCurrLeftPose() {
-    Debug.Assert(leftHand.GetChirality() == Chirality.Left);
-    return leftHand.GetCurrentPose();
+  public SkeletonPoseData GetCurrLeftPose() {
+    // Debug.Assert(leftHand.GetChirality() == Chirality.Left);
+    return leftHand.GetSkeleton().GetSkeletonPoseData();
   }
 
-  public Pose GetCurrRightPose() {
-    Debug.Assert(rightHand.GetChirality() == Chirality.Right);
-    return rightHand.GetCurrentPose();
+  public SkeletonPoseData GetCurrRightPose() {
+    // Debug.Assert(rightHand.GetChirality() == Chirality.Right);
+    return rightHand.GetSkeleton().GetSkeletonPoseData();
   }
 }
 

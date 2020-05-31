@@ -133,7 +133,7 @@ public static class OVRPlugin
 		}
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	private class GUID
 	{
 		public int a;
@@ -149,13 +149,13 @@ public static class OVRPlugin
 		public byte d7;
 	}
 
-	public enum Bool
+	[System.Serializable] public enum Bool
 	{
 		False = 0,
 		True
 	}
 
-	public enum Result
+	[System.Serializable] public enum Result
 	{
 		/// Success
 		Success = 0,
@@ -171,7 +171,7 @@ public static class OVRPlugin
 		Failure_InsufficientSize = -1007,
 	}
 
-	public enum CameraStatus
+	[System.Serializable] public enum CameraStatus
 	{
 		CameraStatus_None,
 		CameraStatus_Connected,
@@ -181,7 +181,7 @@ public static class OVRPlugin
 		CameraStatus_EnumSize = 0x7fffffff
 	}
 
-	public enum Eye
+	[System.Serializable] public enum Eye
 	{
 		None = -1,
 		Left = 0,
@@ -189,7 +189,7 @@ public static class OVRPlugin
 		Count = 2
 	}
 
-	public enum Tracker
+	[System.Serializable] public enum Tracker
 	{
 		None = -1,
 		Zero = 0,
@@ -199,7 +199,7 @@ public static class OVRPlugin
 		Count,
 	}
 
-	public enum Node
+	[System.Serializable] public enum Node
 	{
 		None = -1,
 		EyeLeft = 0,
@@ -216,7 +216,7 @@ public static class OVRPlugin
 		Count,
 	}
 
-	public enum Controller
+	[System.Serializable] public enum Controller
 	{
 		None = 0,
 		LTouch = 0x00000001,
@@ -234,14 +234,14 @@ public static class OVRPlugin
 		All = ~None,
 	}
 
-	public enum Handedness
+	[System.Serializable] public enum Handedness
 	{
 		Unsupported = 0,
 		LeftHanded = 1,
 		RightHanded = 2,
 	}
 
-	public enum TrackingOrigin
+	[System.Serializable] public enum TrackingOrigin
 	{
 		EyeLevel = 0,
 		FloorLevel = 1,
@@ -249,7 +249,7 @@ public static class OVRPlugin
 		Count,
 	}
 
-	public enum RecenterFlags
+	[System.Serializable] public enum RecenterFlags
 	{
 		Default = 0,
 		Controllers = 0x40000000,
@@ -257,7 +257,7 @@ public static class OVRPlugin
 		Count,
 	}
 
-	public enum BatteryStatus
+	[System.Serializable] public enum BatteryStatus
 	{
 		Charging = 0,
 		Discharging,
@@ -266,7 +266,7 @@ public static class OVRPlugin
 		Unknown,
 	}
 
-	public enum EyeTextureFormat
+	[System.Serializable] public enum EyeTextureFormat
 	{
 		Default = 0,
 		R8G8B8A8_sRGB = 0,
@@ -279,21 +279,21 @@ public static class OVRPlugin
 		EnumSize = 0x7fffffff
 	}
 
-	public enum PlatformUI
+	[System.Serializable] public enum PlatformUI
 	{
 		None = -1,
 		ConfirmQuit = 1,
 		GlobalMenuTutorial, // Deprecated
 	}
 
-	public enum SystemRegion
+	[System.Serializable] public enum SystemRegion
 	{
 		Unspecified = 0,
 		Japan,
 		China,
 	}
 
-	public enum SystemHeadset
+	[System.Serializable] public enum SystemHeadset
 	{
 		None = 0,
 		GearVR_R320, // Note4 Innovator
@@ -312,7 +312,7 @@ public static class OVRPlugin
 		Rift_S,
 	}
 
-	public enum OverlayShape
+	[System.Serializable] public enum OverlayShape
 	{
 		Quad = 0,
 		Cylinder = 1,
@@ -321,13 +321,13 @@ public static class OVRPlugin
 		Equirect = 5,
 	}
 
-	public enum Step
+	[System.Serializable] public enum Step
 	{
 		Render = -1,
 		Physics = 0,
 	}
 
-	public enum CameraDevice
+	[System.Serializable] public enum CameraDevice
 	{
 		None = 0,
 		WebCamera0 = 100,
@@ -335,20 +335,20 @@ public static class OVRPlugin
 		ZEDCamera = 300,
 	}
 
-	public enum CameraDeviceDepthSensingMode
+	[System.Serializable] public enum CameraDeviceDepthSensingMode
 	{
 		Standard = 0,
 		Fill = 1,
 	}
 
-	public enum CameraDeviceDepthQuality
+	[System.Serializable] public enum CameraDeviceDepthQuality
 	{
 		Low = 0,
 		Medium = 1,
 		High = 2,
 	}
 
-	public enum FixedFoveatedRenderingLevel
+	[System.Serializable] public enum FixedFoveatedRenderingLevel
 	{
 		Off = 0,
 		Low = 1,
@@ -360,7 +360,7 @@ public static class OVRPlugin
 	}
 
 	[Obsolete("Please use FixedFoveatedRenderingLevel instead", false)]
-	public enum TiledMultiResLevel
+	[System.Serializable] public enum TiledMultiResLevel
 	{
 		Off = 0,
 		LMSLow = FixedFoveatedRenderingLevel.Low,
@@ -371,7 +371,7 @@ public static class OVRPlugin
 		EnumSize = 0x7FFFFFFF
 	}
 
-	public enum PerfMetrics
+	[System.Serializable] public enum PerfMetrics
 	{
 		App_CpuTime_Float = 0,
 		App_GpuTime_Float = 1,
@@ -394,7 +394,7 @@ public static class OVRPlugin
 		EnumSize = 0x7FFFFFFF
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct CameraDeviceIntrinsicsParameters
 	{
 		float fx; /* Focal length in pixels along x axis. */
@@ -432,14 +432,14 @@ public static class OVRPlugin
 		Hidden = unchecked((int)0x000000200),
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct Vector2f
 	{
 		public float x;
 		public float y;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct Vector3f
 	{
 		public float x;
@@ -452,7 +452,7 @@ public static class OVRPlugin
 		}
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct Vector4f
 	{
 		public float x;
@@ -466,7 +466,7 @@ public static class OVRPlugin
 		}
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct Vector4s
 	{
 		public short x;
@@ -480,7 +480,7 @@ public static class OVRPlugin
 		}
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct Quatf
 	{
 		public float x;
@@ -494,7 +494,7 @@ public static class OVRPlugin
 		}
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct Posef
 	{
 		public Quatf Orientation;
@@ -506,7 +506,7 @@ public static class OVRPlugin
 		}
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct TextureRectMatrixf
 	{
 		public Rect leftRect;
@@ -521,7 +521,7 @@ public static class OVRPlugin
 		}
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct PoseStatef
 	{
 		public Posef Pose;
@@ -541,7 +541,7 @@ public static class OVRPlugin
 		};
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct ControllerState4
 	{
 		public uint ConnectedControllers;
@@ -638,7 +638,7 @@ public static class OVRPlugin
 		}
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct ControllerState2
 	{
 		public uint ConnectedControllers;
@@ -671,7 +671,7 @@ public static class OVRPlugin
 		}
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct ControllerState
 	{
 		public uint ConnectedControllers;
@@ -686,21 +686,21 @@ public static class OVRPlugin
 		public Vector2f RThumbstick;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct HapticsBuffer
 	{
 		public IntPtr Samples;
 		public int SamplesCount;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct HapticsState
 	{
 		public int SamplesAvailable;
 		public int SamplesQueued;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct HapticsDesc
 	{
 		public int SampleRateHz;
@@ -711,7 +711,7 @@ public static class OVRPlugin
 		public int MaximumBufferSamplesCount;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct AppPerfFrameStats
 	{
 		public int HmdVsyncIndex;
@@ -732,7 +732,7 @@ public static class OVRPlugin
 
 	public const int AppPerfFrameStatsMaxCount = 5;
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct AppPerfStats
 	{
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = AppPerfFrameStatsMaxCount)]
@@ -742,7 +742,7 @@ public static class OVRPlugin
 		public float AdaptiveGpuPerformanceScale;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct Sizei
 	{
 		public int w;
@@ -751,7 +751,7 @@ public static class OVRPlugin
 		public static readonly Sizei zero = new Sizei { w = 0, h = 0 };
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct Sizef
 	{
 		public float w;
@@ -760,26 +760,26 @@ public static class OVRPlugin
 		public static readonly Sizef zero = new Sizef { w = 0, h = 0 };
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct Vector2i
 	{
 		public int x;
 		public int y;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct Recti {
 		Vector2i Pos;
 		Sizei Size;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct Rectf {
 		Vector2f Pos;
 		Sizef Size;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct Frustumf
 	{
 		public float zNear;
@@ -788,7 +788,7 @@ public static class OVRPlugin
 		public float fovY;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct Frustumf2
 	{
 		public float zNear;
@@ -796,13 +796,13 @@ public static class OVRPlugin
 		public Fovf Fov;
 	}
 
-	public enum BoundaryType
+	[System.Serializable] public enum BoundaryType
 	{
 		OuterBoundary = 0x0001,
 		PlayArea = 0x0100,
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct BoundaryTestResult
 	{
 		public Bool IsTriggering;
@@ -811,7 +811,7 @@ public static class OVRPlugin
 		public Vector3f ClosestPointNormal;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct BoundaryGeometry
 	{
 		public BoundaryType BoundaryType;
@@ -820,7 +820,7 @@ public static class OVRPlugin
 		public int PointsCount;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct Colorf
 	{
 		public float r;
@@ -829,7 +829,7 @@ public static class OVRPlugin
 		public float a;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct Fovf
 	{
 		public float UpTan;
@@ -838,7 +838,7 @@ public static class OVRPlugin
 		public float RightTan;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct CameraIntrinsics
 	{
 		public Bool IsValid;
@@ -849,7 +849,7 @@ public static class OVRPlugin
 		public Sizei ImageSensorPixelResolution;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct CameraExtrinsics
 	{
 		public Bool IsValid;
@@ -859,7 +859,7 @@ public static class OVRPlugin
 		public Posef RelativePose;
 	}
 
-	public enum LayerLayout
+	[System.Serializable] public enum LayerLayout
 	{
 		Stereo = 0,
 		Mono = 1,
@@ -868,7 +868,7 @@ public static class OVRPlugin
 		EnumSize = 0xF
 	}
 
-	public enum LayerFlags
+	[System.Serializable] public enum LayerFlags
 	{
 		Static = (1 << 0),
 		LoadingScreen = (1 << 1),
@@ -880,7 +880,7 @@ public static class OVRPlugin
 		AndroidSurfaceSwapChain = (1 << 7),
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct LayerDesc
 	{
 		public OverlayShape Shape;
@@ -912,7 +912,7 @@ public static class OVRPlugin
 		}
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct LayerSubmit
 	{
 		int LayerId;
@@ -923,13 +923,13 @@ public static class OVRPlugin
 		int LayerSubmitFlags;
 	}
 
-	public enum TrackingConfidence
+	[System.Serializable] public enum TrackingConfidence
 	{
 		Low = 0,
 		High = 0x3f800000,
 	}
 
-	public enum Hand
+	[System.Serializable] public enum Hand
 	{
 		None = -1,
 		HandLeft = 0,
@@ -937,14 +937,14 @@ public static class OVRPlugin
 	}
 
 	[Flags]
-	public enum HandStatus
+	[System.Serializable] public enum HandStatus
 	{
 		HandTracked = (1 << 0), // if this is set the hand pose and bone rotations data is usable
 		InputStateValid = (1 << 1), // if this is set the pointer pose and pinch data is usable
 		SystemGestureInProgress = (1 << 6), // if this is set the hand is currently processing a system gesture
 	}
 
-	public enum BoneId
+	[System.Serializable] public enum BoneId
 	{
 		Invalid                 = -1,
 
@@ -983,7 +983,7 @@ public static class OVRPlugin
 		Max = Hand_End + 0,
 	}
 
-	public enum HandFinger
+	[System.Serializable] public enum HandFinger
 	{
 		Thumb = 0,
 		Index = 1,
@@ -993,8 +993,8 @@ public static class OVRPlugin
 		Max = 5,
 	}
 
-    [Flags]
-	public enum HandFingerPinch
+	[Flags]
+	[System.Serializable] public enum HandFingerPinch
 	{
 		Thumb  = (1 << HandFinger.Thumb),
 		Index  = (1 << HandFinger.Index),
@@ -1003,7 +1003,7 @@ public static class OVRPlugin
 		Pinky  = (1 << HandFinger.Pinky),
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct HandState
 	{
 		public HandStatus Status;
@@ -1019,7 +1019,7 @@ public static class OVRPlugin
 		public double SampleTimeStamp;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	private struct HandStateInternal
 	{
 		public HandStatus Status;
@@ -1066,7 +1066,7 @@ public static class OVRPlugin
 		public double SampleTimeStamp;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct BoneCapsule
 	{
 		public short BoneIndex;
@@ -1075,7 +1075,7 @@ public static class OVRPlugin
 		public float Radius;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct Bone
 	{
 		public BoneId Id;
@@ -1083,20 +1083,20 @@ public static class OVRPlugin
 		public Posef Pose;
 	}
 
-	public enum SkeletonConstants
+	[System.Serializable] public enum SkeletonConstants
 	{
 		MaxBones = BoneId.Max,
 		MaxBoneCapsules = 19,
 	}
 
-	public enum SkeletonType
+	[System.Serializable] public enum SkeletonType
 	{
 		None = -1,
 		HandLeft = 0,
 		HandRight = 1,
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public struct Skeleton
 	{
 		public SkeletonType Type;
@@ -1108,20 +1108,20 @@ public static class OVRPlugin
 		public BoneCapsule[] BoneCapsules;
 	}
 
-	public enum MeshConstants
+	[System.Serializable] public enum MeshConstants
 	{
 		MaxVertices = 3000,
 		MaxIndices = MaxVertices * 6,
 	}
 
-	public enum MeshType
+	[System.Serializable] public enum MeshType
 	{
 		None = -1,
 		HandLeft = 0,
 		HandRight = 1,
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Serializable] [StructLayout(LayoutKind.Sequential)]
 	public class Mesh
 	{
 		public MeshType Type;
@@ -3932,14 +3932,14 @@ public static class OVRPlugin
 
 	public class Media
 	{
-		public enum MrcActivationMode
+		[System.Serializable] public enum MrcActivationMode
 		{
 			Automatic = 0,
 			Disabled = 1,
 			EnumSize = 0x7fffffff
 		}
 
-		public enum InputVideoBufferType
+		[System.Serializable] public enum InputVideoBufferType
 		{
 			Memory = 0,
 			TextureHandle = 1,
