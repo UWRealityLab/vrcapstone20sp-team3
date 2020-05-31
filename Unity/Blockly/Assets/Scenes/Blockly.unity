@@ -907,7 +907,7 @@ PrefabInstance:
     - target: {fileID: 6405805160239626934, guid: 15905d23892d043a59dd2cf0590d3a26,
         type: 3}
       propertyPath: rightPoses.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6405805160239626934, guid: 15905d23892d043a59dd2cf0590d3a26,
         type: 3}
