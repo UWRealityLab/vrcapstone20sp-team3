@@ -13,7 +13,6 @@ public class CursorController : MonoBehaviour
     public GameObject moduleCreationBlockPrefab;  // prefab for the temporary blocks that show up during module creation
 
     public GameObject recordButton;
-    private ModuleController moduleController;
 
     private HashSet<Vector3> blockPositions;  // the positions for all blocks existing on grid right now
 
@@ -31,7 +30,6 @@ public class CursorController : MonoBehaviour
         Debug.Assert(Instance == null, "singleton class instantiated multiple times");
         Instance = this;
         source = GetComponent<AudioSource>();
-        moduleController = ModuleController.Instance;
         blockPositions = new HashSet<Vector3>();
     }
 

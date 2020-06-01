@@ -23,7 +23,6 @@ public class ModuleController : MonoBehaviour
     public Material blockMaterial;
 
     /* module library */
-    public GameObject libraryModuleParentPrefab;
     public GameObject libraryBlockPrefab;
     public GameObject libraryModuleEndCursorPrefab;
     private GameObject selectedModule;  // currently selected module (out of the module library)
