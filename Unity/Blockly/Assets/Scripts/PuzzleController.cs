@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
+namespace Blockly {
+
 public class PuzzleController : MonoBehaviour
 {
     public GameObject cursor;
@@ -12,6 +14,7 @@ public class PuzzleController : MonoBehaviour
     public GameObject recordButton;
     private ModuleController moduleController;
     private bool userSubmittedWithModule;
+    private bool moduleCorrect;  // only check this value if "userSubmittedWithModule" is true
 
     public GameObject puzzleBlockPrefab;
     public GameObject submitBlockPrefab;
@@ -54,6 +57,7 @@ public class PuzzleController : MonoBehaviour
         level2.AddStatement("Backward");
         level2.AddStatement("Emit");
         level2.AddStatement("Up");
+        level2.Complete();
         puzzles.Add(level2);
 
         /* level 3 - "stair" shape using the square from level 2 */
@@ -68,6 +72,7 @@ public class PuzzleController : MonoBehaviour
             level3.AddStatement("Backward");
             level3.AddStatement("Emit");
             level3.AddStatement("Up");
+            level3.Complete();
         }
         puzzles.Add(level3);
     }
@@ -77,9 +82,10 @@ public class PuzzleController : MonoBehaviour
     {
         if (cursorController.CursorPosition() == this.submitBlockPosition)
         {
-            if (moduleController.IsRecording())
+            if (moduleController.IsRecording()) // hopefully about to save module & submit
             {
                 this.userSubmittedWithModule = true;
+                this.moduleCorrect = VerifyPuzzle();
             }
         }
         else
@@ -88,6 +94,8 @@ public class PuzzleController : MonoBehaviour
             if (this.userSubmittedWithModule && moduleController.IsRecording())
             {
                 this.userSubmittedWithModule = false;
+                this.moduleCorrect = false;
+                Debug.Log("cursor moved off!");
             }
         }
 
@@ -96,14 +104,16 @@ public class PuzzleController : MonoBehaviour
          */
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Boolean result = VerifyPuzzle();
-            Debug.Log("verify puzzle result: " + result);
+            Boolean result = UserSubmittedCorrect();
+            Debug.Log("user passed puzzle level?: " + result);
         }
     }
 
     public void StartPuzzle(int puzzleId)
     {
         this.selectedPuzzleId = puzzleId;
+        this.userSubmittedWithModule = false;
+        this.moduleCorrect = false;
         Vector3 puzzleCursorPosition = Vector3.zero;
         foreach (string statement in puzzles[puzzleId].Statements())
         {
@@ -156,11 +166,13 @@ public class PuzzleController : MonoBehaviour
 
     // verifies the user's blocks against the puzzle's target structure
     // returns true if correct, false if not
-    public Boolean VerifyPuzzle()
+    private Boolean VerifyPuzzle()
     {
-        Boolean needsModule = this.selectedPuzzleId == 1;  // for level 2, compare with module library not main grid
-        if (needsModule && this.moduleController.ModuleLibraryIsEmpty())
+        Debug.Log("VerifyPuzzle()");
+        Boolean needsModule = this.selectedPuzzleId == 1;  // for level 2, require module
+        if (needsModule && !this.userSubmittedWithModule)
         {
+            Debug.Log("VerifyPuzzle() - needsModule fail");
             return false;
         }
         Vector3 moduleLibraryPosition = this.moduleController.MostRecentModuleLibraryPosition();
@@ -184,22 +196,10 @@ public class PuzzleController : MonoBehaviour
                             puzzleBlock = true;
                         }
                     }
-                    Boolean libraryBlock = false;
-                    if (needsModule)
-                    {
-                        Collider[] libraryCcolliders = Physics.OverlapSphere(moduleLibraryPosition + new Vector3(x, y, z), CursorController.GRID_SIZE / 3);
-                        foreach (Collider collider in libraryCcolliders)
-                        {
-                            if (collider.gameObject.tag == "Library Block")
-                            {
-                                libraryBlock = true;
-                            }
-                        }
-                    }
 
-                    if ((needsModule && libraryBlock != puzzleBlock) || (!needsModule && userBlock != puzzleBlock))
+                    if (userBlock != puzzleBlock)
                     {
-                        Debug.Log("verify fail... user: " + userBlock + ", puzzle: " + puzzleBlock + ", module: " + libraryBlock + " at " + new Vector3(x, y, z));
+                        Debug.Log("verify fail... user: " + userBlock + ", puzzle: " + puzzleBlock + " at " + new Vector3(x, y, z));
                         return false;
                     }
                 }
@@ -228,12 +228,24 @@ public class PuzzleController : MonoBehaviour
         this.cursorController.gameObject.transform.position = new Vector3(CursorController.MIN_POSITION, CursorController.MIN_POSITION, CursorController.MIN_POSITION);
     }
 
-    public Boolean UserSubmitted()
+    // return true if the user submitted a correct result (and they should pass the level)
+    // false if not
+    public Boolean UserSubmittedCorrect()
     {
+        Boolean needsModule = this.selectedPuzzleId == 1;  // for level 2, require module
         if (this.moduleController.IsRecording())
         {
             return false;
         }
-        return this.cursorController.CursorPosition() == this.submitBlockPosition || this.userSubmittedWithModule;
+        if (needsModule)
+        {
+            return this.userSubmittedWithModule && this.moduleCorrect;
+        }
+        else
+        {
+            return this.cursorController.CursorPosition() == this.submitBlockPosition && this.VerifyPuzzle();
+        }
     }
+}
+
 }

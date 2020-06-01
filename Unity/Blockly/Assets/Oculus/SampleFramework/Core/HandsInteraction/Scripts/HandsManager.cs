@@ -190,6 +190,15 @@ namespace OculusSampleFramework
 			_leftMeshRenderer = LeftHand.GetComponent<SkinnedMeshRenderer>();
 			_rightMeshRenderer = RightHand.GetComponent<SkinnedMeshRenderer>();
 			StartCoroutine(FindSkeletonVisualGameObjects());
+			Debug.Log($"finished Awake. handmanager initted? {IsInitialized()}");
+			Debug.Log($"  LeftHandSkeleton: {LeftHandSkeleton}");
+			Debug.Log($"  LeftHandSkeleton.IsInitialized: {LeftHandSkeleton.IsInitialized}");
+			Debug.Log($"  RightHandSkeleton: {LeftHandSkeleton}");
+			Debug.Log($"  RightHandSkeleton.IsInitialized: {LeftHandSkeleton.IsInitialized}");
+			Debug.Log($"  LeftHandMesh: {LeftHandSkeleton}");
+			Debug.Log($"  LeftHandMesh.IsInitialized: {LeftHandSkeleton.IsInitialized}");
+			Debug.Log($"  RightHandMesh: {LeftHandSkeleton}");
+			Debug.Log($"  RightHandMesh.IsInitialized: {LeftHandSkeleton.IsInitialized}");
 		}
 
 		private void Update()

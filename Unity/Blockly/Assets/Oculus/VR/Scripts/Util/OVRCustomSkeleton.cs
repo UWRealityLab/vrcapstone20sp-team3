@@ -95,9 +95,9 @@ public class OVRCustomSkeleton : OVRSkeleton
 		}
 	}
 
-	
+
 #endif
-	
+
 	protected override void InitializeBones(OVRPlugin.Skeleton skeleton)
 	{
 		_bones = new List<OVRBone>(new OVRBone[skeleton.NumBones]);

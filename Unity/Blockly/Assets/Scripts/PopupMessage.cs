@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+namespace Blockly {
+
 public class PopupMessage : MonoBehaviour
 {
     public GameObject ui;
@@ -37,7 +39,7 @@ public class PopupMessage : MonoBehaviour
     void Update()
     {
         clickButton();
-        if (puzzleController != null && !verified && puzzleController.UserSubmitted())
+        if (puzzleController != null && !verified && puzzleController.UserSubmittedCorrect())
         {
             MoveToNextLevel();
         }
@@ -92,10 +94,9 @@ public class PopupMessage : MonoBehaviour
 
     public void MoveToNextLevel()
     {
-        if (puzzleController.VerifyPuzzle())
-        {
-            Open("Do you want to move on to the next level?");
-            verified = true;
-        }
+        Open("Do you want to move on to the next level?");
+        verified = true;
     }
+}
+
 }

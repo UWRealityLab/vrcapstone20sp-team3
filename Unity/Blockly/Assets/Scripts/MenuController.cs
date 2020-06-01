@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+namespace Blockly {
+
 public class MenuController : MonoBehaviour
 {
     private GameObject puzzleButton;

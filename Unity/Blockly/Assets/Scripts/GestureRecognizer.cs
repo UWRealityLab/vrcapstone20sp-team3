@@ -6,6 +6,7 @@ using UnityEngine.Events;
 namespace Blockly {
 
 public class GestureRecognizer : MonoBehaviour {
+  public StringEvent OnRecognizeJointGesture;
   public StringEvent OnRecognizeLeftGesture;
   public StringEvent OnRecognizeRightGesture;
 
@@ -14,7 +15,7 @@ public class GestureRecognizer : MonoBehaviour {
   private LinkedList<string> recentLeftPoses;
   private LinkedList<string> recentRightPoses;
   // how many of the most recent poses to keep track of
-  private int recentPoseCapacity = 10;
+  private static int RECENT_POSE_CAPACITY = 10;
 
   // for recognizing move gestures
   private FingerTrail fingerTrail;
@@ -40,20 +41,19 @@ public class GestureRecognizer : MonoBehaviour {
     Debug.Assert(recentPoses.Count == 0 || newPose != recentPoses.First.Value);
 
     recentPoses.AddFirst(newPose);
-    if (recentPoses.Count > recentPoseCapacity) {
+    if (recentPoses.Count > RECENT_POSE_CAPACITY) {
       recentPoses.RemoveLast();
     }
 
     string gesture = RecognizeGesture(recentPoses);
     if (gesture == "CreateModule")
     {
-      string gestureOther = leftHand ? RecognizeGesture(recentRightPoses) : RecognizeGesture(recentLeftPoses);
-      if (gestureOther != "CreateModule")
+      string gestureOther = leftHand ? recentRightPoses.First.Value : recentLeftPoses.First.Value;
+      if (gestureOther == "CreateModule")
       {
-        gesture = null;
+        OnRecognizeJointGesture.Invoke("CreateModule");
       }
-    }
-    if (gesture != null) {
+    } else if (gesture != null) {
       if (leftHand) {
         OnRecognizeLeftGesture.Invoke(gesture);
       } else {
@@ -81,15 +81,11 @@ public class GestureRecognizer : MonoBehaviour {
       }
     } else if (curr.Value == "Open") {
       curr = curr.Next;
-      if (curr.Value == "Fist" || (curr.Value == "No Pose" && curr.Next.Value == "Fist")) {
+      if (curr.Value == "Fist" || (curr.Value == "Default" && curr.Next.Value == "Fist")) {
         return "Emit";
       }
-    } else if (curr.Value == "Module") {
-      curr = curr.Next;
-      // Idea: If they hold the module pose, we only want to define one single module.
-      if (curr.Value != "Module" || curr.Next.Value != "Module") {
-        return "CreateModule";
-      }
+    } else if (curr.Value == "CreateModule") {
+      return "CreateModule";
     }
     return null;
   }

@@ -27,13 +27,14 @@ public class OVRSkeleton : MonoBehaviour
 		SkeletonPoseData GetSkeletonPoseData();
 	}
 
+	[System.Serializable]
 	public struct SkeletonPoseData
 	{
-		public OVRPlugin.Posef RootPose { get; set; }
-		public float RootScale { get; set; }
-		public OVRPlugin.Quatf[] BoneRotations { get; set; }
-		public bool IsDataValid { get; set; }
-		public bool IsDataHighConfidence { get; set; }
+		public OVRPlugin.Posef RootPose;
+		public float RootScale;
+		public OVRPlugin.Quatf[] BoneRotations;
+		public bool IsDataValid;
+		public bool IsDataHighConfidence;
 	}
 
 	public enum SkeletonType
@@ -117,7 +118,7 @@ public class OVRSkeleton : MonoBehaviour
 		{
 			_dataProvider = GetComponent<IOVRSkeletonDataProvider>();
 		}
-		
+
 		_bones = new List<OVRBone>();
 		Bones = _bones.AsReadOnly();
 
@@ -132,20 +133,23 @@ public class OVRSkeleton : MonoBehaviour
 	{
 		if (_skeletonType != SkeletonType.None)
 		{
+			Debug.Log($"initializing {_skeletonType}");
 			Initialize();
 		}
 	}
-	
+
 	private void Initialize()
 	{
 		var skeleton = new OVRPlugin.Skeleton();
 		if (OVRPlugin.GetSkeleton((OVRPlugin.SkeletonType)_skeletonType, out skeleton))
 		{
+			Debug.Log("  successfully got skeleton");
 			InitializeBones(skeleton);
 			InitializeBindPose(skeleton);
 			InitializeCapsules(skeleton);
-			
+
 			IsInitialized = true;
+			Debug.Log("  finished skeleton init");
 		}
 	}
 
