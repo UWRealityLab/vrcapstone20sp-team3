@@ -104,10 +104,6 @@ public class LevelPopupController : MonoBehaviour
                 }
                 puzzleController.StartPuzzle(currentLevel);
                 verified = false;
-            } else
-            {
-                Open(CONGRATULATIONS, END_INST, null);
-                verified = false;
             }
         }
     }
@@ -117,7 +113,13 @@ public class LevelPopupController : MonoBehaviour
         if (puzzleController.VerifyPuzzle())
         {
             verified = true;
-            Open(NEXT_LEVEL_TITLE, NEXT_LEVEL_INST, null);
+            if (puzzleController.VerifyPuzzleId(currentLevel + 1))
+            {
+                Open(NEXT_LEVEL_TITLE, NEXT_LEVEL_INST, "");
+            } else
+            {
+                Open(CONGRATULATIONS, END_INST, "");
+            }
         }
     }
 
@@ -131,7 +133,7 @@ public class LevelPopupController : MonoBehaviour
 
     private void setText(string message, int childNum)
     {
-        if (!string.IsNullOrEmpty(message))
+        if (message != null)
         {
             Text textObject = ui.transform.GetChild(childNum).gameObject.GetComponentInChildren<Text>();
             textObject.text = message;

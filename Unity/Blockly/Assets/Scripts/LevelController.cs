@@ -67,7 +67,7 @@ public class LevelController : MonoBehaviour
     private void SetupLevel(int level)
     {
         popupController.SetLevel(level);
-        popupController.Open("Welcome to Blockly Puzzle Mode", "Press <TODO> to continue", null);
+        popupController.Open("Welcome to Blockly Puzzle Mode", "Press <TODO> to continue", "");
         SetButtonActive(false);
         SceneManager.LoadScene("Blockly", LoadSceneMode.Additive);
         //SceneManager.LoadScene("GestureRecognition", LoadSceneMode.Additive);
