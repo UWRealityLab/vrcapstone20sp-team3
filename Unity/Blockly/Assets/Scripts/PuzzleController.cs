@@ -14,6 +14,7 @@ public class PuzzleController : MonoBehaviour
     public GameObject recordButton;
     private ModuleController moduleController;
     private bool userSubmittedWithModule;
+    private bool moduleCorrect;  // only check this value if "userSubmittedWithModule" is true
 
     public GameObject puzzleBlockPrefab;
     public GameObject submitBlockPrefab;
@@ -79,9 +80,11 @@ public class PuzzleController : MonoBehaviour
     {
         if (cursorController.CursorPosition() == this.submitBlockPosition)
         {
-            if (moduleController.IsRecording())
+            if (moduleController.IsRecording()) // hopefully about to save module & submit
             {
                 this.userSubmittedWithModule = true;
+                this.moduleCorrect = VerifyPuzzle();
+                Debug.Log("cursor on submit while recording: moduleCorrect=" + this.moduleCorrect);
             }
         }
         else
@@ -90,6 +93,8 @@ public class PuzzleController : MonoBehaviour
             if (this.userSubmittedWithModule && moduleController.IsRecording())
             {
                 this.userSubmittedWithModule = false;
+                this.moduleCorrect = false;
+                Debug.Log("cursor moved off!");
             }
         }
 
@@ -106,6 +111,8 @@ public class PuzzleController : MonoBehaviour
     public void StartPuzzle(int puzzleId)
     {
         this.selectedPuzzleId = puzzleId;
+        this.userSubmittedWithModule = false;
+        this.moduleCorrect = false;
         Vector3 puzzleCursorPosition = Vector3.zero;
         foreach (string statement in puzzles[puzzleId].Statements())
         {
@@ -160,9 +167,11 @@ public class PuzzleController : MonoBehaviour
     // returns true if correct, false if not
     public Boolean VerifyPuzzle()
     {
-        Boolean needsModule = this.selectedPuzzleId == 1;  // for level 2, compare with module library not main grid
-        if (needsModule && this.moduleController.ModuleLibraryIsEmpty())
+        Debug.Log("VerifyPuzzle()");
+        Boolean needsModule = this.selectedPuzzleId == 1;  // for level 2, require module
+        if (needsModule && !this.userSubmittedWithModule)
         {
+            Debug.Log("VerifyPuzzle() - needsModule fail");
             return false;
         }
         Vector3 moduleLibraryPosition = this.moduleController.MostRecentModuleLibraryPosition();
@@ -186,22 +195,10 @@ public class PuzzleController : MonoBehaviour
                             puzzleBlock = true;
                         }
                     }
-                    Boolean libraryBlock = false;
-                    if (needsModule)
-                    {
-                        Collider[] libraryCcolliders = Physics.OverlapSphere(moduleLibraryPosition + new Vector3(x, y, z), CursorController.GRID_SIZE / 3);
-                        foreach (Collider collider in libraryCcolliders)
-                        {
-                            if (collider.gameObject.tag == "Library Block")
-                            {
-                                libraryBlock = true;
-                            }
-                        }
-                    }
 
-                    if ((needsModule && libraryBlock != puzzleBlock) || (!needsModule && userBlock != puzzleBlock))
+                    if (userBlock != puzzleBlock)
                     {
-                        Debug.Log("verify fail... user: " + userBlock + ", puzzle: " + puzzleBlock + ", module: " + libraryBlock + " at " + new Vector3(x, y, z));
+                        Debug.Log("verify fail... user: " + userBlock + ", puzzle: " + puzzleBlock + " at " + new Vector3(x, y, z));
                         return false;
                     }
                 }
@@ -230,13 +227,21 @@ public class PuzzleController : MonoBehaviour
         this.cursorController.gameObject.transform.position = new Vector3(CursorController.MIN_POSITION, CursorController.MIN_POSITION, CursorController.MIN_POSITION);
     }
 
-    public Boolean UserSubmitted()
+    public Boolean UserSubmittedCorrect()
     {
+        Boolean needsModule = this.selectedPuzzleId == 1;  // for level 2, require module
         if (this.moduleController.IsRecording())
         {
             return false;
         }
-        return this.cursorController.CursorPosition() == this.submitBlockPosition || this.userSubmittedWithModule;
+        if (needsModule)
+        {
+            return this.userSubmittedWithModule && this.moduleCorrect;
+        }
+        else
+        {
+            return this.cursorController.CursorPosition() == this.submitBlockPosition && this.VerifyPuzzle();
+        }
     }
 }
 
