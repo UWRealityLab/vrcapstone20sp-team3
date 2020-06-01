@@ -44,30 +44,23 @@ public class LevelController : MonoBehaviour
 
     public void BeginLevel1()
     {
-        //string dir = "Introduction to gestures\n";
-        //dir += "1. Move a block to the right.\nPoint your pointer finger and drag in desired direction.\n";
-        //dir += "2. Emit block at cursor.\nStart with a fist and release,\nmaking a 5 with your fingers, hand facing down.";
         SetupLevel(-1);
     }
 
     public void BeginLevel2()
     {
-        //string dir = "Module\nTap on recording button to start recording your module.\n";
-        //dir += "Emit a block and move cursor to the right.\n Finish by pressing recording button again.";
         SetupLevel(0);
     }
 
     public void BeginLevel3()
     {
-        //string dir = "Loop\nChoose module and loop over it ten times in a clockwise circular motion.\n";
-        //dir += "Apply module to main grid.";
         SetupLevel(1);
     }
 
     private void SetupLevel(int level)
     {
         popupController.SetLevel(level);
-        popupController.Open("Welcome to Blockly Puzzle Mode", "Press <TODO> to continue", "");
+        popupController.Open("Welcome to Blockly Puzzle Mode", "Pinch to get rid of this popup!", "");
         SetButtonActive(false);
         SceneManager.LoadScene("Blockly", LoadSceneMode.Additive);
         //SceneManager.LoadScene("GestureRecognition", LoadSceneMode.Additive);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,26 +15,27 @@ public class LevelPopupController : MonoBehaviour
     private List<string> titles;
     private List<string> instructions;
 
-    public string INSTRUCTION = "Fill in the green outline with blocks. Place cursor at yellow box to submit.";
+    public const string INSTRUCTION = "Fill in the green outline with blocks. Place cursor at yellow box to submit.";
 
-    public string NEXT_LEVEL_TITLE = "LEVEL PASSED!";
-    public string NEXT_LEVEL_INST = "Make a <TODO> gesture to move to the next level!";
+    public const string NEXT_LEVEL_TITLE = "LEVEL PASSED!";
+    public const string NEXT_LEVEL_INST = "Make a pinch gesture to move to the next level!";
 
-    public string CONGRATULATIONS = "CONGRATULATIONS!";
-    public string END_INST = " You will now enter free play mode, where you can explore your creativity in 3D :O";
+    public const string CONGRATULATIONS = "CONGRATULATIONS!";
+    public const string END_INST = " You will now enter free play mode, where you can explore your creativity in 3D :O";
 
-    public string LEVEL1_TITLE = "LEVEL 1: INTRODUCTION";
-    public string LEVEL1_INST = "To move block, point your pointer finger and drag in desired direction." +
+    public const string LEVEL1_TITLE = "LEVEL 1: INTRODUCTION";
+    public const string LEVEL1_INST = "To move block, point your pointer finger and drag in desired direction." +
         "To emit block at cursor, start with a fist and release,\nmaking a 5 with your fingers, hand facing down.";
 
-    public string LEVEL2_TITLE = "LEVEL 2: MODULE";
-    public string LEVEL2_INST = "To create a module, <TODO>.";
-    public string LEVEL2_MODULE_INST = "All of the modules you define in this level will be available to you in the" +
+    public const string LEVEL2_TITLE = "LEVEL 2: MODULE";
+    public const string LEVEL2_INST = "To create a module, fold your hand with only thumb on bottom for both hands.";
+    public const string LEVEL2_MODULE_INST = "All of the modules you define in this level will be available to you in the" +
         "module library for use in future levels. Good luck!";
 
-    public string LEVEL3_TITLE = "LEVEL 3: LoOpY StAirS";
-    public string LEVEL3_INST = "To loop, select module by <TODO> and" +
-        "loop over it desired number of times in a clockwise circular motion. Apply module by <TODO>.";
+    public const string LEVEL3_TITLE = "LEVEL 3: LoOpY StAirS";
+    public const string LEVEL3_INST = "To loop, select module by making a pinch gesture and " +
+        "loop over it desired number of times in a clockwise circular motion. " +
+        "Apply module by dragging pinched module from module library to the play area.";
 
      void Start()
     {
@@ -54,7 +56,7 @@ public class LevelPopupController : MonoBehaviour
     private void Update()
     {
         closePopup();
-        if (puzzleController != null && puzzleController.UserSubmitted() && !verified)
+        if (puzzleController != null && !verified)
         {
             MoveToNextLevel();
         }
@@ -94,6 +96,7 @@ public class LevelPopupController : MonoBehaviour
             }
             if (puzzleController.VerifyPuzzleId(currentLevel + 1))
             {
+                Debug.Log("incrementing current level");
                 currentLevel++;
                 if (currentLevel == 1)
                 {
@@ -112,10 +115,12 @@ public class LevelPopupController : MonoBehaviour
     {
         if (puzzleController.VerifyPuzzle())
         {
+            Debug.Log("successfully completed level " + currentLevel);
             verified = true;
             if (puzzleController.VerifyPuzzleId(currentLevel + 1))
             {
                 Open(NEXT_LEVEL_TITLE, NEXT_LEVEL_INST, "");
+
             } else
             {
                 Open(CONGRATULATIONS, END_INST, "");
