@@ -30,13 +30,29 @@ public class PoseRecognizer : MonoBehaviour {
   public bool shouldLoadPoses;
 
   private BlocklyPlayer player;
+  // Number of update calls to wait until updating a pose
+  // (ie. excludes poses that are held for less update calls
+  // than this value).
+  public int frameLag;
 
   private string currLeftPose;
   private string currRightPose;
 
+  private Queue<Pose> recentLeftPoses;
+  private Queue<Pose> recentRightPoses;
+
   public void Start() {
     Debug.Log("awake pose recognizer");
     player = GetComponent<BlocklyPlayer>();
+
+    recentLeftPoses = new Queue<Pose>();
+    recentRightPoses = new Queue<Pose>();
+
+    for (int i = 0; i < frameLag; i++)
+    {
+      recentLeftPoses.Enqueue(new Pose());
+      recentRightPoses.Enqueue(new Pose());
+    }
 
     // Load in saved poses.
     if (shouldLoadPoses)
@@ -57,8 +73,6 @@ public class PoseRecognizer : MonoBehaviour {
       Debug.Log($"rightPose: {rightPose}");
       OnUpdateRightPose.Invoke(rightPose);
     }
-    currLeftPose = leftPose;
-    currRightPose = rightPose;
   }
 
   // TODO shouldn't need both hand and targetposes
@@ -109,6 +123,18 @@ public class PoseRecognizer : MonoBehaviour {
     return bestCandidate;
   }
 
+  private bool allPosesMatch(Queue<Pose> recentPoses, Pose target)
+  {
+    foreach(Pose p in recentPoses)
+    {
+      if (p.name != target.name)
+      {
+        return false;
+      }
+    }
+    return true;
+  }
+  
   private void LoadPoses(string hand) {
     foreach (string file in Directory.GetFiles(Application.dataPath + "/Poses/" + hand))
     {

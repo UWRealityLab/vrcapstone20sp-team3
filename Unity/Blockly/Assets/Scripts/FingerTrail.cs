@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 namespace Blockly {
 
@@ -8,6 +9,7 @@ public class FingerTrail : MonoBehaviour {
   public float startWidth = 0.001f;
   public float endWidth = 0.001f;
   public float trailTime = Mathf.Infinity;
+  public Text loopIterationText;
 
   private GameObject trailObj;
   private TrailRenderer trail;
@@ -15,6 +17,10 @@ public class FingerTrail : MonoBehaviour {
 
   private Transform playerTransform;
   private Transform indexFingerTip;
+
+  private Vector3 startPos;
+  private int lastCircleComplete;
+  private int numLoopIterations;
 
   public void Awake() {
     #if UNITY_EDITOR
@@ -55,19 +61,36 @@ public class FingerTrail : MonoBehaviour {
     if (poseName == "Point") {
       trail.Clear();
       trail.enabled = true;
+      startPos = indexFingerTip.position;
+      lastCircleComplete = 0;
+      numLoopIterations = 0;
     } else if (trail.enabled) {
       trail.enabled = false;
     }
+    loopIterationText.text = "";
   }
 
   public void Update() {
     trailTransform.position = indexFingerTip.position;
+    if (trail.enabled) {
+      float distToStart = Vector3.Distance(trailTransform.position, startPos);
+      // Assume it takes at least 5 points to make a circle
+      if (distToStart < 0.1 && trail.positionCount - lastCircleComplete > 5) {
+        lastCircleComplete = trail.positionCount;
+        numLoopIterations++;
+        loopIterationText.text = "Loop Iterations: " + numLoopIterations;
+      }
+    }
   }
 
   public Vector3[] GetPositions() {
     Vector3[] positions = new Vector3[trail.positionCount];
     trail.GetPositions(positions);
     return positions;
+  }
+  
+  public int GetNumLoopIterations() {
+    return numLoopIterations;
   }
 }
 

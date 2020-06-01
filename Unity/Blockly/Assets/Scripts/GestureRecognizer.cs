@@ -38,6 +38,14 @@ public class GestureRecognizer : MonoBehaviour {
   public void OnUpdatePose(
     bool leftHand, string newPose, LinkedList<string> recentPoses) {
     // ensure this pose is new
+    if (recentPoses.Count > 0)
+    {
+      // if (newPose == recentPoses.First.Value)
+      // {
+      //   return;
+      // }
+      Debug.Log(newPose + " " + recentPoses.First.Value);
+    }
     Debug.Assert(recentPoses.Count == 0 || newPose != recentPoses.First.Value);
 
     recentPoses.AddFirst(newPose);
@@ -74,7 +82,12 @@ public class GestureRecognizer : MonoBehaviour {
         if (curr.Value == "Open" && curr.Next.Next != null && curr.Next.Next.Value == "Fist") {
           return "Emit";
         } else {
-          return null;
+          int numLoops = fingerTrail.GetNumLoopIterations();
+          if (numLoops > 0) {
+            return "Loop(" + numLoops + ")";
+          } else {
+            return null;
+          }
         }
       } else {
         return dir;
