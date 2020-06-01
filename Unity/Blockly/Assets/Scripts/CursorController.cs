@@ -181,7 +181,7 @@ public class CursorController : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(blockPosition, CursorController.GRID_SIZE / 3);
         foreach (Collider collider in colliders)
         {
-            if (this.moduleController.IsRecording() ? collider.gameObject.tag == "Module Creation Block" : collider.gameObject.tag == "Block")
+            if (ModuleController.Instance.IsRecording() ? collider.gameObject.tag == "Module Creation Block" : collider.gameObject.tag == "Block")
             {
                 Vector3 cursorCopy = new Vector3(blockPosition.x, blockPosition.y, blockPosition.z);
                 if (blockPositions.Contains(cursorCopy))
@@ -197,7 +197,7 @@ public class CursorController : MonoBehaviour
 
         if (!blockExisted)
         {
-            GameObject prefab = this.moduleController.IsRecording() ? this.moduleCreationBlockPrefab : this.blockPrefab;
+            GameObject prefab = ModuleController.Instance.IsRecording() ? this.moduleCreationBlockPrefab : this.blockPrefab;
             GameObject obj = Instantiate(prefab, blockPosition, Quaternion.identity) as GameObject;
             blockPositions.Add(new Vector3(blockPosition.x, blockPosition.y, blockPosition.z));
         }
