@@ -5401,7 +5401,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cursor: {fileID: 2043039209}
   blockMaterial: {fileID: 2100000, guid: 6fc320a6fd3a00d49b6a61ba8b8f4742, type: 2}
-  libraryModuleParentPrefab: {fileID: 0}
   libraryBlockPrefab: {fileID: 7207642979990035086, guid: 6b5c91daf7943b442bf586bb36ca968a,
     type: 3}
   libraryModuleEndCursorPrefab: {fileID: 3739730769190837708, guid: 307b1a0d034aa2a4788791d1f60ec34d,
@@ -5449,12 +5448,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ef86a1695b418141b6031d6e2e4b784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursor: {fileID: 2043039209}
-  recordButton: {fileID: 941678395}
-  puzzleBlockPrefab: {fileID: 5966132431626884807, guid: 05fa188c5fc6744409c1de4ce082dded,
-    type: 3}
-  submitBlockPrefab: {fileID: 5768872339636739573, guid: 1858f5d5be6867942aab6de36bf01438,
-    type: 3}
+  cursor: {fileID: 0}
+  recordButton: {fileID: 0}
+  puzzleBlockPrefab: {fileID: 0}
+  submitBlockPrefab: {fileID: 0}
 --- !u!4 &1152802558
 Transform:
   m_ObjectHideFlags: 0
@@ -5974,7 +5971,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a160d3734bafd804caf4bcb68901dc9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: 1
   blockPrefab: {fileID: 2226868214865433724, guid: 30435ee68dd949240b41c43e071564fd,
     type: 3}
   moduleCreationBlockPrefab: {fileID: 7777705353893656173, guid: fdb8a83bbee38cc4890dc0877cc50653,
@@ -6092,7 +6088,7 @@ GameObject:
   - component: {fileID: 2096479408}
   m_Layer: 0
   m_Name: Valid Block Area
-  m_TagString: Untagged
+  m_TagString: Valid Block Area
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6108,7 +6104,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2096479409
 MeshRenderer:
