@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 705507994}
   m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
@@ -5221,6 +5221,18 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 849708947602592895, guid: b0661ade7ad54448cafa5b4ee980864d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b0661ade7ad54448cafa5b4ee980864d, type: 3}
+--- !u!114 &795958569 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 849708947602592877, guid: b0661ade7ad54448cafa5b4ee980864d,
+    type: 3}
+  m_PrefabInstance: {fileID: 795958568}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b7fe19350452473bb85c76602f84229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &873777698
 GameObject:
   m_ObjectHideFlags: 0
@@ -5331,7 +5343,7 @@ MonoBehaviour:
   onTriggered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 795958569}
         m_MethodName: SaveLeftPose
         m_Mode: 1
         m_Arguments:
@@ -5389,6 +5401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cursor: {fileID: 2043039209}
   blockMaterial: {fileID: 2100000, guid: 6fc320a6fd3a00d49b6a61ba8b8f4742, type: 2}
+  libraryModuleParentPrefab: {fileID: 0}
   libraryBlockPrefab: {fileID: 7207642979990035086, guid: 6b5c91daf7943b442bf586bb36ca968a,
     type: 3}
   libraryModuleEndCursorPrefab: {fileID: 3739730769190837708, guid: 307b1a0d034aa2a4788791d1f60ec34d,
@@ -5522,7 +5535,7 @@ MonoBehaviour:
   onTriggered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 941678396}
         m_MethodName: OnPressRecord
         m_Mode: 1
         m_Arguments:
@@ -5784,7 +5797,7 @@ MonoBehaviour:
   onTriggered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 795958569}
         m_MethodName: SaveRightPose
         m_Mode: 1
         m_Arguments:
@@ -5961,6 +5974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a160d3734bafd804caf4bcb68901dc9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridSize: 1
   blockPrefab: {fileID: 2226868214865433724, guid: 30435ee68dd949240b41c43e071564fd,
     type: 3}
   moduleCreationBlockPrefab: {fileID: 7777705353893656173, guid: fdb8a83bbee38cc4890dc0877cc50653,
