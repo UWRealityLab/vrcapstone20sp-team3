@@ -57,6 +57,7 @@ public class PuzzleController : MonoBehaviour
         level2.AddStatement("Backward");
         level2.AddStatement("Emit");
         level2.AddStatement("Up");
+        level2.Complete();
         puzzles.Add(level2);
 
         /* level 3 - "stair" shape using the square from level 2 */
@@ -71,6 +72,7 @@ public class PuzzleController : MonoBehaviour
             level3.AddStatement("Backward");
             level3.AddStatement("Emit");
             level3.AddStatement("Up");
+            level3.Complete();
         }
         puzzles.Add(level3);
     }
@@ -84,7 +86,6 @@ public class PuzzleController : MonoBehaviour
             {
                 this.userSubmittedWithModule = true;
                 this.moduleCorrect = VerifyPuzzle();
-                Debug.Log("cursor on submit while recording: moduleCorrect=" + this.moduleCorrect);
             }
         }
         else
@@ -103,8 +104,8 @@ public class PuzzleController : MonoBehaviour
          */
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Boolean result = VerifyPuzzle();
-            Debug.Log("verify puzzle result: " + result);
+            Boolean result = UserSubmittedCorrect();
+            Debug.Log("user passed puzzle level?: " + result);
         }
     }
 
@@ -165,7 +166,7 @@ public class PuzzleController : MonoBehaviour
 
     // verifies the user's blocks against the puzzle's target structure
     // returns true if correct, false if not
-    public Boolean VerifyPuzzle()
+    private Boolean VerifyPuzzle()
     {
         Debug.Log("VerifyPuzzle()");
         Boolean needsModule = this.selectedPuzzleId == 1;  // for level 2, require module
@@ -227,6 +228,8 @@ public class PuzzleController : MonoBehaviour
         this.cursorController.gameObject.transform.position = new Vector3(CursorController.MIN_POSITION, CursorController.MIN_POSITION, CursorController.MIN_POSITION);
     }
 
+    // return true if the user submitted a correct result (and they should pass the level)
+    // false if not
     public Boolean UserSubmittedCorrect()
     {
         Boolean needsModule = this.selectedPuzzleId == 1;  // for level 2, require module
