@@ -74,7 +74,12 @@ public class GestureRecognizer : MonoBehaviour {
         if (curr.Value == "Open" && curr.Next.Next != null && curr.Next.Next.Value == "Fist") {
           return "Emit";
         } else {
-          return null;
+          int numLoops = fingerTrail.GetNumLoopIterations();
+          if (numLoops > 0) {
+            return "Loop(" + numLoops + ")";
+          } else {
+            return null;
+          }
         }
       } else {
         return dir;
