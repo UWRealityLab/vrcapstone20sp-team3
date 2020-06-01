@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blockly;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -113,7 +114,7 @@ public class LevelPopupController : MonoBehaviour
 
     public void MoveToNextLevel()
     {
-        if (puzzleController.VerifyPuzzle())
+        if (puzzleController.UserSubmittedCorrect())
         {
             Debug.Log("successfully completed level " + currentLevel);
             verified = true;
