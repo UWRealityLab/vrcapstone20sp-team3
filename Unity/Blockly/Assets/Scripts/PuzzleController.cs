@@ -38,7 +38,6 @@ public class PuzzleController : MonoBehaviour
         level1.AddStatement("Forward");
         level1.AddStatement("Emit");
         level1.AddStatement("Right");
-        level1.AddStatement("Emit");
         level1.AddStatement("Right");
         level1.AddStatement("Emit");
         level1.AddStatement("Up");
@@ -56,6 +55,7 @@ public class PuzzleController : MonoBehaviour
         level2.AddStatement("Emit");
         level2.AddStatement("Backward");
         level2.AddStatement("Emit");
+        level2.AddStatement("Forward");
         level2.AddStatement("Up");
         level2.Complete();
         puzzles.Add(level2);
@@ -71,6 +71,7 @@ public class PuzzleController : MonoBehaviour
             level3.AddStatement("Emit");
             level3.AddStatement("Backward");
             level3.AddStatement("Emit");
+            level3.AddStatement("Forward");
             level3.AddStatement("Up");
             level3.Complete();
         }
