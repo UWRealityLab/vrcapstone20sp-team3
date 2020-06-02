@@ -41,7 +41,8 @@ public class BlocklyDragModule : MonoBehaviour {
 
         if (toolInteractingWithMe.ToolInputState == ToolInputState.PrimaryInputDown || toolInteractingWithMe.ToolInputState == ToolInputState.PrimaryInputDownStay) {
             moduleRenderer.material.color = Color.blue;
-            transform.position = Vector3.Lerp(transform.position, CalcToolEnd(), 0.2f);
+            // transform.position = Vector3.Lerp(transform.position, CalcToolEnd(), 1.0f);
+            transform.position = CalcToolEnd();
         } else {
             moduleRenderer.material.color = Color.red;
             toolInteractingWithMe.DeFocus();
@@ -89,8 +90,9 @@ public class BlocklyDragModule : MonoBehaviour {
     }
 
     private Vector3 CalcToolEnd() {
-        Transform toolTransform = toolInteractingWithMe.ToolTransform;
-        return toolTransform.position + toolTransform.forward * 2f;
+      float distToGrid = Vector3.Distance(BlocklyPlayer.Instance.transform.position, BlocklyGrid.Instance.transform.position) - 0.75f;
+      Transform toolTransform = toolInteractingWithMe.ToolTransform;
+      return toolTransform.position + toolTransform.forward * distToGrid;
     }
 }
 

@@ -98,20 +98,25 @@ public class ModuleController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            GameObject hand = GameObject.FindGameObjectWithTag("isHand");
-            Transform handTransform = hand.transform;
-            Vector3 handPosition = handTransform.position;
-            Debug.Log("select module - hand position: " + handPosition);
+            Vector3 playerPos = BlocklyPlayer.Instance.transform.position;
+            Debug.Log("select module - player position: " + playerPos);
 
-            Collider[] hitColliders = Physics.OverlapSphere(handPosition, 5);
+            GameObject closestObj = null;
+            float closestObjDist = Mathf.Infinity;
+            Collider[] hitColliders = Physics.OverlapSphere(playerPos, 5);
             foreach (Collider collider in hitColliders)
             {
-                if (collider.gameObject.tag == "Library Block")
+                float dist = Vector3.Distance(collider.transform.position, playerPos);
+                if (collider.gameObject.tag == "Library Block" && dist < closestObjDist)
                 {
-                    this.selectedModule = collider.gameObject;
-                    Debug.Log("module was selected!");
-                    break;
+                    closestObj = collider.gameObject;
+                    closestObjDist = dist;
                 }
+            }
+
+            if (closestObj != null) {
+                this.selectedModule = closestObj;
+                Debug.Log("module was selected!");
             }
         }
     }
@@ -183,15 +188,15 @@ public class ModuleController : MonoBehaviour
     public void OnUseModule(int moduleId)
     {
         Module module = this.allModules[moduleId];
-        Vector3 cursorPos = CursorController.Instance.CursorPosition();
-        Vector3 minPos = module.MinPositionFromStart(cursorPos);
-        Vector3 maxPos = module.MaxPositionFromStart(cursorPos);
-        if (minPos.x < CursorController.MIN_POSITION
-            || minPos.y < CursorController.MIN_POSITION
-            || minPos.z < CursorController.MIN_POSITION
-            || maxPos.x > CursorController.MAX_POSITION
-            || maxPos.y > CursorController.MAX_POSITION
-            || maxPos.z > CursorController.MAX_POSITION)
+        Vector3Int cursorIdx = CursorController.Instance.CursorIndex();
+        Vector3Int minIdx = module.MinIndexFromStart(cursorIdx);
+        Vector3Int maxIdx = module.MaxIndexFromStart(cursorIdx);
+        if (minIdx.x < 0
+            || minIdx.y < 0
+            || minIdx.z < 0
+            || maxIdx.x > CursorController.GRID_SIZE - 1
+            || maxIdx.y > CursorController.GRID_SIZE - 1
+            || maxIdx.z > CursorController.GRID_SIZE - 1)
         {
             Debug.Log("module can't be applied (would go out of bounds)");
             // TODO: add error sound effect?
@@ -200,7 +205,7 @@ public class ModuleController : MonoBehaviour
 
         foreach (string statement in module.Statements())
         {
-            Debug.Log("recognizing gesture");
+            Debug.Log($"processing statement {statement}");
             CursorController.Instance.OnRecognizeGesture(statement);
         }
     }
@@ -243,7 +248,8 @@ public class ModuleController : MonoBehaviour
     // and add blocks to mapping of block->id
     private void AddToLibrary(int moduleId)
     {
-        Vector3 startPosition = this.moduleIdToLibraryPosition(moduleId);
+        // Vector3 startPosition = this.moduleIdToLibraryPosition(moduleId);
+        Vector3 startPosition = Vector3.zero;
         Debug.Log("AddToLibrary: module #" + moduleId + " at " + startPosition + "!");
         Module module = this.allModules[moduleId];
 
@@ -252,9 +258,11 @@ public class ModuleController : MonoBehaviour
         objectToId.Add(moduleMeshObj, moduleId);
         foreach (string statement in module.Statements())
         {
+            Debug.Log($"curr statement: {statement}");
             switch (statement)
             {
                 case "Emit":
+                  Debug.Log($"emitting with startPosition=={startPosition}");
                     GameObject obj = Instantiate(this.libraryBlockPrefab, startPosition, Quaternion.identity);
                     obj.transform.parent = moduleMeshObj.transform;
                     objectToId.Add(obj, moduleId);
@@ -262,22 +270,22 @@ public class ModuleController : MonoBehaviour
                 // case "Delete":
                 //     break;
                 case "Right":
-                    startPosition.x += LIBRARY_GRID_SIZE;
+                    startPosition.x += 1f;
                     break;
                 case "Left":
-                    startPosition.x -= LIBRARY_GRID_SIZE;
+                    startPosition.x -= 1f;
                     break;
                 case "Up":
-                    startPosition.y += LIBRARY_GRID_SIZE;
+                    startPosition.y += 1f;
                     break;
                 case "Down":
-                    startPosition.y -= LIBRARY_GRID_SIZE;
+                    startPosition.y -= 1f;
                     break;
                 case "Forward":
-                    startPosition.z += LIBRARY_GRID_SIZE;
+                    startPosition.z += 1f;
                     break;
                 case "Backward":
-                    startPosition.z -= LIBRARY_GRID_SIZE;
+                    startPosition.z -= 1f;
                     break;
                 default:
                     Debug.Log("unrecognized statement in module #" + moduleId + ": " + statement);
@@ -291,33 +299,33 @@ public class ModuleController : MonoBehaviour
         ModuleLibrary.Instance.AddModule(moduleId, moduleMeshObj);
     }
 
-    private Vector3 moduleIdToLibraryPosition(int moduleId)
-    {
-        Module module = this.allModules[moduleId];
-        Vector3 minCorner = new Vector3(-20.5f, 2f, -1f);  // min corner of entire library area
+    // private Vector3 moduleIdToLibraryPosition(int moduleId)
+    // {
+    //     Module module = this.allModules[moduleId];
+    //     Vector3 minCorner = new Vector3(-20.5f, 2f, -1f);  // min corner of entire library area
 
-        if (moduleId != 0)  // if not first module, base position on preceding module
-        {
-            Module prevModule = this.allModules[moduleId - 1];
-            Vector3 prevStart = this.moduleLibraryPositions[moduleId - 1];
-            Vector3 prevMax = prevModule.MaxPositionFromStart(prevStart);
-            Vector3 prevMin = prevModule.MinPositionFromStart(prevStart);
+    //     if (moduleId != 0)  // if not first module, base position on preceding module
+    //     {
+    //         Module prevModule = this.allModules[moduleId - 1];
+    //         Vector3 prevStart = this.moduleLibraryPositions[moduleId - 1];
+    //         Vector3 prevMax = prevModule.MaxPositionFromStart(prevStart);
+    //         Vector3 prevMin = prevModule.MinPositionFromStart(prevStart);
 
-            if (prevMax.x > -9.5f - 1 - prevModule.TotalSize().x)  // need to go to next row
-            {
-                minCorner.x = -20.5f;
-                minCorner.z = prevMin.z + 10f;
-            }
-            else
-            {
-                minCorner.x = prevMax.x + 2f;
-                minCorner.z = prevMin.z;
-            }
-        }
+    //         if (prevMax.x > -9.5f - 1 - prevModule.TotalSize().x)  // need to go to next row
+    //         {
+    //             minCorner.x = -20.5f;
+    //             minCorner.z = prevMin.z + 10f;
+    //         }
+    //         else
+    //         {
+    //             minCorner.x = prevMax.x + 2f;
+    //             minCorner.z = prevMin.z;
+    //         }
+    //     }
 
-        this.moduleLibraryPositions[moduleId] = module.StartPositionFromMinCorner(minCorner);
-        return this.moduleLibraryPositions[moduleId];
-    }
+    //     this.moduleLibraryPositions[moduleId] = module.StartPositionFromMinCorner(minCorner);
+    //     return this.moduleLibraryPositions[moduleId];
+    // }
 }
 
 }
