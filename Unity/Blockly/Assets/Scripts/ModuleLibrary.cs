@@ -25,28 +25,29 @@ public class ModuleLibrary : MonoBehaviour {
     }
   }
 
-  private int numModules;
+  public List<BlocklyLibraryModule> modules;
 
   public void Awake() {
     Debug.Assert(Instance == null);
     Debug.Assert(moduleAllowedBoundsCol != null);
     Instance = this;
-    numModules = 0;
+    modules = new List<BlocklyLibraryModule>();
   }
 
   public void AddModule(int moduleName, GameObject modBlockMeshObj) {
-    Debug.Assert(numModules < MAX_MODULES);
-    Transform modulesContainerTransform = modulesContainerTransforms[numModules / MODULES_PER_SHELF];
+    Debug.Assert(modules.Count < MAX_MODULES);
+    Transform modulesContainerTransform = modulesContainerTransforms[modules.Count / MODULES_PER_SHELF];
     GameObject libModObj = Instantiate(libraryModulePrefab, modulesContainerTransform);
-    libModObj.transform.localPosition = new Vector3(0f, 0f, (numModules % MODULES_PER_SHELF) * 0.43f);
+    libModObj.transform.localPosition = new Vector3(0f, 0f, (modules.Count % MODULES_PER_SHELF) * 0.43f);
 
-    libModObj.GetComponent<BlocklyLibraryModule>().moduleName = moduleName;
+    BlocklyLibraryModule libModComp = libModObj.GetComponent<BlocklyLibraryModule>();
+    libModComp.moduleName = moduleName;
     GameObject libModMeshObj = libModObj.transform.Find($"Mesh").gameObject;
     CenterAndScaleModule(modBlockMeshObj);
     modBlockMeshObj.transform.parent = libModMeshObj.transform;
     modBlockMeshObj.transform.localPosition = Vector3.zero;
 
-    numModules++;
+    modules.Add(libModComp);
   }
 
   private void CenterAndScaleModule(GameObject modBlockMeshObj) {

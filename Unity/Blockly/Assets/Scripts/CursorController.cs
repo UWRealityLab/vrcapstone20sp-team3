@@ -9,7 +9,9 @@ public class CursorController : MonoBehaviour
 {
     public static CursorController Instance = null;
 
+    [NotNull]
     public GameObject blockPrefab;  // prefab for blocks, used when emitted
+    [NotNull]
     public GameObject moduleCreationBlockPrefab;  // prefab for the temporary blocks that show up during module creation
 
     public GameObject recordButton;
@@ -19,9 +21,7 @@ public class CursorController : MonoBehaviour
     public AudioClip emitSound;
     public AudioClip moveSound;
 
-    public const float GRID_SIZE = 0.5f;
-    public const float MIN_POSITION = 0;  // inclusive
-    public const float MAX_POSITION = 4.5f;  // inclusive
+    private Vector3Int cursorIdx;
 
     private AudioSource source;
 
@@ -31,6 +31,7 @@ public class CursorController : MonoBehaviour
         Instance = this;
         source = GetComponent<AudioSource>();
         blockPositions = new HashSet<Vector3>();
+        cursorIdx = Vector3Int.zero;
     }
 
     // Start is called before the first frame update
@@ -53,7 +54,7 @@ public class CursorController : MonoBehaviour
             return;
         }
 
-        Vector3 oldPosition = this.gameObject.transform.position;
+        Vector3Int oldCursorIdx = cursorIdx;
         if (gestureName == "Emit")
         {
             Emit();
@@ -86,12 +87,14 @@ public class CursorController : MonoBehaviour
             {
                 MoveDown();
             }
+            UpdatePosition();
         }
+
 
         if (ModuleController.Instance.IsRecording())
         {
             // only record if the move actually happens (don't record if cursor is at edge of valid region and doesn't actually move)
-            if (gestureName != "Emit" && this.gameObject.transform.position == oldPosition)
+            if (gestureName != "Emit" && cursorIdx == oldCursorIdx)
             {
                 return;
             }
@@ -106,70 +109,87 @@ public class CursorController : MonoBehaviour
 
     public void MoveRight()
     {
-        Vector3 position = this.gameObject.transform.position;
-        position.x += GRID_SIZE;
-        if (position.x > MAX_POSITION)
+        if (cursorIdx.x == BlocklyGrid.GRID_SIZE - 1)
         {
             return;
         }
-        this.gameObject.transform.position = position;
+        cursorIdx.x++;
+        // Vector3 position = this.gameObject.transform.localPosition;
+        // position.x += 1f;
+        // this.gameObject.transform.localPosition = position;
     }
 
     public void MoveLeft()
     {
-        Vector3 position = this.gameObject.transform.position;
-        Debug.Log("old pos = " + this.gameObject.transform.position);
-        position.x -= GRID_SIZE;
-        if (position.x < MIN_POSITION)
+        if (cursorIdx.x == 0)
         {
             return;
         }
-        this.gameObject.transform.position = position;
-        Debug.Log("new pos = " + this.gameObject.transform.position);
+        cursorIdx.x--;
+        // Vector3 position = this.gameObject.transform.localPosition;
+        // position.x -= 1f;
+        // this.gameObject.transform.localPosition = position;
     }
 
     public void MoveUp()
     {
-        Vector3 position = this.gameObject.transform.position;
-        position.y += GRID_SIZE;
-        if (position.y > MAX_POSITION)
+        if (cursorIdx.y == BlocklyGrid.GRID_SIZE - 1)
         {
             return;
         }
-        this.gameObject.transform.position = position;
+        cursorIdx.y++;
+        // Vector3 position = this.gameObject.transform.localPosition;
+        // position.y += 1f;
+        // this.gameObject.transform.localPosition = position;
     }
 
     public void MoveDown()
     {
-        Vector3 position = this.gameObject.transform.position;
-        position.y -= GRID_SIZE;
-        if (position.y < MIN_POSITION)
+        if (cursorIdx.y == 0)
         {
             return;
         }
-        this.gameObject.transform.position = position;
+        cursorIdx.y--;
+        // Vector3 position = this.gameObject.transform.localPosition;
+        // position.y -= 1f;
+        // this.gameObject.transform.localPosition = position;
     }
 
     public void MoveBackward()
     {
-        Vector3 position = this.gameObject.transform.position;
-        position.z -= GRID_SIZE;
-        if (position.z < MIN_POSITION)
+        if (cursorIdx.z == 0)
         {
             return;
         }
-        this.gameObject.transform.position = position;
+        cursorIdx.z--;
+        // Vector3 position = this.gameObject.transform.localPosition;
+        // position.z -= 1f;
+        // this.gameObject.transform.localPosition = position;
     }
 
     public void MoveForward()
     {
-        Vector3 position = this.gameObject.transform.position;
-        position.z += GRID_SIZE;
-        if (position.z > MAX_POSITION)
+        if (cursorIdx.z == BlocklyGrid.GRID_SIZE - 1)
         {
             return;
         }
-        this.gameObject.transform.position = position;
+        cursorIdx.z++;
+        // Vector3 position = this.gameObject.transform.localPosition;
+        // position.z += 1f;
+        // this.gameObject.transform.localPosition = position;
+        UpdatePosition();
+    }
+
+    private void UpdatePosition() {
+      Vector3 position = Vector3.zero;
+      position.x = cursorIdx.x;
+      position.y = cursorIdx.y;
+      position.z = cursorIdx.z;
+      this.gameObject.transform.localPosition = position;
+    }
+
+    public Vector3 PositionFromCursorIdx(Vector3Int idx) {
+        return transform.parent.TransformPoint(idx.x, idx.y, idx.z);
     }
 
     // emit a new block at the cursor's current position, if there isn't a block there already
@@ -177,19 +197,15 @@ public class CursorController : MonoBehaviour
     public void Emit()
     {
         bool blockExisted = false;
-        Vector3 blockPosition = this.gameObject.transform.position;
-        Collider[] colliders = Physics.OverlapSphere(blockPosition, CursorController.GRID_SIZE / 3);
+        Collider[] colliders = BlocklyGrid.Instance.BlocksAtIndex(cursorIdx);
         foreach (Collider collider in colliders)
         {
             if (ModuleController.Instance.IsRecording() ? collider.gameObject.tag == "Module Creation Block" : collider.gameObject.tag == "Block")
             {
-                Vector3 cursorCopy = new Vector3(blockPosition.x, blockPosition.y, blockPosition.z);
-                if (blockPositions.Contains(cursorCopy))
+                if (blockPositions.Contains(transform.position))
                 {
                     blockExisted = true;
                     Destroy(collider.gameObject);
-                    blockPositions.Remove(cursorCopy);
-
                 }
                 break;
             }
@@ -198,15 +214,15 @@ public class CursorController : MonoBehaviour
         if (!blockExisted)
         {
             GameObject prefab = ModuleController.Instance.IsRecording() ? this.moduleCreationBlockPrefab : this.blockPrefab;
-            GameObject obj = Instantiate(prefab, blockPosition, Quaternion.identity) as GameObject;
-            blockPositions.Add(new Vector3(blockPosition.x, blockPosition.y, blockPosition.z));
+            GameObject obj = Instantiate(prefab, transform.position, Quaternion.identity, BlocklyGrid.Instance.gridSpace) as GameObject;
+            blockPositions.Add(transform.position);
         }
     }
 
     // delete the block at the cursor's current position, if there is one
     public void Delete()
     {
-        Collider[] colliders = Physics.OverlapSphere(this.gameObject.transform.position, GRID_SIZE / 3);
+        Collider[] colliders = BlocklyGrid.Instance.BlocksAtPosition(this.gameObject.transform.position);
         foreach (Collider collider in colliders)
         {
             // only destroy emitted blocks, not the cursor/region
@@ -226,7 +242,7 @@ public class CursorController : MonoBehaviour
         {
           OnRecognizeGesture("CreateModule");
         }
-        /*
+
         if (Input.GetKeyDown(KeyCode.A))
         {
           OnRecognizeGesture("Left");
@@ -256,17 +272,16 @@ public class CursorController : MonoBehaviour
         {
           OnRecognizeGesture("Emit");
         }
-        */
-        if (Input.GetKeyDown(KeyCode.Delete))
-        {
-          OnRecognizeGesture("Delete");
-        }
+        // if (Input.GetKeyDown(KeyCode.T))
+        // {
+        //   OnRecognizeGesture("Delete");
+        // }
     }
 
     // returns true if there is not currently a block at the given position
     private bool isGridSpaceEmpty(Vector3 position)
     {
-        Collider[] colliders = Physics.OverlapSphere(this.gameObject.transform.position, GRID_SIZE / 3);
+        Collider[] colliders = BlocklyGrid.Instance.BlocksAtPosition(this.gameObject.transform.position);
         foreach (Collider collider in colliders)
         {
             // TODO: look into layer masks
@@ -278,9 +293,19 @@ public class CursorController : MonoBehaviour
         return true;
     }
 
+    public Vector3Int CursorIndex()
+    {
+        return cursorIdx;
+    }
+
+    public void SetCursorIndex(Vector3Int idx) {
+        cursorIdx = idx;
+        UpdatePosition();
+    }
+
     public Vector3 CursorPosition()
     {
-        return this.gameObject.transform.position;
+        return transform.position;
     }
 }
 

@@ -121,7 +121,7 @@ public class PuzzleController : MonoBehaviour
             {
                 case "Emit":
                     bool blockExisted = false;
-                    Collider[] colliders = Physics.OverlapSphere(this.gameObject.transform.position, CursorController.GRID_SIZE / 3);
+                    Collider[] colliders = Physics.OverlapSphere(this.gameObject.transform.position, BlocklyGrid.GRID_SIZE / 3);
                     foreach (Collider collider in colliders)
                     {
                         if (collider.gameObject.tag == "Puzzle Block")
@@ -138,22 +138,22 @@ public class PuzzleController : MonoBehaviour
                     }
                     break;
                 case "Right":
-                    puzzleCursorPosition.x += CursorController.GRID_SIZE;
+                    puzzleCursorPosition.x += 1f;
                     break;
                 case "Left":
-                    puzzleCursorPosition.x -= CursorController.GRID_SIZE;
+                    puzzleCursorPosition.x -= 1f;
                     break;
                 case "Up":
-                    puzzleCursorPosition.y += CursorController.GRID_SIZE;
+                    puzzleCursorPosition.y += 1f;
                     break;
                 case "Down":
-                    puzzleCursorPosition.y -= CursorController.GRID_SIZE;
+                    puzzleCursorPosition.y -= 1f;
                     break;
                 case "Forward":
-                    puzzleCursorPosition.z += CursorController.GRID_SIZE;
+                    puzzleCursorPosition.z += 1f;
                     break;
                 case "Backward":
-                    puzzleCursorPosition.z -= CursorController.GRID_SIZE;
+                    puzzleCursorPosition.z -= 1f;
                     break;
                 default:
                     Debug.Log("unrecognized statement in puzzle level #" + puzzleId + ": " + statement);
@@ -175,15 +175,16 @@ public class PuzzleController : MonoBehaviour
             Debug.Log("VerifyPuzzle() - needsModule fail");
             return false;
         }
-        Vector3 moduleLibraryPosition = this.moduleController.MostRecentModuleLibraryPosition();
+        // Vector3 moduleLibraryPosition = this.moduleController.MostRecentModuleLibraryPosition();
 
-        for (float x = CursorController.MIN_POSITION; x <= CursorController.MAX_POSITION; x += CursorController.GRID_SIZE)
+        for (int x = 0; x <= BlocklyGrid.GRID_SIZE; x++)
         {
-            for (float y = CursorController.MIN_POSITION; y <= CursorController.MAX_POSITION; y += CursorController.GRID_SIZE)
+            for (int y = 0; y <= BlocklyGrid.GRID_SIZE; y++)
             {
-                for (float z = CursorController.MIN_POSITION; z <= CursorController.MAX_POSITION; z += CursorController.GRID_SIZE)
+                for (int z = 0; z <= BlocklyGrid.GRID_SIZE; z++)
                 {
-                    Collider[] colliders = Physics.OverlapSphere(new Vector3(x, y, z), CursorController.GRID_SIZE / 3);
+                    // Collider[] colliders = Physics.OverlapSphere(CursorController.Instance.PositionFromCursorIdx(new Vector3Int(x, y, z)), BlocklyGrid.GLOBAL_CELL_SIZE / 3);
+                    Collider[] colliders = BlocklyGrid.Instance.BlocksAtIndex(new Vector3Int(x, y, z));
                     Boolean userBlock = false;
                     Boolean puzzleBlock = false;
                     foreach (Collider collider in colliders)
@@ -225,7 +226,7 @@ public class PuzzleController : MonoBehaviour
         {
             Destroy(block);
         }
-        this.cursorController.gameObject.transform.position = new Vector3(CursorController.MIN_POSITION, CursorController.MIN_POSITION, CursorController.MIN_POSITION);
+        this.cursorController.gameObject.transform.localPosition = Vector3.zero;
     }
 
     // return true if the user submitted a correct result (and they should pass the level)
