@@ -21,6 +21,7 @@ public class MenuController : MonoBehaviour
         puzzleButton = GameObject.Find("Puzzle Button");
         freePlayButton = GameObject.Find("Free Play Button");
         levelController.SetButtonActive(false);
+        SceneManager.LoadScene("Environment", LoadSceneMode.Additive);
     }
 
     public void BeginPuzzleMode()
@@ -32,7 +33,6 @@ public class MenuController : MonoBehaviour
 
     public void BeginFreePlayMode()
     {
-        SceneManager.LoadScene("Environment", LoadSceneMode.Additive);
         puzzleButton.SetActive(false);
         freePlayButton.SetActive(false);
     }

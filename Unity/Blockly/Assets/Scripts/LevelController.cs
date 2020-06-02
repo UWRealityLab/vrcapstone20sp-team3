@@ -24,7 +24,7 @@ public class LevelController : MonoBehaviour
         level1Button = GameObject.Find("Level 1 Button");
         level2Button = GameObject.Find("Level 2 Button");
         level3Button = GameObject.Find("Level 3 Button");
-        popupMessage.Close();
+        popupMessage.ui.SetActive(false);
     }
 
     // Update is called once per frame
@@ -52,7 +52,7 @@ public class LevelController : MonoBehaviour
 
     public void BeginLevel3()
     {
-        SetupLevel(-1);
+        SetupLevel(1);
     }
 
     private void SetupLevel(int level)
@@ -60,7 +60,6 @@ public class LevelController : MonoBehaviour
         popupMessage.SetLevel(level);
         popupMessage.Open("Welcome to Blockly Puzzle Mode");
         SetButtonActive(false);
-        SceneManager.LoadScene("Environment", LoadSceneMode.Additive);
     }
  }
 
