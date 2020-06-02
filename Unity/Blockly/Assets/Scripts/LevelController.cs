@@ -17,8 +17,11 @@ public class LevelController : MonoBehaviour
     public GameObject popup;
     private PopupMessage popupMessage;
 
+        public const string WELCOME_TITLE = "Welcome to Blockly Puzzle Mode";
+        public const string WELCOME_INSTR = "Pinch to get rid of this popup!";
+
     // Start is called before the first frame update
-    void Start()
+        void Start()
     {
         popupMessage = popup.GetComponent<PopupMessage>();
         level1Button = GameObject.Find("Level 1 Button");
@@ -58,7 +61,7 @@ public class LevelController : MonoBehaviour
     private void SetupLevel(int level)
     {
         popupMessage.SetLevel(level);
-        popupMessage.Open("Welcome to Blockly Puzzle Mode");
+        popupMessage.Open(WELCOME_TITLE, WELCOME_INSTR);
         SetButtonActive(false);
     }
  }

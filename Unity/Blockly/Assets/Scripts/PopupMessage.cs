@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,32 +10,54 @@ namespace Blockly {
 public class PopupMessage : MonoBehaviour
 {
     public GameObject ui;
+
     private PuzzleController puzzleController;
     private bool verified;
     private int currentLevel;
 
-    public const string LEVEL1_MESSAGE = "Introduction to gestures\n" +
-        "1. Move a block to the right.\nPoint your pointer finger and drag in desired direction.\n" +
-        "2. Emit block at cursor.\nStart with a fist and release,\nmaking a 5 with your fingers, hand facing down.";
+    public const string INSTRUCTION = "Fill in the green outline with blocks. Place cursor at yellow box to submit.";
 
-    public const string LEVEL2_MESSAGE = "Module\nTap on recording button to start recording your module.\n" +
-        "Emit a block and move cursor to the right.\n Finish by pressing recording button again.";
+    public const string NEXT_LEVEL_TITLE = "LEVEL PASSED!";
+    public const string NEXT_LEVEL_INST = "Make a pinch gesture to move to the next level!";
 
-    public const string LEVEL3_MESSAGE = "Loop\nChoose module and loop over it ten times in a clockwise circular motion.\n" +
-        "Apply module to main grid.";
+    public const string CONGRATS_TITLE = "CONGRATULATIONS!";
+    public const string CONGRATS_INST = " You will now enter free play mode, where you can explore your creativity in 3D!";
 
-    private List<string> levelMessages;
+    public const string LEVEL1_TITLE = "LEVEL 1: Introductory Statements";
+    public const string LEVEL1_INST = "To move block, point your pointer finger and drag in desired direction.\n" +
+    "To emit block at cursor, start with a fist and release, making a 5 with your fingers, hand facing down.\n\n";
+
+    public const string LEVEL2_TITLE = "LEVEL 2: MODULE";
+    public const string LEVEL2_INST = "To create a module, fold your hand with only thumb on bottom for both hands.\n\n";
+    public const string LEVEL2_MODULE_INST = "All of the modules you define in this level will be available to you in the" +
+        "module library for use in future levels. Good luck!";
+
+    public const string LEVEL3_TITLE = "LEVEL 3: LoOpY StAirS";
+    public const string LEVEL3_INST = "To loop, select module by making a pinch gesture and " +
+    "loop over it desired number of times in a clockwise circular motion.\n" +
+    "Apply module by dragging pinched module from module library to the play area.\n\n";
+
+
+        private List<string> titles;
+    private List<string> instructions;
+
 
     // Start is called before the first frame update
     void Start()
     {
         currentLevel = -1;
         verified = true;
-        levelMessages = new List<string>();
-        levelMessages.Add(LEVEL1_MESSAGE);
-        levelMessages.Add(LEVEL2_MESSAGE);
-        levelMessages.Add(LEVEL3_MESSAGE);
-    }
+
+        titles = new List<string>();
+        titles.Add(LEVEL1_TITLE);
+        titles.Add(LEVEL2_TITLE);
+        titles.Add(LEVEL3_TITLE);
+
+        instructions = new List<string>();
+        instructions.Add(LEVEL1_INST + INSTRUCTION);
+        instructions.Add(LEVEL2_INST + LEVEL2_MODULE_INST);
+        instructions.Add(LEVEL3_INST + INSTRUCTION);
+        }
 
     // Update is called once per frame
     void Update()
@@ -50,16 +74,13 @@ public class PopupMessage : MonoBehaviour
         this.currentLevel = level;
     }
 
-    public void Open(string message)
+    public void Open(string title, string instruction)
     {
         ui.SetActive(!ui.activeSelf);
         if (ui.activeSelf)
         {
-            if (message != null)
-            {
-                Text textObject = ui.gameObject.GetComponentInChildren<Text>();
-                textObject.text = message;
-            }
+            setText(title, 0);
+            setText(instruction, 1);
         }
     }
 
@@ -81,7 +102,7 @@ public class PopupMessage : MonoBehaviour
             if (puzzleController.VerifyPuzzleId(currentLevel + 1))
             {
                 currentLevel++;
-                Open(levelMessages[currentLevel]);
+                Open(titles[currentLevel], instructions[currentLevel]);
                 puzzleController.StartPuzzle(currentLevel);
                 verified = false;
             } // an else which means they are completed with all possible levels --> give them a congratulations :D
@@ -104,12 +125,21 @@ public class PopupMessage : MonoBehaviour
             verified = true;
             if (puzzleController.VerifyPuzzleId(currentLevel + 1))
             {
-                Open("LEVEL PASSED");
+                Open(NEXT_LEVEL_TITLE, NEXT_LEVEL_INST);
             }
             else
             {
-                Open("CONGRATULATIONS");
+                Open(CONGRATS_TITLE, CONGRATS_INST);
             }
+        }
+    }
+
+    private void setText(string message, int childNum)
+    {
+        if (message != null)
+        {
+            Text[] textObject = ui.gameObject.GetComponentsInChildren<Text>();
+            textObject[childNum].text = message;
         }
     }
 }
