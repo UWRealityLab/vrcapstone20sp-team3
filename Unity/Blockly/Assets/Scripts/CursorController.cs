@@ -37,6 +37,7 @@ public class CursorController : MonoBehaviour
     void Start()
     {
         source = GetComponent<AudioSource>();
+        PuzzleController.Instance.StartPuzzle(0);  // starts level 1
     }
 
     // Update is called once per frame

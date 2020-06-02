@@ -8,6 +8,8 @@ namespace Blockly {
 
 public class PuzzleController : MonoBehaviour
 {
+    public static PuzzleController Instance = null;
+
     public GameObject cursor;
     private CursorController cursorController;
 
@@ -26,6 +28,7 @@ public class PuzzleController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Instance = this;
         this.cursorController = cursor.GetComponent<CursorController>();
         this.moduleController = recordButton.GetComponent<ModuleController>();
         this.puzzles = new List<Module>();
