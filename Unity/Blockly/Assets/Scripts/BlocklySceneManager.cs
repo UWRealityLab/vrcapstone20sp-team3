@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class BlocklySceneManager : MonoBehaviour {
   public void Start() {
-    // if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Blockly")) {
-    //   SceneManager.LoadScene("Environment", LoadSceneMode.Additive);
-    // }
+    if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("BlocklyAesthetic")) {
+      SceneManager.LoadScene("EnvironmentAesthetic", LoadSceneMode.Additive);
+    }
   }
 }
