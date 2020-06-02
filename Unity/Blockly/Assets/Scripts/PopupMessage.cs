@@ -39,10 +39,15 @@ public class PopupMessage : MonoBehaviour
     void Update()
     {
         clickButton();
-        if (puzzleController != null && !verified && puzzleController.UserSubmittedCorrect())
+        if (puzzleController != null && !verified)
         {
             MoveToNextLevel();
         }
+    }
+
+    public void SetLevel(int level)
+    {
+        this.currentLevel = level;
     }
 
     public void Open(string message)
@@ -50,7 +55,7 @@ public class PopupMessage : MonoBehaviour
         ui.SetActive(!ui.activeSelf);
         if (ui.activeSelf)
         {
-            if (!string.IsNullOrEmpty(message))
+            if (message != null)
             {
                 Text textObject = ui.gameObject.GetComponentInChildren<Text>();
                 textObject.text = message;
@@ -94,8 +99,18 @@ public class PopupMessage : MonoBehaviour
 
     public void MoveToNextLevel()
     {
-        Open("Do you want to move on to the next level?");
-        verified = true;
+        if (puzzleController.UserSubmittedCorrect())
+        {
+            verified = true;
+            if (puzzleController.VerifyPuzzleId(currentLevel + 1))
+            {
+                Open("LEVEL PASSED");
+            }
+            else
+            {
+                Open("CONGRATULATIONS");
+            }
+        }
     }
 }
 

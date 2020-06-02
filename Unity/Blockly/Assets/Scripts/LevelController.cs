@@ -1,6 +1,7 @@
 ﻿using Oculus.Platform.Models;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -35,19 +36,21 @@ public class LevelController : MonoBehaviour
     public void SetButtonActive(bool active)
     {
         level1Button.SetActive(active);
+            UnityEngine.Debug.Log("set level1 button to " + active);
         level2Button.SetActive(active);
         level3Button.SetActive(active);
     }
 
     public void BeginLevel1()
     {
+            UnityEngine.Debug.Log("in begin level 1");
         string dir = "Introduction to gestures\n";
         dir += "1. Move a block to the right.\nPoint your pointer finger and drag in desired direction.\n";
         dir += "2. Emit block at cursor.\nStart with a fist and release,\nmaking a 5 with your fingers, hand facing down.";
         popupMessage.Open(dir);
         SetButtonActive(false);
-        LoadScene();
-    }
+        SceneManager.LoadScene("Environment", LoadSceneMode.Additive);
+        }
 
     public void BeginLevel2()
     {
@@ -55,7 +58,7 @@ public class LevelController : MonoBehaviour
         dir += "Emit a block and move cursor to the right.\n Finish by pressing recording button again.";
         popupMessage.Open(dir);
         SetButtonActive(false);
-        LoadScene();
+        SceneManager.LoadScene("Environment", LoadSceneMode.Additive);
     }
 
     public void BeginLevel3()
@@ -64,14 +67,15 @@ public class LevelController : MonoBehaviour
         dir += "Apply module to main grid.";
         popupMessage.Open(dir);
         SetButtonActive(false);
-        LoadScene();
+        SceneManager.LoadScene("Environment", LoadSceneMode.Additive);
+
     }
 
-    private void LoadScene()
-    {
-        SceneManager.LoadScene("Blockly", LoadSceneMode.Additive);
-        //SceneManager.LoadScene("GestureRecognition", LoadSceneMode.Additive);
-    }
+    //private void LoadScene()
+    //{
+    //    SceneManager.LoadScene("Blockly", LoadSceneMode.Additive);
+    //    //SceneManager.LoadScene("GestureRecognition", LoadSceneMode.Additive);
+    //}
 }
 
 }
