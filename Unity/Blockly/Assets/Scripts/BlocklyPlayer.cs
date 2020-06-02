@@ -12,6 +12,9 @@ public class BlocklyPlayer : MonoBehaviour {
   private Transform leftIndexTip;
   private Transform rightIndexTip;
 
+  public int currLeftSelectedModule;
+  public int currRightSelectedModule;
+
 #if UNITY_EDITOR
   // positional velocity
   private Vector3 posV;
