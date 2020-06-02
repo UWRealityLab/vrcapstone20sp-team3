@@ -1,5 +1,266 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &106727070
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 106727074}
+  - component: {fileID: 106727073}
+  - component: {fileID: 106727072}
+  - component: {fileID: 106727071}
+  m_Layer: 5
+  m_Name: Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &106727074
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106727070}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children:
+  - {fileID: 653841334}
+  m_Father: {fileID: 849708947602592883}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!223 &106727073
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106727070}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 1
+  m_Camera: {fileID: 134181613}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &106727072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106727070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+--- !u!114 &106727071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106727070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!1 &134181610
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 134181611}
+  - component: {fileID: 134181613}
+  - component: {fileID: 134181612}
+  m_Layer: 0
+  m_Name: UICamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &134181611
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134181610}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.6890001, y: 5.984, z: -2.517}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 849708948841350475}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &134181613
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134181610}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 3
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 32
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!81 &134181612
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134181610}
+  m_Enabled: 1
+--- !u!1 &653841333
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 653841334}
+  - component: {fileID: 653841336}
+  - component: {fileID: 653841335}
+  m_Layer: 5
+  m_Name: LoopIterationText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &653841334
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653841333}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -30}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 106727074}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 125}
+  m_SizeDelta: {x: 750, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &653841336
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653841333}
+  m_CullTransparentMesh: 0
+--- !u!114 &653841335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653841333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0.995283, b: 0.995283, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 45
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 4
+    m_MaxSize: 45
+    m_Alignment: 1
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'DEFAULT
+
+'
 --- !u!1 &849708947602592880
 GameObject:
   m_ObjectHideFlags: 0
@@ -34,6 +295,7 @@ Transform:
   - {fileID: 849708948841350477}
   - {fileID: 848000652855944145}
   - {fileID: 848271471594204573}
+  - {fileID: 106727074}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -49,6 +311,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12eafec339a544754ba15ab0efc420dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currLeftSelectedModule: 0
+  currRightSelectedModule: 0
 --- !u!114 &849708947602592877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,9 +386,1129 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  threshold: 100
-  leftPoses: []
-  rightPoses: []
+  threshold: 250
+  leftPoses:
+  - name: Fist
+    data:
+      RootPose:
+        Orientation:
+          x: 0.76909584
+          y: -0.05742693
+          z: -0.63649917
+          w: 0.007916858
+        Position:
+          x: -0.37967053
+          y: 0.025980592
+          z: -0.30014163
+      RootScale: 0.9779887
+      BoneRotations:
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0.40284985
+        y: 0.40998438
+        z: 0.017202778
+        w: 0.81812525
+      - x: 0.26192367
+        y: -0.020157898
+        z: 0.11368666
+        w: 0.95815706
+      - x: -0.08114985
+        y: -0.047389157
+        z: 0.24757734
+        w: 0.9643
+      - x: 0.07122222
+        y: 0.032069214
+        z: 0.30744278
+        w: 0.9483554
+      - x: 0.04768305
+        y: 0.00420417
+        z: 0.45132846
+        w: 0.8910731
+      - x: -0.019575551
+        y: 0.016435184
+        z: 0.80218965
+        w: 0.59652203
+      - x: -0.016605126
+        y: -0.013713932
+        z: 0.5189384
+        w: 0.8545402
+      - x: -0.034154102
+        y: -0.04358033
+        z: 0.55878806
+        w: 0.8274601
+      - x: -0.012328083
+        y: 0.0053793886
+        z: 0.73940015
+        w: 0.6731319
+      - x: -0.09028137
+        y: 0.023582952
+        z: 0.5505754
+        w: 0.82955396
+      - x: -0.09972277
+        y: -0.052223396
+        z: 0.6285043
+        w: 0.7696172
+      - x: -0.041454736
+        y: 0.021901539
+        z: 0.71562517
+        w: 0.6969093
+      - x: -0.02947432
+        y: 0.027087467
+        z: 0.5451823
+        w: 0.8373613
+      - x: -0.20703599
+        y: -0.14034285
+        z: 0.0183118
+        w: 0.96804166
+      - x: 0.08460805
+        y: -0.0015502536
+        z: 0.6093317
+        w: 0.788387
+      - x: -0.09004231
+        y: -0.0011357802
+        z: 0.72159237
+        w: 0.6864369
+      - x: 0.0022850821
+        y: 0.04286387
+        z: 0.47709647
+        w: 0.8778021
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      IsDataValid: 1
+      IsDataHighConfidence: 1
+  - name: Point
+    data:
+      RootPose:
+        Orientation:
+          x: 0.6409948
+          y: -0.18129784
+          z: -0.7412316
+          w: 0.0826594
+        Position:
+          x: -0.39751855
+          y: 0.06947565
+          z: -0.26032507
+      RootScale: 0.9779887
+      BoneRotations:
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0.34061444
+        y: 0.44166937
+        z: -0.038626127
+        w: 0.8291068
+      - x: 0.25710586
+        y: 0.083655365
+        z: 0.14127299
+        w: 0.95233417
+      - x: -0.08270566
+        y: -0.076946065
+        z: -0.08386
+        w: 0.9900539
+      - x: 0.08513434
+        y: 0.074553
+        z: -0.18571651
+        w: 0.97606534
+      - x: 0.014719219
+        y: 0.07378023
+        z: -0.096768774
+        w: 0.99245936
+      - x: -0.025853984
+        y: -0.007108076
+        z: 0.0036016027
+        w: 0.99963397
+      - x: -0.016056752
+        y: -0.027146924
+        z: -0.07191091
+        w: 0.9969123
+      - x: -0.019535543
+        y: -0.03661498
+        z: 0.35363615
+        w: 0.9344621
+      - x: -0.012355126
+        y: 0.00530513
+        z: 0.73475754
+        w: 0.67819655
+      - x: -0.08993933
+        y: 0.023364682
+        z: 0.5456188
+        w: 0.83286566
+      - x: -0.1088953
+        y: -0.11387327
+        z: 0.46804947
+        w: 0.86954266
+      - x: -0.04143705
+        y: 0.021971652
+        z: 0.7175419
+        w: 0.6949344
+      - x: -0.028447125
+        y: 0.027412003
+        z: 0.52182037
+        w: 0.85214025
+      - x: -0.20703599
+        y: -0.14034285
+        z: 0.0183118
+        w: 0.96804166
+      - x: 0.04862996
+        y: -0.07029262
+        z: 0.42684746
+        w: 0.9002752
+      - x: -0.091464356
+        y: 0.0015960479
+        z: 0.7533702
+        w: 0.6512029
+      - x: 0.0022702257
+        y: 0.042996272
+        z: 0.4722363
+        w: 0.88041985
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      IsDataValid: 1
+      IsDataHighConfidence: 1
+  - name: Default
+    data:
+      RootPose:
+        Orientation:
+          x: 0.64817417
+          y: 0.123305306
+          z: -0.73957574
+          w: 0.13301864
+        Position:
+          x: -0.40326822
+          y: 0.07303321
+          z: -0.26164323
+      RootScale: 0.94079554
+      BoneRotations:
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0.4019729
+        y: 0.41046643
+        z: 0.016396182
+        w: 0.81833136
+      - x: 0.25165918
+        y: 0.15940955
+        z: 0.16052239
+        w: 0.94100416
+      - x: -0.08308
+        y: -0.062812634
+        z: 0.085701
+        w: 0.99086213
+      - x: 0.08235142
+        y: 0.060481094
+        z: -0.0019362827
+        w: 0.99476457
+      - x: 0.030519443
+        y: 0.036736425
+        z: 0.05243353
+        w: 0.99748176
+      - x: -0.026281264
+        y: -0.000037350346
+        z: 0.26706412
+        w: 0.9633203
+      - x: -0.016908476
+        y: -0.023950877
+        z: 0.11581832
+        w: 0.9928377
+      - x: -0.009018395
+        y: -0.00998158
+        z: 0.10828227
+        w: 0.99402916
+      - x: -0.012899214
+        y: 0.0007026781
+        z: 0.41507426
+        w: 0.90969586
+      - x: -0.051481556
+        y: 0.0030157177
+        z: 0.08167236
+        w: 0.9953242
+      - x: -0.054200854
+        y: -0.026386319
+        z: 0.08997832
+        w: 0.9941177
+      - x: -0.04082437
+        y: 0.010763952
+        z: 0.40259862
+        w: 0.9144025
+      - x: -0.015645022
+        y: 0.029568532
+        z: 0.23714788
+        w: 0.9708975
+      - x: -0.20703599
+        y: -0.14034285
+        z: 0.0183118
+        w: 0.96804166
+      - x: 0.091884814
+        y: 0.06770065
+        z: 0.046883997
+        w: 0.9923587
+      - x: -0.07218267
+        y: -0.021979166
+        z: 0.4223028
+        w: 0.903309
+      - x: 0.001493387
+        y: 0.04771251
+        z: 0.22751662
+        w: 0.9726035
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      IsDataValid: 1
+      IsDataHighConfidence: 1
+  - name: Open
+    data:
+      RootPose:
+        Orientation:
+          x: 0.9954197
+          y: 0.088341884
+          z: -0.017925173
+          w: -0.031844348
+        Position:
+          x: 0.33036852
+          y: 0.5200739
+          z: -0.47625315
+      RootScale: 0.9784662
+      BoneRotations:
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0.26807353
+        y: 0.47272786
+        z: -0.10041324
+        w: 0.833416
+      - x: 0.24736898
+        y: 0.20713076
+        z: 0.17225666
+        w: 0.9307164
+      - x: -0.08304085
+        y: -0.07338588
+        z: -0.038762342
+        w: 0.9930842
+      - x: 0.08513551
+        y: 0.07456434
+        z: -0.18587661
+        w: 0.97603387
+      - x: 0.013282755
+        y: 0.08278284
+        z: -0.09646652
+        w: 0.9917988
+      - x: -0.025852473
+        y: -0.007115744
+        z: 0.0033051956
+        w: 0.999635
+      - x: -0.01612865
+        y: -0.026970012
+        z: -0.05990106
+        w: 0.9977096
+      - x: -0.0013212563
+        y: -0.07552897
+        z: -0.061057616
+        w: 0.9952717
+      - x: -0.011582435
+        y: -0.0037231736
+        z: 0.055746164
+        w: 0.9983708
+      - x: -0.04054631
+        y: -0.0019149138
+        z: -0.031199727
+        w: 0.99868864
+      - x: -0.0366787
+        y: -0.14600854
+        z: -0.06956571
+        w: 0.9861525
+      - x: -0.035512988
+        y: -0.00012575902
+        z: 0.08485536
+        w: 0.9957602
+      - x: -0.0048690266
+        y: 0.029325983
+        z: 0.0046048784
+        w: 0.99954754
+      - x: -0.20703599
+        y: -0.14034285
+        z: 0.0183118
+        w: 0.96804166
+      - x: 0.11642895
+        y: -0.112505026
+        z: -0.14490925
+        w: 0.9761088
+      - x: -0.046401225
+        y: -0.03881033
+        z: 0.088526994
+        w: 0.9942352
+      - x: 0.00064661383
+        y: 0.049170904
+        z: -0.023479238
+        w: 0.9985142
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      IsDataValid: 1
+      IsDataHighConfidence: 1
+  - name: CreateModule
+    data:
+      RootPose:
+        Orientation:
+          x: 0.2248259
+          y: 0.2543965
+          z: 0.088962756
+          w: 0.9363874
+        Position:
+          x: 0.28928748
+          y: 0.47669142
+          z: -0.4691388
+      RootScale: 1.002631
+      BoneRotations:
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0.52054226
+        y: 0.33430248
+        z: 0.13160029
+        w: 0.7745702
+      - x: 0.25378954
+        y: 0.1324172
+        z: 0.15375003
+        w: 0.94573647
+      - x: -0.08129693
+        y: -0.048181217
+        z: 0.23973937
+        w: 0.96622694
+      - x: 0.08454376
+        y: 0.07021398
+        z: -0.12605394
+        w: 0.9859172
+      - x: 0.07536779
+        y: 0.047144745
+        z: 0.5276997
+        w: 0.8447664
+      - x: -0.026216617
+        y: 0.0007232258
+        z: 0.29427427
+        w: 0.9553611
+      - x: -0.016530147
+        y: -0.025757039
+        z: 0.01646176
+        w: 0.999396
+      - x: -0.0063623767
+        y: 0.0017877703
+        z: 0.54258794
+        w: 0.83997303
+      - x: -0.012479137
+        y: -0.0014580691
+        z: 0.24593198
+        w: 0.9692057
+      - x: -0.04747136
+        y: 0.0011770112
+        z: 0.039599765
+        w: 0.99808675
+      - x: -0.062883876
+        y: -0.0090679005
+        z: 0.5433108
+        w: 0.8371241
+      - x: -0.037771743
+        y: 0.0036088019
+        z: 0.19491158
+        w: 0.9800867
+      - x: -0.0077478094
+        y: 0.02954792
+        z: 0.06618783
+        w: 0.9973395
+      - x: -0.20703599
+        y: -0.14034285
+        z: 0.0183118
+        w: 0.96804166
+      - x: 0.108924136
+        y: 0.04963086
+        z: 0.5048805
+        w: 0.8548497
+      - x: -0.05299764
+        y: -0.035262246
+        z: 0.16830578
+        w: 0.98367727
+      - x: 0.000658689
+        y: 0.049172096
+        z: -0.01999405
+        w: 0.99859
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      IsDataValid: 1
+      IsDataHighConfidence: 1
+  rightPoses:
+  - name: Fist
+    data:
+      RootPose:
+        Orientation:
+          x: 0.0115430225
+          y: -0.7051595
+          z: 0.07769733
+          w: 0.70468426
+        Position:
+          x: 0.3373453
+          y: 0.009890139
+          z: -0.3197376
+      RootScale: 0.9779887
+      BoneRotations:
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0.4091292
+        y: 0.4065012
+        z: 0.022995926
+        w: 0.8166035
+      - x: 0.263363
+        y: -0.08271612
+        z: 0.096395314
+        w: 0.956298
+      - x: -0.08110586
+        y: -0.047157142
+        z: 0.24986443
+        w: 0.96372503
+      - x: 0.07531575
+        y: 0.04094892
+        z: 0.21763837
+        w: 0.9722574
+      - x: 0.03816812
+        y: -0.013190626
+        z: 0.38288447
+        w: 0.9229132
+      - x: -0.020276116
+        y: 0.015560411
+        z: 0.77729005
+        w: 0.6286231
+      - x: -0.016487772
+        y: -0.013000567
+        z: 0.5407399
+        w: 0.8409277
+      - x: -0.026587866
+        y: -0.04270293
+        z: 0.44978672
+        w: 0.8917183
+      - x: -0.012399945
+        y: 0.0051777805
+        z: 0.72675174
+        w: 0.68676883
+      - x: -0.092259735
+        y: 0.02487077
+        z: 0.5798084
+        w: 0.80913025
+      - x: -0.097525686
+        y: -0.07490323
+        z: 0.5187884
+        w: 0.8460124
+      - x: -0.041521862
+        y: 0.021621514
+        z: 0.70796144
+        w: 0.7046979
+      - x: -0.031113354
+        y: 0.0265091
+        z: 0.5826681
+        w: 0.8116817
+      - x: -0.20703599
+        y: -0.14034285
+        z: 0.0183118
+        w: 0.96804166
+      - x: 0.06956931
+        y: -0.022243265
+        z: 0.49247319
+        w: 0.8672575
+      - x: -0.08927553
+        y: -0.0024661713
+        z: 0.7055148
+        w: 0.70304537
+      - x: 0.0024467057
+        y: 0.04129137
+        z: 0.5305413
+        w: 0.84664935
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      IsDataValid: 1
+      IsDataHighConfidence: 1
+  - name: Point
+    data:
+      RootPose:
+        Orientation:
+          x: -0.0975354
+          y: -0.79178244
+          z: 0.08547923
+          w: 0.59687585
+        Position:
+          x: 0.3616982
+          y: 0.08875185
+          z: -0.24723494
+      RootScale: 0.9779887
+      BoneRotations:
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0.402388
+        y: 0.41023836
+        z: 0.016777933
+        w: 0.818234
+      - x: 0.25576425
+        y: 0.10460748
+        z: 0.14667217
+        w: 0.9498049
+      - x: -0.08316531
+        y: -0.0710406
+        z: -0.010008
+        w: 0.99395007
+      - x: 0.08513468
+        y: 0.074556276
+        z: -0.18576276
+        w: 0.9760562
+      - x: 0.022270048
+        y: 0.04828944
+        z: -0.05192244
+        w: 0.9972343
+      - x: -0.026184266
+        y: -0.0049641123
+        z: 0.085538104
+        w: 0.9959784
+      - x: -0.016169244
+        y: -0.02686572
+        z: -0.05293852
+        w: 0.9981054
+      - x: -0.019772647
+        y: -0.036837805
+        z: 0.35756505
+        w: 0.9329519
+      - x: -0.012599461
+        y: 0.0045265304
+        z: 0.6849731
+        w: 0.72844535
+      - x: -0.08873613
+        y: 0.02260619
+        z: 0.52839047
+        w: 0.84404886
+      - x: -0.11140163
+        y: -0.10930646
+        z: 0.49362463
+        w: 0.85555625
+      - x: -0.041490674
+        y: 0.021754501
+        z: 0.71160275
+        w: 0.70101845
+      - x: -0.029243998
+        y: 0.027162667
+        z: 0.5399358
+        w: 0.84075934
+      - x: -0.20703599
+        y: -0.14034285
+        z: 0.0183118
+        w: 0.96804166
+      - x: 0.061337564
+        y: -0.041467138
+        z: 0.44271493
+        w: 0.89360046
+      - x: -0.09241547
+        y: 0.0036901245
+        z: 0.77660286
+        w: 0.6231645
+      - x: 0.002168542
+        y: 0.04385254
+        z: 0.4391814
+        w: 0.8973249
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      IsDataValid: 1
+      IsDataHighConfidence: 1
+  - name: Default
+    data:
+      RootPose:
+        Orientation:
+          x: -0.22069621
+          y: -0.7601291
+          z: -0.0577531
+          w: 0.6084089
+        Position:
+          x: 0.37460673
+          y: 0.08042377
+          z: -0.32269344
+      RootScale: 0.94079554
+      BoneRotations:
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0.38451707
+        y: 0.41984245
+        z: 0.00046365662
+        w: 0.82211846
+      - x: 0.26106405
+        y: 0.0042333906
+        z: 0.120292395
+        w: 0.95778775
+      - x: -0.082924575
+        y: -0.060480345
+        z: 0.1115307
+        w: 0.9884466
+      - x: 0.08279575
+        y: 0.062129468
+        z: -0.022139411
+        w: 0.9943816
+      - x: 0.027684158
+        y: 0.10425121
+        z: 0.036549952
+        w: 0.9934935
+      - x: -0.026259843
+        y: 0.00024361245
+        z: 0.27714095
+        w: 0.9604704
+      - x: -0.01673017
+        y: -0.024931768
+        z: 0.063635044
+        w: 0.99752146
+      - x: -0.008820447
+        y: 0.011784378
+        z: 0.036284674
+        w: 0.9992331
+      - x: -0.012899316
+        y: 0.0007036968
+        z: 0.4151513
+        w: 0.9096607
+      - x: -0.053311434
+        y: 0.0038673002
+        z: 0.101150215
+        w: 0.9934343
+      - x: -0.053413834
+        y: -0.021622036
+        z: 0.050341234
+        w: 0.99706835
+      - x: -0.041127034
+        y: 0.011838187
+        z: 0.43339232
+        w: 0.9001887
+      - x: -0.015736766
+        y: 0.02956341
+        z: 0.23915239
+        w: 0.9704044
+      - x: -0.20703599
+        y: -0.14034285
+        z: 0.0183118
+        w: 0.96804166
+      - x: 0.09160739
+        y: 0.07441656
+        z: 0.03326907
+        w: 0.9924532
+      - x: -0.07346844
+        y: -0.020871738
+        z: 0.44093552
+        w: 0.8942833
+      - x: 0.0013938939
+        y: 0.048057653
+        z: 0.19728169
+        w: 0.9791672
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      IsDataValid: 1
+      IsDataHighConfidence: 1
+  - name: Open
+    data:
+      RootPose:
+        Orientation:
+          x: 0.13441594
+          y: -0.9875864
+          z: -0.053795602
+          w: 0.060923368
+        Position:
+          x: 0.2801919
+          y: 0.53384775
+          z: 0.034507632
+      RootScale: 0.9784662
+      BoneRotations:
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0.25241318
+        y: 0.47867727
+        z: -0.11332924
+        w: 0.8332539
+      - x: 0.2557815
+        y: 0.10434935
+        z: 0.146606
+        w: 0.94983876
+      - x: -0.083192214
+        y: -0.06555884
+        z: 0.054585926
+        w: 0.9928754
+      - x: 0.085102186
+        y: 0.07424899
+        z: -0.18143304
+        w: 0.9768966
+      - x: 0.028509226
+        y: -0.013108756
+        z: -0.09100343
+        w: 0.99535614
+      - x: -0.02605674
+        y: -0.0059379414
+        z: 0.048550725
+        w: 0.99846315
+      - x: -0.01624898
+        y: -0.026650667
+        z: -0.038840692
+        w: 0.9987578
+      - x: -0.0007178123
+        y: -0.080966964
+        z: -0.061318077
+        w: 0.99482864
+      - x: -0.011502756
+        y: -0.0038782163
+        z: 0.042211924
+        w: 0.999035
+      - x: -0.040135402
+        y: -0.0020952385
+        z: -0.035330813
+        w: 0.9985672
+      - x: -0.03374049
+        y: -0.17788379
+        z: -0.060528096
+        w: 0.9816085
+      - x: -0.03500667
+        y: -0.0008751642
+        z: 0.06263862
+        w: 0.99742174
+      - x: -0.005405823
+        y: 0.029375704
+        z: 0.016059346
+        w: 0.9994248
+      - x: -0.20703599
+        y: -0.14034285
+        z: 0.0183118
+        w: 0.96804166
+      - x: 0.12798494
+        y: -0.12320354
+        z: -0.19733202
+        w: 0.96410626
+      - x: -0.04680095
+        y: -0.038606953
+        z: 0.093275174
+        w: 0.9937902
+      - x: 0.0007403364
+        y: 0.049164414
+        z: 0.0036386359
+        w: 0.99878377
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      IsDataValid: 1
+      IsDataHighConfidence: 1
+  - name: CreateModule
+    data:
+      RootPose:
+        Orientation:
+          x: 0.101942584
+          y: -0.5667737
+          z: -0.77320564
+          w: 0.26557183
+        Position:
+          x: 0.3545306
+          y: 0.5107611
+          z: 0.16703106
+      RootScale: 1.002631
+      BoneRotations:
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0.5166774
+        y: 0.33718324
+        z: 0.12762238
+        w: 0.7765722
+      - x: 0.25772068
+        y: 0.07333784
+        z: 0.13859333
+        w: 0.95341146
+      - x: -0.081193715
+        y: -0.047622766
+        z: 0.24527055
+        w: 0.9648741
+      - x: 0.08485741
+        y: 0.07226628
+        z: -0.1538894
+        w: 0.98178154
+      - x: 0.014542434
+        y: -0.068809524
+        z: 0.4736057
+        w: 0.8779245
+      - x: -0.026141057
+        y: 0.0014020331
+        z: 0.3183766
+        w: 0.94760287
+      - x: -0.016564365
+        y: -0.025629854
+        z: 0.023953341
+        w: 0.99924725
+      - x: -0.048324153
+        y: -0.0919438
+        z: 0.44506294
+        w: 0.88945496
+      - x: -0.012899967
+        y: 0.00071030424
+        z: 0.41565064
+        w: 0.9094326
+      - x: -0.056247033
+        y: 0.0052508116
+        z: 0.13278413
+        w: 0.9895338
+      - x: -0.101314776
+        y: -0.11119126
+        z: 0.43134466
+        w: 0.8895582
+      - x: -0.040993646
+        y: 0.011345574
+        z: 0.41928467
+        w: 0.9068579
+      - x: -0.009370776
+        y: 0.029623955
+        z: 0.10107517
+        w: 0.9943935
+      - x: -0.20703599
+        y: -0.14034285
+        z: 0.0183118
+        w: 0.96804166
+      - x: 0.07371615
+        y: -0.019235868
+        z: 0.37421164
+        w: 0.9242086
+      - x: -0.065348886
+        y: -0.02732784
+        z: 0.32725337
+        w: 0.9422781
+      - x: 0.0011455413
+        y: 0.048706528
+        z: 0.12272009
+        w: 0.9912448
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      - x: 0
+        y: 0
+        z: 0
+        w: 1
+      IsDataValid: 1
+      IsDataHighConfidence: 1
   shouldLoadPoses: 0
 --- !u!114 &849708947602592878
 MonoBehaviour:
@@ -140,7 +1524,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnRecognizeJointGesture:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: OnRecognizeGesture
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: OnUpdateJointGesture
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnRecognizeLeftGesture:
     m_PersistentCalls:
       m_Calls:
@@ -207,6 +1613,7 @@ MonoBehaviour:
   startWidth: 0.005
   endWidth: 0.005
   trailTime: Infinity
+  loopIterationText: {fileID: 653841335}
 --- !u!1001 &849708947235499609
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -849,9 +2256,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
---- !u!4 &849708948841350477 stripped
+--- !u!4 &849708948841410719 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a,
+  m_CorrespondingSourceObject: {fileID: 487254, guid: 126d619cf4daa52469682f85c1378b4a,
     type: 3}
   m_PrefabInstance: {fileID: 849708948841750473}
   m_PrefabAsset: {fileID: 0}
@@ -861,9 +2268,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 849708948841750473}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &849708948841410719 stripped
+--- !u!4 &849708948841350475 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 487254, guid: 126d619cf4daa52469682f85c1378b4a,
+  m_CorrespondingSourceObject: {fileID: 400002, guid: 126d619cf4daa52469682f85c1378b4a,
+    type: 3}
+  m_PrefabInstance: {fileID: 849708948841750473}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &849708948841350477 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a,
     type: 3}
   m_PrefabInstance: {fileID: 849708948841750473}
   m_PrefabAsset: {fileID: 0}
