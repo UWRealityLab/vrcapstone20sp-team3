@@ -39,6 +39,12 @@ public class BlocklyDragModule : MonoBehaviour {
     {
         if (toolInteractingWithMe == null) return;
 
+        if (toolInteractingWithMe.IsRightHandedTool) {
+            BlocklyPlayer.Instance.currRightSelectedModule = moduleName;
+        } else {
+            BlocklyPlayer.Instance.currLeftSelectedModule = moduleName;
+        }
+
         if (toolInteractingWithMe.ToolInputState == ToolInputState.PrimaryInputDown || toolInteractingWithMe.ToolInputState == ToolInputState.PrimaryInputDownStay) {
             moduleRenderer.material.color = Color.blue;
             transform.position = Vector3.Lerp(transform.position, CalcToolEnd(), 0.2f);

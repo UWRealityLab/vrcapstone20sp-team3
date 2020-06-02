@@ -53,6 +53,19 @@ public class GestureRecognizer : MonoBehaviour {
       {
         OnRecognizeJointGesture.Invoke("CreateModule");
       }
+    } else if (gesture == "Loop") {
+      int numLoops = fingerTrail.GetNumLoopIterations();
+      int moduleName;
+      if (leftHand) {
+        moduleName = BlocklyPlayer.Instance.currRightSelectedModule;
+      } else {
+        moduleName = BlocklyPlayer.Instance.currLeftSelectedModule;
+      }
+      if (numLoops > 0 && moduleName != -1) {
+        for (int i = 0; i < numLoops; i++) {
+          ModuleController.Instance.OnUseModule(moduleName);
+        }
+      }
     } else if (gesture != null) {
       if (leftHand) {
         OnRecognizeLeftGesture.Invoke(gesture);
@@ -74,7 +87,7 @@ public class GestureRecognizer : MonoBehaviour {
         if (curr.Value == "Open" && curr.Next.Next != null && curr.Next.Next.Value == "Fist") {
           return "Emit";
         } else {
-          return null;
+          return "Loop";
         }
       } else {
         return dir;
