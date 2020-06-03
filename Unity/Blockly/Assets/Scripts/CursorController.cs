@@ -188,10 +188,6 @@ public class CursorController : MonoBehaviour
       this.gameObject.transform.localPosition = position;
     }
 
-    public Vector3 PositionFromCursorIdx(Vector3Int idx) {
-        return transform.parent.TransformPoint(idx.x, idx.y, idx.z);
-    }
-
     // emit a new block at the cursor's current position, if there isn't a block there already
     // if there is a block there, deletes it
     public void Emit()

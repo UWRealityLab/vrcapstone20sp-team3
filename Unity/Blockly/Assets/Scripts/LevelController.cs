@@ -1,15 +1,17 @@
 ﻿using Oculus.Platform.Models;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+// using System.Diagnostics;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+// using UnityEngine.SceneManagement;
+// using UnityEngine.UI;
 
 namespace Blockly {
 
 public class LevelController : MonoBehaviour
 {
+  public static LevelController Instance = null;
+
     private GameObject level1Button;
     private GameObject level2Button;
     private GameObject level3Button;
@@ -20,13 +22,19 @@ public class LevelController : MonoBehaviour
         public const string WELCOME_TITLE = "Welcome to Blockly Puzzle Mode";
         public const string WELCOME_INSTR = "Pinch to get rid of this popup!";
 
-    // Start is called before the first frame update
-        void Start()
-    {
+    void Awake() {
+        Debug.Assert(Instance == null, "singleton class instantiated multiple times");
+        Instance = this;
+
         popupMessage = popup.GetComponent<PopupMessage>();
         level1Button = GameObject.Find("Level 1 Button");
         level2Button = GameObject.Find("Level 2 Button");
         level3Button = GameObject.Find("Level 3 Button");
+    }
+
+    // Start is called before the first frame update
+        void Start()
+    {
         popupMessage.ui.SetActive(false);
     }
 

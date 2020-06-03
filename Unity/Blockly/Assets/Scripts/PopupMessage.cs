@@ -9,9 +9,10 @@ namespace Blockly {
 
 public class PopupMessage : MonoBehaviour
 {
+  public static PopupMessage Instance = null;
+
     public GameObject ui;
 
-    private PuzzleController puzzleController;
     private bool verified;
     private int currentLevel;
 
@@ -41,10 +42,10 @@ public class PopupMessage : MonoBehaviour
         private List<string> titles;
     private List<string> instructions;
 
+  void Awake() {
+    Debug.Assert(Instance == null, "singleton class instantiated multiple times");
+    Instance = this;
 
-    // Start is called before the first frame update
-    void Start()
-    {
         currentLevel = -1;
         verified = true;
 
@@ -57,13 +58,22 @@ public class PopupMessage : MonoBehaviour
         instructions.Add(LEVEL1_INST + INSTRUCTION);
         instructions.Add(LEVEL2_INST + LEVEL2_MODULE_INST);
         instructions.Add(LEVEL3_INST + INSTRUCTION);
+  }
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
         }
 
     // Update is called once per frame
     void Update()
     {
-        clickButton();
-        if (puzzleController != null && !verified)
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+          ClickButton();
+        }
+        if (PuzzleController.Instance != null && !verified)
         {
             MoveToNextLevel();
         }
@@ -88,42 +98,34 @@ public class PopupMessage : MonoBehaviour
     {
         ui.SetActive(!ui.activeSelf);
 
-        if (puzzleController == null)
-        {
-            puzzleController = GameObject.Find("Puzzle Controller").GetComponent<PuzzleController>();
-        }
-
         if (verified)
         {
             if (currentLevel >= 0)
             {
-                puzzleController.ClearGrid();
+                PuzzleController.Instance.ClearGrid();
             }
-            if (puzzleController.VerifyPuzzleId(currentLevel + 1))
+            if (PuzzleController.Instance.VerifyPuzzleId(currentLevel + 1))
             {
                 currentLevel++;
                 Open(titles[currentLevel], instructions[currentLevel]);
-                puzzleController.StartPuzzle(currentLevel);
+                PuzzleController.Instance.StartPuzzle(currentLevel);
                 verified = false;
             } // an else which means they are completed with all possible levels --> give them a congratulations :D
         }
     }
 
-    private void clickButton()
+    public void ClickButton()
     {
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            Button okButton = GameObject.Find("OK").GetComponent<Button>();
-            okButton.onClick.Invoke();
-        }
+      Button okButton = GameObject.Find("OK").GetComponent<Button>();
+      okButton.onClick.Invoke();
     }
 
     public void MoveToNextLevel()
     {
-        if (puzzleController.UserSubmittedCorrect())
+        if (PuzzleController.Instance.UserSubmittedCorrect())
         {
             verified = true;
-            if (puzzleController.VerifyPuzzleId(currentLevel + 1))
+            if (PuzzleController.Instance.VerifyPuzzleId(currentLevel + 1))
             {
                 Open(NEXT_LEVEL_TITLE, NEXT_LEVEL_INST);
             }

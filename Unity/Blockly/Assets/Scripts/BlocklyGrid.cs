@@ -24,11 +24,15 @@ public class BlocklyGrid : MonoBehaviour {
   }
 
   public Collider[] BlocksAtIndex(Vector3Int index) {
-    return BlocksAtPosition(gridSpace.TransformPoint(new Vector3(index.x, index.y, index.z)));
+    return BlocksAtPosition(PositionFromIdx(index));
   }
 
   public Collider[] BlocksAtPosition(Vector3 pos) {
     return Physics.OverlapSphere(pos, GLOBAL_CELL_SIZE / 3);
+  }
+
+  public Vector3 PositionFromIdx(Vector3Int idx) {
+    return gridSpace.TransformPoint(new Vector3(idx.x, idx.y, idx.z));
   }
 }
 

@@ -8,11 +8,13 @@ namespace Blockly {
 
 public class PuzzleController : MonoBehaviour
 {
+  public static PuzzleController Instance = null;
+
     public GameObject cursor;
-    private CursorController cursorController;
+    // private CursorController CursorController.Instance;
 
     public GameObject recordButton;
-    private ModuleController moduleController;
+    // private ModuleController ModuleController.Instance;
     private bool userSubmittedWithModule;
     private bool moduleCorrect;  // only check this value if "userSubmittedWithModule" is true
 
@@ -23,11 +25,10 @@ public class PuzzleController : MonoBehaviour
     private Vector3 submitBlockPosition;
     private List<Module> puzzles;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        this.cursorController = cursor.GetComponent<CursorController>();
-        this.moduleController = recordButton.GetComponent<ModuleController>();
+  public void Awake() {
+    Debug.Assert(Instance == null, "singleton class instantiated multiple times");
+    Instance = this;
+
         this.puzzles = new List<Module>();
 
         /* level 1 - 2 random emits */
@@ -76,14 +77,19 @@ public class PuzzleController : MonoBehaviour
             level3.Complete();
         }
         puzzles.Add(level3);
+  }
+
+    // Start is called before the first frame update
+    void Start()
+    {
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (cursorController.CursorPosition() == this.submitBlockPosition)
+        if (CursorController.Instance.CursorPosition() == this.submitBlockPosition)
         {
-            if (moduleController.IsRecording()) // hopefully about to save module & submit
+            if (ModuleController.Instance.IsRecording()) // hopefully about to save module & submit
             {
                 this.userSubmittedWithModule = true;
                 this.moduleCorrect = VerifyPuzzle();
@@ -92,7 +98,7 @@ public class PuzzleController : MonoBehaviour
         else
         {
             // if they moved off the submit block without ending/saving the module
-            if (this.userSubmittedWithModule && moduleController.IsRecording())
+            if (this.userSubmittedWithModule && ModuleController.Instance.IsRecording())
             {
                 this.userSubmittedWithModule = false;
                 this.moduleCorrect = false;
@@ -115,14 +121,14 @@ public class PuzzleController : MonoBehaviour
         this.selectedPuzzleId = puzzleId;
         this.userSubmittedWithModule = false;
         this.moduleCorrect = false;
-        Vector3 puzzleCursorPosition = Vector3.zero;
+        Vector3Int puzzleCursorIdx = Vector3Int.zero;
         foreach (string statement in puzzles[puzzleId].Statements())
         {
             switch (statement)
             {
                 case "Emit":
                     bool blockExisted = false;
-                    Collider[] colliders = Physics.OverlapSphere(this.gameObject.transform.position, BlocklyGrid.GRID_SIZE / 3);
+                    Collider[] colliders = BlocklyGrid.Instance.BlocksAtIndex(puzzleCursorIdx);
                     foreach (Collider collider in colliders)
                     {
                         if (collider.gameObject.tag == "Puzzle Block")
@@ -135,34 +141,36 @@ public class PuzzleController : MonoBehaviour
 
                     if (!blockExisted)
                     {
-                        GameObject obj = Instantiate(this.puzzleBlockPrefab, puzzleCursorPosition, Quaternion.identity);
+                        GameObject obj = Instantiate(puzzleBlockPrefab, BlocklyGrid.Instance.PositionFromIdx(puzzleCursorIdx), Quaternion.identity, BlocklyGrid.Instance.gridSpace) as GameObject;
                     }
                     break;
                 case "Right":
-                    puzzleCursorPosition.x += 1f;
+                    puzzleCursorIdx.x++;
                     break;
                 case "Left":
-                    puzzleCursorPosition.x -= 1f;
+                    puzzleCursorIdx.x--;
                     break;
                 case "Up":
-                    puzzleCursorPosition.y += 1f;
+                    puzzleCursorIdx.y++;
                     break;
                 case "Down":
-                    puzzleCursorPosition.y -= 1f;
+                    puzzleCursorIdx.y--;
                     break;
                 case "Forward":
-                    puzzleCursorPosition.z += 1f;
+                    puzzleCursorIdx.z++;
                     break;
                 case "Backward":
-                    puzzleCursorPosition.z -= 1f;
+                    puzzleCursorIdx.z--;
                     break;
                 default:
                     Debug.Log("unrecognized statement in puzzle level #" + puzzleId + ": " + statement);
                     break;
             }
         }
-        Instantiate(this.submitBlockPrefab, puzzleCursorPosition, Quaternion.identity);  // add submit block
-        this.submitBlockPosition = puzzleCursorPosition;
+
+        // add submit block
+        Instantiate(submitBlockPrefab, BlocklyGrid.Instance.PositionFromIdx(puzzleCursorIdx), Quaternion.identity, BlocklyGrid.Instance.gridSpace);
+        this.submitBlockPosition = BlocklyGrid.Instance.PositionFromIdx(puzzleCursorIdx);
     }
 
     // verifies the user's blocks against the puzzle's target structure
@@ -176,7 +184,7 @@ public class PuzzleController : MonoBehaviour
             Debug.Log("VerifyPuzzle() - needsModule fail");
             return false;
         }
-        // Vector3 moduleLibraryPosition = this.moduleController.MostRecentModuleLibraryPosition();
+        // Vector3 moduleLibraryPosition = ModuleController.Instance.MostRecentModuleLibraryPosition();
 
         for (int x = 0; x <= BlocklyGrid.GRID_SIZE; x++)
         {
@@ -227,7 +235,7 @@ public class PuzzleController : MonoBehaviour
         {
             Destroy(block);
         }
-        this.cursorController.gameObject.transform.localPosition = Vector3.zero;
+        CursorController.Instance.gameObject.transform.localPosition = Vector3.zero;
     }
 
     // return true if the user submitted a correct result (and they should pass the level)
@@ -235,7 +243,7 @@ public class PuzzleController : MonoBehaviour
     public Boolean UserSubmittedCorrect()
     {
         Boolean needsModule = this.selectedPuzzleId == 1;  // for level 2, require module
-        if (this.moduleController.IsRecording())
+        if (ModuleController.Instance.IsRecording())
         {
             return false;
         }
@@ -245,7 +253,7 @@ public class PuzzleController : MonoBehaviour
         }
         else
         {
-            return this.cursorController.CursorPosition() == this.submitBlockPosition && this.VerifyPuzzle();
+            return CursorController.Instance.CursorPosition() == this.submitBlockPosition && this.VerifyPuzzle();
         }
     }
 }
