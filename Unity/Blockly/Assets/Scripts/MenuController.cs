@@ -14,6 +14,8 @@ public class MenuController : MonoBehaviour
     private GameObject puzzleButton;
   [SerializeField] [NotNull]
     private GameObject freePlayButton;
+  [SerializeField] [NotNull]
+    private GameObject blocklyTitle;
 
     public GameObject level;
 
@@ -32,12 +34,14 @@ public class MenuController : MonoBehaviour
         puzzleButton.SetActive(false);
         freePlayButton.SetActive(false);
         LevelController.Instance.SetButtonActive(true);
+        blocklyTitle.SetActive(false);
     }
 
     public void BeginFreePlayMode()
     {
         puzzleButton.SetActive(false);
         freePlayButton.SetActive(false);
+        blocklyTitle.SetActive(false);
     }
 }
 

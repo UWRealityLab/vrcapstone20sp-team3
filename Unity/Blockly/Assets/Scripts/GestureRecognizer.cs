@@ -39,6 +39,10 @@ public class GestureRecognizer : MonoBehaviour {
     bool leftHand, string newPose, LinkedList<string> recentPoses) {
     // ensure this pose is new
     Debug.Assert(recentPoses.Count == 0 || newPose != recentPoses.First.Value);
+    if (recentPoses.Count > 0 && newPose == recentPoses.First.Value) {
+      string handName = leftHand ? "left" : "right";
+      Debug.Log("got duplicate pose \"" + newPose + "\" in " + handName + " hand");
+    }
 
     recentPoses.AddFirst(newPose);
     if (recentPoses.Count > RECENT_POSE_CAPACITY) {

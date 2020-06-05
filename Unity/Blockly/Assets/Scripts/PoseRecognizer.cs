@@ -29,14 +29,11 @@ public class PoseRecognizer : MonoBehaviour {
 
   public bool shouldLoadPoses;
 
-  private BlocklyPlayer player;
-
   private string currLeftPose;
   private string currRightPose;
 
   public void Start() {
     Debug.Log("awake pose recognizer");
-    player = GetComponent<BlocklyPlayer>();
 
     // Load in saved poses.
     if (shouldLoadPoses)
@@ -47,8 +44,8 @@ public class PoseRecognizer : MonoBehaviour {
   }
 
   public void Update() {
-    string leftPose = Recognize(player.GetCurrLeftPose(), "left", leftPoses);
-    string rightPose = Recognize(player.GetCurrRightPose(), "right", rightPoses);
+    string leftPose = Recognize(BlocklyPlayer.Instance.GetCurrLeftPose(), "left", leftPoses);
+    string rightPose = Recognize(BlocklyPlayer.Instance.GetCurrRightPose(), "right", rightPoses);
     if (leftPose != null && leftPose != currLeftPose) {
       Debug.Log($"leftPose: {leftPose}");
       OnUpdateLeftPose.Invoke(leftPose);
@@ -154,9 +151,9 @@ public class PoseRecognizer : MonoBehaviour {
     using (Stream filestream = File.Open(filePath, FileMode.Create))
     {
       if (hand == "left") {
-        formatter.Serialize(filestream, player.GetCurrLeftPose());
+        formatter.Serialize(filestream, BlocklyPlayer.Instance.GetCurrLeftPose());
       } else if (hand == "right") {
-        formatter.Serialize(filestream, player.GetCurrRightPose());
+        formatter.Serialize(filestream, BlocklyPlayer.Instance.GetCurrRightPose());
       } else {
         Debug.Assert(false);
       }

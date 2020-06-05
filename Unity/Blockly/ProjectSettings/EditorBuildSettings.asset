@@ -29,7 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BlocklyAesthetic.unity
     guid: aeff9f0cbae6f41ccb1a1531aa1da5fb
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/EnvironmentAesthetic.unity
     guid: 8f68a06ab085349fbb497c3d596ac2e6
   m_configObjects:
