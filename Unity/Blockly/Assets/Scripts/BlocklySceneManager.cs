@@ -10,9 +10,7 @@ public class BlocklySceneManager : MonoBehaviour {
     if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("BlocklyAesthetic")) {
       SceneManager.LoadScene("EnvironmentAesthetic", LoadSceneMode.Additive);
     }
-    StartCoroutine(Progress());
-    // PuzzleController.Instance.StartPuzzle(2);
-    // PuzzleController.Instance.StartPuzzle(2);
+    // StartCoroutine(Progress());
   }
 
   private IEnumerator Progress() {

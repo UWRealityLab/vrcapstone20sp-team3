@@ -11,6 +11,7 @@ public class PopupMessage : MonoBehaviour
 {
   public static PopupMessage Instance = null;
 
+  [NotNull]
     public GameObject ui;
 
     private bool verified;

@@ -79,11 +79,6 @@ public class PuzzleController : MonoBehaviour
         puzzles.Add(level3);
   }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -118,6 +113,7 @@ public class PuzzleController : MonoBehaviour
 
     public void StartPuzzle(int puzzleId)
     {
+      Debug.Log($"starting puzzle {puzzleId}");
         this.selectedPuzzleId = puzzleId;
         this.userSubmittedWithModule = false;
         this.moduleCorrect = false;
@@ -192,7 +188,6 @@ public class PuzzleController : MonoBehaviour
             {
                 for (int z = 0; z <= BlocklyGrid.GRID_SIZE; z++)
                 {
-                    // Collider[] colliders = Physics.OverlapSphere(CursorController.Instance.PositionFromCursorIdx(new Vector3Int(x, y, z)), BlocklyGrid.GLOBAL_CELL_SIZE / 3);
                     Collider[] colliders = BlocklyGrid.Instance.BlocksAtIndex(new Vector3Int(x, y, z));
                     Boolean userBlock = false;
                     Boolean puzzleBlock = false;
@@ -235,7 +230,7 @@ public class PuzzleController : MonoBehaviour
         {
             Destroy(block);
         }
-        CursorController.Instance.gameObject.transform.localPosition = Vector3.zero;
+        CursorController.Instance.ResetCursorIndex();
     }
 
     // return true if the user submitted a correct result (and they should pass the level)

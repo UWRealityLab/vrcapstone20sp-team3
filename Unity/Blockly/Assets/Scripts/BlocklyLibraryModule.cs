@@ -7,12 +7,14 @@ namespace Blockly
 
 public class BlocklyLibraryModule : MonoBehaviour
 {
-	[SerializeField] private GameObject _startStopButton = null;
-	[SerializeField] private SelectionCylinder _selectionCylinder = null;
+	[SerializeField] [NotNull]
+	private GameObject _startStopButton = null;
+	[SerializeField] [NotNull]
+	private SelectionCylinder _selectionCylinder = null;
 
-	[SerializeField]
+	[SerializeField] [NotNull]
 	private GameObject _baseMeshObj;
-	[SerializeField]
+	[SerializeField] [NotNull]
 	private GameObject _dragModulePrefab;
 
 	public int moduleName = -1;
@@ -21,9 +23,6 @@ public class BlocklyLibraryModule : MonoBehaviour
 
 	private void Awake()
 	{
-		// Debug.Assert(moduleName != -1);
-		Assert.IsNotNull(_startStopButton);
-		Assert.IsNotNull(_selectionCylinder);
 	}
 
 	private void OnEnable()

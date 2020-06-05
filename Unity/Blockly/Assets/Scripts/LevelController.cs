@@ -12,12 +12,12 @@ public class LevelController : MonoBehaviour
 {
   public static LevelController Instance = null;
 
+  [SerializeField] [NotNull]
     private GameObject level1Button;
+  [SerializeField] [NotNull]
     private GameObject level2Button;
+  [SerializeField] [NotNull]
     private GameObject level3Button;
-
-    public GameObject popup;
-    private PopupMessage popupMessage;
 
         public const string WELCOME_TITLE = "Welcome to Blockly Puzzle Mode";
         public const string WELCOME_INSTR = "Pinch to get rid of this popup!";
@@ -25,17 +25,13 @@ public class LevelController : MonoBehaviour
     void Awake() {
         Debug.Assert(Instance == null, "singleton class instantiated multiple times");
         Instance = this;
-
-        popupMessage = popup.GetComponent<PopupMessage>();
-        level1Button = GameObject.Find("Level 1 Button");
-        level2Button = GameObject.Find("Level 2 Button");
-        level3Button = GameObject.Find("Level 3 Button");
     }
 
     // Start is called before the first frame update
-        void Start()
+    void Start()
     {
-        popupMessage.ui.SetActive(false);
+        PopupMessage.Instance.ui.SetActive(false);
+        SetButtonActive(false);
     }
 
     // Update is called once per frame
@@ -68,8 +64,8 @@ public class LevelController : MonoBehaviour
 
     private void SetupLevel(int level)
     {
-        popupMessage.SetLevel(level);
-        popupMessage.Open(WELCOME_TITLE, WELCOME_INSTR);
+        PopupMessage.Instance.SetLevel(level);
+        PopupMessage.Instance.Open(WELCOME_TITLE, WELCOME_INSTR);
         SetButtonActive(false);
     }
  }

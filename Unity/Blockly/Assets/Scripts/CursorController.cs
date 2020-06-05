@@ -299,6 +299,10 @@ public class CursorController : MonoBehaviour
         UpdatePosition();
     }
 
+    public void ResetCursorIndex() {
+      SetCursorIndex(Vector3Int.zero);
+    }
+
     public Vector3 CursorPosition()
     {
         return transform.position;
