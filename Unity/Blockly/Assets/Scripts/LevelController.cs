@@ -1,29 +1,37 @@
 ﻿using Oculus.Platform.Models;
 using System.Collections;
 using System.Collections.Generic;
+// using System.Diagnostics;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+// using UnityEngine.SceneManagement;
+// using UnityEngine.UI;
 
 namespace Blockly {
 
 public class LevelController : MonoBehaviour
 {
+  public static LevelController Instance = null;
+
+  [SerializeField] [NotNull]
     private GameObject level1Button;
+  [SerializeField] [NotNull]
     private GameObject level2Button;
+  [SerializeField] [NotNull]
     private GameObject level3Button;
 
-    public GameObject popup;
-    private PopupMessage popupMessage;
+        public const string WELCOME_TITLE = "Welcome to Blockly Puzzle Mode";
+        public const string WELCOME_INSTR = "Pinch to get rid of this popup!";
+
+    void Awake() {
+        Debug.Assert(Instance == null, "singleton class instantiated multiple times");
+        Instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        popupMessage = popup.GetComponent<PopupMessage>();
-        level1Button = GameObject.Find("Level 1 Button");
-        level2Button = GameObject.Find("Level 2 Button");
-        level3Button = GameObject.Find("Level 3 Button");
-        popupMessage.Close();
+        PopupMessage.Instance.ui.SetActive(false);
+        SetButtonActive(false);
     }
 
     // Update is called once per frame
@@ -41,37 +49,25 @@ public class LevelController : MonoBehaviour
 
     public void BeginLevel1()
     {
-        string dir = "Introduction to gestures\n";
-        dir += "1. Move a block to the right.\nPoint your pointer finger and drag in desired direction.\n";
-        dir += "2. Emit block at cursor.\nStart with a fist and release,\nmaking a 5 with your fingers, hand facing down.";
-        popupMessage.Open(dir);
-        SetButtonActive(false);
-        LoadScene();
+        SetupLevel(-1);
     }
 
     public void BeginLevel2()
     {
-        string dir = "Module\nTap on recording button to start recording your module.\n";
-        dir += "Emit a block and move cursor to the right.\n Finish by pressing recording button again.";
-        popupMessage.Open(dir);
-        SetButtonActive(false);
-        LoadScene();
+        SetupLevel(0);
     }
 
     public void BeginLevel3()
     {
-        string dir = "Loop\nChoose module and loop over it ten times in a clockwise circular motion.\n";
-        dir += "Apply module to main grid.";
-        popupMessage.Open(dir);
-        SetButtonActive(false);
-        LoadScene();
+        SetupLevel(1);
     }
 
-    private void LoadScene()
+    private void SetupLevel(int level)
     {
-        SceneManager.LoadScene("Blockly", LoadSceneMode.Additive);
-        //SceneManager.LoadScene("GestureRecognition", LoadSceneMode.Additive);
+        PopupMessage.Instance.SetLevel(level);
+        PopupMessage.Instance.Open(WELCOME_TITLE, WELCOME_INSTR);
+        SetButtonActive(false);
     }
-}
+ }
 
 }

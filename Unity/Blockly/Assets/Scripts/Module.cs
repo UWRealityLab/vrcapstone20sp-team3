@@ -6,18 +6,16 @@ namespace Blockly {
 
 public class Module : MonoBehaviour
 {
-    private Vector3 cursor;
-    private Vector3 maximum;  // max x, y, z offset
-    private Vector3 minimum;  // min x, y, z offset
+    private Vector3Int cursor;
+    private Vector3Int maximum;  // max x, y, z offset
+    private Vector3Int minimum;  // min x, y, z offset
     private List<string> statements;
-
-    private const float GRID_SIZE = CursorController.GRID_SIZE;
 
     public Module()
     {
-        this.cursor = Vector3.zero;
-        this.maximum = Vector3.zero;
-        this.minimum = Vector3.zero;
+        this.cursor = Vector3Int.zero;
+        this.maximum = Vector3Int.zero;
+        this.minimum = Vector3Int.zero;
         this.statements = new List<string>();
     }
 
@@ -36,26 +34,26 @@ public class Module : MonoBehaviour
         switch (action)
         {
             case "Emit":
-                this.maximum = Vector3.Max(cursor, maximum);
-                this.minimum = Vector3.Min(cursor, minimum);
+                this.maximum = Vector3Int.Max(cursor, maximum);
+                this.minimum = Vector3Int.Min(cursor, minimum);
                 break;
             case "Right":
-                cursor.x += GRID_SIZE;
+                cursor.x++;
                 break;
             case "Left":
-                cursor.x -= GRID_SIZE;
+                cursor.x--;
                 break;
             case "Up":
-                cursor.y += GRID_SIZE;
+                cursor.y++;
                 break;
             case "Down":
-                cursor.y -= GRID_SIZE;
+                cursor.y--;
                 break;
             case "Forward":
-                cursor.z += GRID_SIZE;
+                cursor.z++;
                 break;
             case "Backward":
-                cursor.z -= GRID_SIZE;
+                cursor.z--;
                 break;
             default:
                 break;
@@ -66,8 +64,8 @@ public class Module : MonoBehaviour
     // updates max/min to account for end cursor position of the module
     public void Complete()
     {
-        this.maximum = Vector3.Max(cursor, maximum);
-        this.minimum = Vector3.Min(cursor, minimum);
+        this.maximum = Vector3Int.Max(cursor, maximum);
+        this.minimum = Vector3Int.Min(cursor, minimum);
     }
 
     public List<string> Statements()
@@ -77,28 +75,28 @@ public class Module : MonoBehaviour
 
     // returns the "maximum" corner position of the module relative to the
     // given position as the start position of the cursor for the module
-    public Vector3 MaxPositionFromStart(Vector3 startPos)
+    public Vector3Int MaxIndexFromStart(Vector3Int startIdx)
     {
-        return startPos + this.maximum;
+        return startIdx + this.maximum;
     }
 
     // returns the "minimum" corner position of the module relative to the
     // given position as the start position of the cursor for the module
-    public Vector3 MinPositionFromStart(Vector3 startPos)
+    public Vector3Int MinIndexFromStart(Vector3Int startIdx)
     {
-        return startPos + this.minimum;
+        return startIdx + this.minimum;
     }
 
     // return the start position for a cursor to recreate this module
     // so that the "minimum" corner of the module is at the given minCorner
-    public Vector3 StartPositionFromMinCorner(Vector3 minCorner)
+    public Vector3Int StartIndexFromMinCorner(Vector3Int minCorner)
     {
         return minCorner - this.minimum;
     }
 
     // returns a vector representing the total size of the module in the
     // x, y, z dimensions
-    public Vector3 TotalSize()
+    public Vector3Int TotalSize()
     {
         return this.maximum - this.minimum;
     }
