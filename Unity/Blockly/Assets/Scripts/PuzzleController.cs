@@ -193,12 +193,19 @@ public class PuzzleController : MonoBehaviour
                     Boolean puzzleBlock = false;
                     foreach (Collider collider in colliders)
                     {
-                        if (collider.gameObject.tag == "Block")
-                        {
-                            userBlock = true;
-                        } else if (collider.gameObject.tag == "Puzzle Block")
+                        if (collider.gameObject.tag == "Puzzle Block")
                         {
                             puzzleBlock = true;
+                        }
+                        else {
+                            if (collider.gameObject.tag == "Block" && !needsModule)
+                            {
+                                userBlock = true;
+                            }
+                            else if (collider.gameObject.tag == "Module Creation Block" && needsModule)
+                            {
+                                userBlock = true;
+                            }
                         }
                     }
 
