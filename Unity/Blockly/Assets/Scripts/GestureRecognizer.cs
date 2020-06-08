@@ -18,13 +18,15 @@ public class GestureRecognizer : MonoBehaviour {
   private static int RECENT_POSE_CAPACITY = 10;
 
   // for recognizing move gestures
-  private FingerTrail fingerTrail;
+  [SerializeField] [NotNull]
+  private FingerTrail leftFingerTrail;
+  [SerializeField] [NotNull]
+  private FingerTrail rightFingerTrail;
 
   public void Awake() {
     poseRecognizer = GetComponent<PoseRecognizer>();
     recentLeftPoses = new LinkedList<string>();
     recentRightPoses = new LinkedList<string>();
-    fingerTrail = GetComponent<FingerTrail>();
   }
 
   public void OnUpdateLeftPose(string poseName) {
@@ -59,12 +61,14 @@ public class GestureRecognizer : MonoBehaviour {
         OnRecognizeJointGesture.Invoke("CreateModule");
       }
     } else if (gesture == "Loop") {
-      int numLoops = fingerTrail.GetNumLoopIterations();
+      int numLoops = -1;
       int moduleName;
       if (leftHand) {
         moduleName = BlocklyPlayer.Instance.currRightSelectedModule;
+        numLoops = leftFingerTrail.GetNumLoopIterations();
       } else {
         moduleName = BlocklyPlayer.Instance.currLeftSelectedModule;
+        numLoops = rightFingerTrail.GetNumLoopIterations();
       }
       if (numLoops > 0 && moduleName != -1) {
         for (int i = 0; i < numLoops; i++) {
@@ -81,13 +85,20 @@ public class GestureRecognizer : MonoBehaviour {
   }
 
   private string RecognizeGesture(LinkedList<string> recentPoses) {
-    if (recentPoses.Count < 2) {
+    if (recentPoses.Count < 3) {
       return null;
     }
     // TODO should be replaced by a simple regex-style matching language
     LinkedListNode<string> curr = recentPoses.First;
     if (curr.Next.Value == "Point") {
-      string dir = RecognizeDirection(fingerTrail.GetPositions());
+      string dir = null;
+      if (recentPoses == recentLeftPoses) {
+        dir = RecognizeDirection(leftFingerTrail.GetPositions());
+      } else if (recentPoses == recentRightPoses) {
+        dir = RecognizeDirection(rightFingerTrail.GetPositions());
+      } else {
+        Debug.Assert(false);
+      }
       if (dir == null) {
         if (curr.Value == "Open" && curr.Next.Next != null && curr.Next.Next.Value == "Fist") {
           return "Emit";

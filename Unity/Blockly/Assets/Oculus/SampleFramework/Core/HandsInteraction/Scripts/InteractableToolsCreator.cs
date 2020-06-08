@@ -20,11 +20,21 @@ namespace OculusSampleFramework
 	/// </summary>
 	public class InteractableToolsCreator : MonoBehaviour
 	{
+		public static InteractableToolsCreator Instance = null;
+
 		[SerializeField] private Transform[] LeftHandTools = null;
 		[SerializeField] private Transform[] RightHandTools = null;
 
+		public InteractableTool leftRayTool = null;
+		public InteractableTool rightRayTool = null;
+
 		private void Awake()
 		{
+			Debug.Assert(Instance == null, "singleton class instantiated multiple times");
+			Instance = this;
+
+			Debug.Assert(LeftHandTools.Length == 1);
+			Debug.Assert(RightHandTools.Length == 1);
 			if (LeftHandTools != null && LeftHandTools.Length > 0)
 			{
 				StartCoroutine(AttachToolsToHands(LeftHandTools, false));
@@ -72,6 +82,11 @@ namespace OculusSampleFramework
 			toolComp.IsRightHandedTool = isRightHanded;
 			// Initialize only AFTER settings have been applied!
 			toolComp.Initialize();
+			if (isRightHanded) {
+				rightRayTool = toolComp;
+			} else {
+				leftRayTool = toolComp;
+			}
 		}
 	}
 }

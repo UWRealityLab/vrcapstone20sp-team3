@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using OculusSampleFramework;
 using static OVRSkeleton;
 
 namespace Blockly {
@@ -49,13 +50,13 @@ public class PoseRecognizer : MonoBehaviour {
     if (leftPose != null && leftPose != currLeftPose) {
       Debug.Log($"leftPose: {leftPose}");
       OnUpdateLeftPose.Invoke(leftPose);
+      currLeftPose = leftPose;
     }
     if (rightPose != null && rightPose != currRightPose) {
       Debug.Log($"rightPose: {rightPose}");
       OnUpdateRightPose.Invoke(rightPose);
+      currRightPose = rightPose;
     }
-    currLeftPose = leftPose;
-    currRightPose = rightPose;
   }
 
   // TODO shouldn't need both hand and targetposes
@@ -78,9 +79,25 @@ public class PoseRecognizer : MonoBehaviour {
     Quaternion quatA = new Quaternion();
     Quaternion quatB = new Quaternion();
     foreach (var targetPose in targetPoses) {
+      if (targetPose.name == "CreateModule") {
+        InteractableTool rayTool = null;
+        if (hand == "left") {
+          rayTool = InteractableToolsCreator.Instance.leftRayTool;
+        } else if (hand == "right") {
+          rayTool = InteractableToolsCreator.Instance.rightRayTool;
+        }
+        if (rayTool.ToolInputState != ToolInputState.PrimaryInputDown && rayTool.ToolInputState != ToolInputState.PrimaryInputDownStay) {
+          // ignore the create module gesture if a pinch isn't detected by OVR
+          continue;
+        }
+      }
+
       float error = 0f;
       bool poseDiscarded = false;
       for (int i = 0; i < pose.BoneRotations.Length; i++) {
+        if (targetPose.name == "Point" && i >= (int) OVRPlugin.BoneId.Hand_Thumb0 && i <= (int) OVRPlugin.BoneId.Hand_Thumb3) {
+          continue;
+        }
         OVRPlugin.Quatf inputQuat = pose.BoneRotations[i];
         OVRPlugin.Quatf targetQuat = targetPose.data.BoneRotations[i];
         quatA.Set(inputQuat.x, inputQuat.y, inputQuat.z, inputQuat.w);

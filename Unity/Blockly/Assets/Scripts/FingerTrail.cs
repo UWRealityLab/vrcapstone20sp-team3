@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using static OVRSkeleton;
 
 namespace Blockly {
 
@@ -11,7 +12,7 @@ public class FingerTrail : MonoBehaviour {
   public float trailTime = Mathf.Infinity;
   public Text loopIterationText;
 
-  public OVRSkeleton.SkeletonType skeletonType;
+  public OVRSkeleton.SkeletonType skeletonType = OVRSkeleton.SkeletonType.None;
 
   private GameObject trailObj;
   private TrailRenderer trail;
@@ -51,14 +52,13 @@ public class FingerTrail : MonoBehaviour {
   }
 
   public void Start() {
-    BlocklyPlayer player = GetComponent<BlocklyPlayer>();
-    playerTransform = player.GetTransform();
+    playerTransform = BlocklyPlayer.Instance.GetTransform();
     if (skeletonType == OVRSkeleton.SkeletonType.HandLeft) {
       Debug.Log("left finger trail start");
-      indexFingerTip = player.GetLeftIndexTipTransform();
+      indexFingerTip = BlocklyPlayer.Instance.GetLeftIndexTipTransform();
     } else if (skeletonType == OVRSkeleton.SkeletonType.HandRight) {
       Debug.Log("right finger trail start");
-      indexFingerTip = player.GetRightIndexTipTransform();
+      indexFingerTip = BlocklyPlayer.Instance.GetRightIndexTipTransform();
     } else {
       Debug.Assert(false);
     }
@@ -69,7 +69,35 @@ public class FingerTrail : MonoBehaviour {
     inModuleCreation = false;
   }
 
+  public void Update() {
+    // TODO why the flippin heck does the initial value not stay the same?
+    // skeletonType = GetComponent<IOVRSkeletonDataProvider>().GetSkeletonType();
+
+    trailTransform.position = indexFingerTip.position;
+    if (trail.enabled) {
+      float distToStart = Vector3.Distance(trailTransform.position, startPos);
+      // Assume it takes at least 5 points to make a circle
+      if (distToStart < 0.1 && trail.positionCount - lastCircleComplete > 5) {
+        lastCircleComplete = trail.positionCount;
+        numLoopIterations++;
+        string loopText = "";
+        if (inModuleCreation) {
+          loopText = "[Creating module] ";
+        }
+        loopIterationText.text = loopText + "Loop Iterations: " + numLoopIterations;
+      }
+    }
+  }
+
   public void OnUpdatePose(string poseName) {
+    Debug.Log($"skeleton type: {skeletonType}");
+    Debug.Log($"skeleton type == OVRSkeleton.SkeletonType.HandLeft: {skeletonType == OVRSkeleton.SkeletonType.HandLeft}");
+    Debug.Log($"skeleton type == OVRSkeleton.SkeletonType.HandRight: {skeletonType == OVRSkeleton.SkeletonType.HandRight}");
+    if (skeletonType == OVRSkeleton.SkeletonType.HandLeft) {
+      Debug.Log($"update pose left: {poseName}");
+    } else if (skeletonType == OVRSkeleton.SkeletonType.HandRight) {
+      Debug.Log($"update pose right: {poseName}");
+    }
     if (poseName == "Point") {
       trail.Clear();
       trail.enabled = true;
@@ -88,23 +116,6 @@ public class FingerTrail : MonoBehaviour {
 
   public void ToggleModuleCreation() {
     inModuleCreation = !inModuleCreation;
-  }
-
-  public void Update() {
-    trailTransform.position = indexFingerTip.position;
-    if (trail.enabled) {
-      float distToStart = Vector3.Distance(trailTransform.position, startPos);
-      // Assume it takes at least 5 points to make a circle
-      if (distToStart < 0.1 && trail.positionCount - lastCircleComplete > 5) {
-        lastCircleComplete = trail.positionCount;
-        numLoopIterations++;
-        string loopText = "";
-        if (inModuleCreation) {
-          loopText = "[Creating module] ";
-        }
-        loopIterationText.text = loopText + "Loop Iterations: " + numLoopIterations;
-      }
-    }
   }
 
   public Vector3[] GetPositions() {
