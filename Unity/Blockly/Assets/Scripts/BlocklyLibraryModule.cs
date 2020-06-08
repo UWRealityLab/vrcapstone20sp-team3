@@ -70,6 +70,7 @@ public class BlocklyLibraryModule : MonoBehaviour
 					moduleMeshObjCopy.transform.parent = dragModObj.transform.Find("Mesh");
 					moduleMeshObjCopy.transform.localPosition = Vector3.zero;
 					moduleMeshObjCopy.transform.localScale = moduleMeshObj.transform.localScale;
+					moduleMeshObjCopy.transform.rotation = moduleMeshObj.transform.rotation;
 
 					Debug.Log($"finished creating drag module");
 
