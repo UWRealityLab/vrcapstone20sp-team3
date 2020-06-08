@@ -27,7 +27,7 @@ namespace OculusSampleFramework
 		private const int NUM_COLLIDERS_TO_TEST = 20;
 
 		[SerializeField] private RayToolView _rayToolView = null;
-		[Range(0.0f, 45.0f)] [SerializeField] private float _coneAngleDegrees = 20.0f;
+		[Range(0.0f, 45.0f)] [SerializeField] private float _coneAngleDegrees = 15f;
 		[SerializeField] private float _farFieldMaxDistance = 5f;
 
 		public override InteractableToolTags ToolTags
@@ -40,6 +40,7 @@ namespace OculusSampleFramework
 
 		private PinchStateModule _pinchStateModule = new PinchStateModule();
 		private Interactable _focusedInteractable;
+		private Interactable _lastFocusedInteractable = null;
 
 		public override ToolInputState ToolInputState
 		{
@@ -93,7 +94,11 @@ namespace OculusSampleFramework
 			Assert.IsNotNull(_rayToolView);
 			InteractableToolsInputRouter.Instance.RegisterInteractableTool(this);
 			_rayToolView.InteractableTool = this;
+			// NOTE we're hardcoding it here, because those buttheads at oculus
+			// disregard values set in the inspector.
+			_coneAngleDegrees = 5f;
 			_coneAngleReleaseDegrees = _coneAngleDegrees * 1.2f;
+			Debug.Log($"Cone Angle Degrees: {_coneAngleDegrees}");
 			_initialized = true;
 		}
 
@@ -335,6 +340,9 @@ namespace OculusSampleFramework
 		public override void FocusOnInteractable(Interactable focusedInteractable,
 		  ColliderZone colliderZone)
 		{
+			if (_lastFocusedInteractable != null && focusedInteractable == _lastFocusedInteractable) {
+				return;
+			}
 			_rayToolView.SetFocusedInteractable(focusedInteractable);
 			_focusedInteractable = focusedInteractable;
 
@@ -346,6 +354,7 @@ namespace OculusSampleFramework
 
 		public override void DeFocus()
 		{
+			_lastFocusedInteractable = _focusedInteractable;
 			_rayToolView.SetFocusedInteractable(null);
 			_focusedInteractable = null;
 		}

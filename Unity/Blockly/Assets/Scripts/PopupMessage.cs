@@ -14,8 +14,6 @@ public class PopupMessage : MonoBehaviour
   [NotNull]
     public GameObject ui;
     
-
-
   void Awake() {
     Debug.Assert(Instance == null, "singleton class instantiated multiple times");
     Instance = this;

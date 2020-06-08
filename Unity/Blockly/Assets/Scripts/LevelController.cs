@@ -40,7 +40,7 @@ public class LevelController : MonoBehaviour
 
     public const string LEVEL2_TITLE = "LEVEL 2: MODULE";
     public const string LEVEL2_INST = "To create a module, fold your hand with only thumb on bottom for both hands.\n\n";
-    public const string LEVEL2_MODULE_INST = "All of the modules you define in this level will be available to you in the" +
+    public const string LEVEL2_MODULE_INST = "All of the modules you define in this level will be available to you in the " +
         "module library for use in future levels. Good luck!";
 
     public const string LEVEL3_TITLE = "LEVEL 3: LoOpY StAirS";

@@ -37,6 +37,8 @@ public class BlocklyUIInteractable : MonoBehaviour {
     if (_toolInteractingWithMe.ToolInputState == ToolInputState.PrimaryInputDown || _toolInteractingWithMe.ToolInputState == ToolInputState.PrimaryInputDownStay) {
         // finger is pinching
         onButtonPinch.Invoke();
+        _toolInteractingWithMe.DeFocus();
+        _toolInteractingWithMe = null;
     }
   }
 

@@ -11,6 +11,8 @@ public class FingerTrail : MonoBehaviour {
   public float trailTime = Mathf.Infinity;
   public Text loopIterationText;
 
+  public OVRSkeleton.SkeletonType skeletonType;
+
   private GameObject trailObj;
   private TrailRenderer trail;
   private Transform trailTransform;
@@ -50,7 +52,15 @@ public class FingerTrail : MonoBehaviour {
   public void Start() {
     BlocklyPlayer player = GetComponent<BlocklyPlayer>();
     playerTransform = player.GetTransform();
-    indexFingerTip = player.GetLeftIndexTipTransform();
+    if (skeletonType == OVRSkeleton.SkeletonType.HandLeft) {
+      Debug.Log("left finger trail start");
+      indexFingerTip = player.GetLeftIndexTipTransform();
+    } else if (skeletonType == OVRSkeleton.SkeletonType.HandRight) {
+      Debug.Log("right finger trail start");
+      indexFingerTip = player.GetRightIndexTipTransform();
+    } else {
+      Debug.Assert(false);
+    }
     Debug.Log(indexFingerTip);
     Debug.Assert(indexFingerTip != null);
 

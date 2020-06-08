@@ -52,8 +52,10 @@ public class BlocklyPlayer : MonoBehaviour {
     leftIndexTip = handsManager.LeftHandSkeleton.Bones[(int) BoneId.Hand_IndexTip].Transform;
     Debug.Log($"setting left index tip to: {leftIndexTip}");
     Debug.Assert(handsManager.LeftHandSkeleton.Bones[(int) BoneId.Hand_IndexTip].Id == BoneId.Hand_IndexTip);
+
     rightIndexTip = handsManager.RightHandSkeleton.Bones[(int) BoneId.Hand_IndexTip].Transform;
-    Debug.Log($"setting right index tip to: {leftIndexTip}");
+    Debug.Log($"setting right index tip to: {rightIndexTip}");
+    Debug.Assert(handsManager.LeftHandSkeleton.Bones[(int) BoneId.Hand_IndexTip].Id == BoneId.Hand_IndexTip);
   }
 
   #if UNITY_EDITOR

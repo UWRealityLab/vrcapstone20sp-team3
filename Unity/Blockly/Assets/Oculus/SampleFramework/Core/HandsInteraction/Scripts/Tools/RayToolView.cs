@@ -88,7 +88,6 @@ namespace OculusSampleFramework
 			var myPosition = InteractableTool.ToolTransform.position;
 			var myForward = InteractableTool.ToolTransform.forward;
 
-			// Debug.Log($"_focusedTransform == null: {_focusedTransform == null}");
 			var targetPosition = _focusedTransform != null
 			  ? _focusedTransform.position
 			  : myPosition + myForward * DEFAULT_RAY_CAST_DISTANCE;
