@@ -23,6 +23,7 @@ public class FingerTrail : MonoBehaviour {
   private Vector3 startPos;
   private int lastCircleComplete;
   private int numLoopIterations;
+  private bool inModuleCreation;
 
   public void Awake() {
     #if UNITY_EDITOR
@@ -65,6 +66,7 @@ public class FingerTrail : MonoBehaviour {
     Debug.Assert(indexFingerTip != null);
 
     trailTransform.position = indexFingerTip.position;
+    inModuleCreation = false;
   }
 
   public void OnUpdatePose(string poseName) {
@@ -77,7 +79,15 @@ public class FingerTrail : MonoBehaviour {
     } else if (trail.enabled) {
       trail.enabled = false;
     }
-    loopIterationText.text = "";
+    if (inModuleCreation) {
+      loopIterationText.text = "Creating module...";
+    } else {
+      loopIterationText.text = "";
+    }
+  }
+
+  public void ToggleModuleCreation() {
+    inModuleCreation = !inModuleCreation;
   }
 
   public void Update() {
@@ -88,7 +98,11 @@ public class FingerTrail : MonoBehaviour {
       if (distToStart < 0.1 && trail.positionCount - lastCircleComplete > 5) {
         lastCircleComplete = trail.positionCount;
         numLoopIterations++;
-        loopIterationText.text = "Loop Iterations: " + numLoopIterations;
+        string loopText = "";
+        if (inModuleCreation) {
+          loopText = "[Creating module...] ";
+        }
+        loopIterationText.text = loopText + "Loop Iterations: " + numLoopIterations;
       }
     }
   }
