@@ -115,7 +115,8 @@ public class LevelController : MonoBehaviour
             if (PuzzleController.Instance.VerifyPuzzleId(currentLevel))
             {
                 this.levelSet = false;
-                PopupMessage.Instance.Open(NEXT_LEVEL_TITLE, NEXT_LEVEL_INST);
+                string t = NEXT_LEVEL_TITLE + "UP NEXT: " + titles[currentLevel];
+                PopupMessage.Instance.Open(t, instructions[currentLevel]);
             }
             else
             {
@@ -129,7 +130,7 @@ public class LevelController : MonoBehaviour
     {
         this.currentLevel = level;
         this.levelSet = false;
-        PopupMessage.Instance.Open(WELCOME_TITLE, WELCOME_INST);
+        PopupMessage.Instance.Open(titles[currentLevel], instructions[currentLevel]);
         SetButtonActive(false);
     }
 
@@ -137,7 +138,6 @@ public class LevelController : MonoBehaviour
     {
         if (!levelSet && PuzzleController.Instance.VerifyPuzzleId(currentLevel))
         {
-            PopupMessage.Instance.Open(titles[currentLevel], instructions[currentLevel]);
             PuzzleController.Instance.ClearGrid();
             PuzzleController.Instance.StartPuzzle(currentLevel);
             levelSet = true;
