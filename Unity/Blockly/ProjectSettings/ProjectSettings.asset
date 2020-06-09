@@ -441,6 +441,9 @@ PlayerSettings:
     m_Enabled: 1
     m_Devices:
     - Oculus
+  - m_BuildTarget: WebGL
+    m_Enabled: 1
+    m_Devices: []
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
   openGLRequireES32: 0

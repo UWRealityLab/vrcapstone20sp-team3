@@ -21,7 +21,7 @@ public class PuzzleController : MonoBehaviour
     public GameObject puzzleBlockPrefab;
     public GameObject submitBlockPrefab;
 
-    private HashSet<GameObject> createdBlocks;
+    // private HashSet<GameObject> createdBlocks;
 
     private int selectedPuzzleId;  // index of currently selected puzzle
     private Vector3 submitBlockPosition;
@@ -32,7 +32,7 @@ public class PuzzleController : MonoBehaviour
     Instance = this;
 
         this.puzzles = new List<Module>();
-        this.createdBlocks = new HashSet<GameObject>();
+        // this.createdBlocks = new HashSet<GameObject>();
 
         /* level 1 - 2 random emits */
         Module level1 = new Module();
@@ -120,17 +120,33 @@ public class PuzzleController : MonoBehaviour
         this.selectedPuzzleId = puzzleId;
         this.userSubmittedWithModule = false;
         this.moduleCorrect = false;
-        this.createdBlocks = new HashSet<GameObject>();
+        // this.createdBlocks = new HashSet<GameObject>();
         Vector3Int puzzleCursorIdx = Vector3Int.zero;
         foreach (string statement in puzzles[puzzleId].Statements())
         {
             switch (statement)
             {
                 case "Emit":
-                    Collider[] colliders = BlocklyGrid.Instance.BlocksAtIndex(puzzleCursorIdx);
+                    // Collider[] colliders = BlocklyGrid.Instance.BlocksAtIndex(puzzleCursorIdx);
+                    // GameObject obj = Instantiate(puzzleBlockPrefab, BlocklyGrid.Instance.PositionFromIdx(puzzleCursorIdx), Quaternion.identity, BlocklyGrid.Instance.gridSpace) as GameObject;
+                    // this.createdBlocks.Add(obj);
+                  bool blockExisted = false;
+                  Collider[] colliders = BlocklyGrid.Instance.BlocksAtIndex(puzzleCursorIdx);
+                  foreach (Collider collider in colliders)
+                  {
+                    if (collider.gameObject.tag == "Puzzle Block")
+                    {
+                      blockExisted = true;
+                      Destroy(collider.gameObject);
+                      break;
+                    }
+                  }
+
+                  if (!blockExisted)
+                  {
                     GameObject obj = Instantiate(puzzleBlockPrefab, BlocklyGrid.Instance.PositionFromIdx(puzzleCursorIdx), Quaternion.identity, BlocklyGrid.Instance.gridSpace) as GameObject;
-                    this.createdBlocks.Add(obj);
-                    break;
+                  }
+                  break;
                 case "Right":
                     puzzleCursorIdx.x++;
                     break;
@@ -226,10 +242,10 @@ public class PuzzleController : MonoBehaviour
         objectsToClear.AddRange(GameObject.FindGameObjectsWithTag("Submit Block"));
         foreach (GameObject block in objectsToClear)
         {
-            if (!this.createdBlocks.Contains(block))
-            {
+            // if (!this.createdBlocks.Contains(block))
+            // {
                 Destroy(block);
-            }
+            // }
         }
         CursorController.Instance.ResetCursorIndex();
     }

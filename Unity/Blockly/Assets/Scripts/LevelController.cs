@@ -117,6 +117,7 @@ public class LevelController : MonoBehaviour
                 this.levelSet = false;
                 string t = NEXT_LEVEL_TITLE + "UP NEXT: " + titles[currentLevel];
                 PopupMessage.Instance.Open(t, instructions[currentLevel]);
+                PuzzleController.Instance.ClearGrid();
             }
             else
             {

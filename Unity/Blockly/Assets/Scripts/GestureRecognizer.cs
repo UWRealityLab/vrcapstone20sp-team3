@@ -124,7 +124,7 @@ public class GestureRecognizer : MonoBehaviour {
       string gestureOther = leftHand ? recentRightPoses.First.Value : recentLeftPoses.First.Value;
       if (gestureOther == "CreateModule")
       {
-        fingerTrail.ToggleModuleCreation();
+        leftFingerTrail.ToggleModuleCreation();
         OnRecognizeJointGesture.Invoke("CreateModule");
       }
     } else if (gesture == "Loop") {
