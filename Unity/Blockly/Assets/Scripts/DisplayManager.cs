@@ -24,6 +24,11 @@ public class DisplayManager : MonoBehaviour {
   [NotNull]
   public TextMesh RightPoseErrorDisplay;
 
+  [NotNull]
+  public TextMesh LeftSatDisplay;
+  [NotNull]
+  public TextMesh RightSatDisplay;
+
   public void Awake() {
     Debug.Assert(Instance == null);
     Instance = this;
@@ -55,6 +60,14 @@ public class DisplayManager : MonoBehaviour {
 
   public void SetRightPoseError(float error) {
     RightPoseErrorDisplay.text = "Error: " + error.ToString("F2");
+  }
+
+  public void SetLeftSat(float error) {
+    LeftSatDisplay.text = "Sat: " + error.ToString("F2");
+  }
+
+  public void SetRightSat(float error) {
+    RightSatDisplay.text = "Sat: " + error.ToString("F2");
   }
 }
 

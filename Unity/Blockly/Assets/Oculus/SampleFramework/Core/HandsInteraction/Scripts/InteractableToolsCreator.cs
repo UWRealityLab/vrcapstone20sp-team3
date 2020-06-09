@@ -25,8 +25,8 @@ namespace OculusSampleFramework
 		[SerializeField] private Transform[] LeftHandTools = null;
 		[SerializeField] private Transform[] RightHandTools = null;
 
-		public InteractableTool leftRayTool = null;
-		public InteractableTool rightRayTool = null;
+		public RayTool leftRayTool = null;
+		public RayTool rightRayTool = null;
 
 		private void Awake()
 		{
@@ -83,9 +83,9 @@ namespace OculusSampleFramework
 			// Initialize only AFTER settings have been applied!
 			toolComp.Initialize();
 			if (isRightHanded) {
-				rightRayTool = toolComp;
+				rightRayTool = toolComp as RayTool;
 			} else {
-				leftRayTool = toolComp;
+				leftRayTool = toolComp as RayTool;
 			}
 		}
 	}

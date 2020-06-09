@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using OculusSampleFramework;
 
 namespace Blockly {
 
@@ -16,6 +17,16 @@ public class GestureRecognizer : MonoBehaviour {
   private LinkedList<string> recentRightPoses;
   // how many of the most recent poses to keep track of
   private static int RECENT_POSE_CAPACITY = 10;
+
+  // keep track of how many seconds have elapsed since we've been in
+  // "Open"/"Default" and since we've left "Open"/"Default", so we can smoothly
+  // turn the ray tool on and off, respectively
+  private static float SATURATION_THRESH = 0.3f;
+  private static float SATURATION_LIMIT = 0.4f;
+  private float leftRaySatCounter = 0f;
+  private float rightRaySatCounter = 0f;
+  private bool leftEnableState = true;
+  private bool rightEnableState = true;
 
   // for recognizing move gestures
   [SerializeField] [NotNull]
@@ -35,6 +46,62 @@ public class GestureRecognizer : MonoBehaviour {
 
   public void OnUpdateRightPose(string poseName) {
     OnUpdatePose(false, poseName, recentRightPoses);
+  }
+
+  public void Update() {
+    UpdateSingle(true, recentLeftPoses);
+    UpdateSingle(false, recentRightPoses);
+  }
+
+  private void UpdateSingle(bool leftHand, LinkedList<string> recentPoses) {
+    if (recentPoses.Count == 0) return;
+
+    RayTool rayTool = null;
+    float satCounter = 0f;
+    bool enableState = false;
+    if (leftHand) {
+      rayTool = InteractableToolsCreator.Instance.leftRayTool;
+      satCounter = leftRaySatCounter;
+      enableState = leftEnableState;
+    } else {
+      rayTool = InteractableToolsCreator.Instance.rightRayTool;
+      satCounter = rightRaySatCounter;
+      enableState = rightEnableState;
+    }
+
+    bool isOpened = recentPoses.First.Value == "Open" || recentPoses.First.Value == "Default";
+    isOpened = isOpened || ((rayTool.ToolInputState == ToolInputState.PrimaryInputDown || rayTool.ToolInputState == ToolInputState.PrimaryInputDownStay) && recentPoses.First.Value != "Fist");
+
+    // we desaturate faster than we saturate
+    float delta = 0f;
+    if (isOpened) {
+      delta = Time.deltaTime;
+    } else if (recentPoses.First.Value == "Point") {
+      delta = -Time.deltaTime * 2f;
+    } else if (recentPoses.First.Value == "CreateModule") {
+      delta = -Time.deltaTime * 1.5f;
+    } else {
+      delta = -Time.deltaTime;
+    }
+    satCounter = Mathf.Clamp(satCounter + delta, -SATURATION_LIMIT, SATURATION_LIMIT);
+
+    if (satCounter < -SATURATION_THRESH) {
+      enableState = false;
+    } else if (satCounter > SATURATION_THRESH) {
+      enableState = true;
+    }
+
+    rayTool.EnableState = enableState;
+
+    if (leftHand) {
+      leftRaySatCounter = satCounter;
+      leftEnableState = enableState;
+      DisplayManager.Instance.SetLeftSat(leftRaySatCounter);
+    } else {
+      rightRaySatCounter = satCounter;
+      rightEnableState = enableState;
+      DisplayManager.Instance.SetRightSat(rightRaySatCounter);
+    }
   }
 
   public void OnUpdatePose(

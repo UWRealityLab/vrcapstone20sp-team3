@@ -109,7 +109,12 @@ public class PoseRecognizer : MonoBehaviour {
         }
       }
       if (!poseDiscarded && error < bestError) {
-        bestCandidate = targetPose.name;
+        // HACK: remapping "Default" -> "Open"
+        if (targetPose.name == "Default") {
+          bestCandidate = "Open";
+        } else {
+          bestCandidate = targetPose.name;
+        }
         bestError = error;
       }
     }

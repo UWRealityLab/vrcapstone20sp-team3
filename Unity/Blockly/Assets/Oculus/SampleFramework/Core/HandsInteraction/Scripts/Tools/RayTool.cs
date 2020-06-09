@@ -42,10 +42,18 @@ namespace OculusSampleFramework
 		private Interactable _focusedInteractable;
 		private Interactable _lastFocusedInteractable = null;
 
+		public bool IsFocused {
+			get { return _focusedInteractable != null; }
+		}
+
 		public override ToolInputState ToolInputState
 		{
 			get
 			{
+				if (!EnableState) {
+					return ToolInputState.Inactive;
+				}
+
 				if (_pinchStateModule.PinchDownOnFocusedObject)
 				{
 					return ToolInputState.PrimaryInputDown;
