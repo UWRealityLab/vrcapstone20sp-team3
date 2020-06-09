@@ -100,7 +100,7 @@ public class FingerTrail : MonoBehaviour {
         numLoopIterations++;
         string loopText = "";
         if (inModuleCreation) {
-          loopText = "[Creating module...] ";
+          loopText = "[Creating module] ";
         }
         loopIterationText.text = loopText + "Loop Iterations: " + numLoopIterations;
       }
