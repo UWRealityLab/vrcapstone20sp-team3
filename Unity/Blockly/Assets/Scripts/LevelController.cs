@@ -35,18 +35,23 @@ public class LevelController : MonoBehaviour
     public const string CONGRATS_INST = " You will now enter free play mode, where you can explore your creativity in 3D!";
 
     public const string LEVEL1_TITLE = "LEVEL 1 - Introductory Statements";
-    public const string LEVEL1_INST = "To move block, point your pointer finger and drag in desired direction.\n" +
-    "To emit block at cursor, start with a fist and release, making a 5 with your fingers, hand facing down.\n\n";
+    public const string LEVEL1_INST =
+            "To move cursor, point your pointer finger and drag in desired direction.\n" +
+            "To emit block at cursor, start with a fist and release, making a 5 with your fingers, hand facing down.\n\n";
 
     public const string LEVEL2_TITLE = "LEVEL 2 - MODULE";
-    public const string LEVEL2_INST = "To create a module, fold your hand with only thumb on bottom for both hands.\n\n";
-    public const string LEVEL2_MODULE_INST = "All of the modules you define in this level will be available to you in the " +
-        "module library for use in future levels. Good luck!";
+    public const string LEVEL2_INST =
+            "For this level, create a module that matches the green outline and yellow box.\n" +
+            "To start or stop module creation, fold your hand with only thumb on bottom for both hands.\n\n";
+    public const string LEVEL2_MODULE_INST =
+            "All of the modules you define in this level will be available to you in the " +
+            "module library for use in future levels. Good luck!";
 
     public const string LEVEL3_TITLE = "LEVEL 3 - LoOpY StAirS";
-    public const string LEVEL3_INST = "To loop, select module by making a pinch gesture and " +
-    "loop over it desired number of times in a clockwise circular motion.\n" +
-    "Apply module by dragging pinched module from module library to the play area.\n\n";
+    public const string LEVEL3_INST =
+            "Apply module by dragging pinched module from module library to the play area.\n" +
+            "To loop, select module by making a pinch gesture and " +
+            "loop with other hand for the desired number of times in a circular motion.\n\n";
 
     private List<string> titles;
     private List<string> instructions;
